@@ -13,10 +13,10 @@ grow_vertical = 2
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
 
 [node name="PlayButton" type="Button" parent="CanvasLayer"]
-offset_left = 431.0
-offset_top = 194.0
-offset_right = 722.0
-offset_bottom = 292.0
+offset_left = 409.0
+offset_top = 274.0
+offset_right = 700.0
+offset_bottom = 372.0
 text = "Play"
 script = ExtResource("1_glfsf")
 

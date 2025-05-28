@@ -14,3 +14,7 @@ config/name="Slice Of Terror"
 run/main_scene="uid://pttui37r384l"
 config/features=PackedStringArray("4.4", "Forward Plus")
 config/icon="res://icon.svg"
+
+[rendering]
+
+textures/canvas_textures/default_texture_filter=0

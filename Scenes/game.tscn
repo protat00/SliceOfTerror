@@ -7,9 +7,6 @@ size = Vector2(1157, 29)
 
 [node name="Node2D" type="Node2D"]
 
-[node name="Player" parent="." instance=ExtResource("1_ebmjs")]
-position = Vector2(142, 268)
-
 [node name="StaticBody2D" type="StaticBody2D" parent="."]
 position = Vector2(620, 453)
 metadata/_edit_group_ = true
@@ -17,3 +14,6 @@ metadata/_edit_group_ = true
 [node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D"]
 position = Vector2(-44.5, 4.5)
 shape = SubResource("RectangleShape2D_2poj3")
+
+[node name="Player" parent="." instance=ExtResource("1_ebmjs")]
+position = Vector2(146, 184)
