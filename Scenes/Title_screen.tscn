@@ -1,12 +1,17 @@
-[gd_scene load_steps=2 format=3 uid="uid://pttui37r384l"]
+[gd_scene load_steps=3 format=3 uid="uid://pttui37r384l"]
 
 [ext_resource type="Script" uid="uid://q35m5ewk00g" path="res://Scripts/play_button.gd" id="1_glfsf"]
+[ext_resource type="Texture2D" uid="uid://c47qx7b7yymy6" path="res://UI_Assets/text-1748391840210-1.png.png" id="2_sxg3m"]
 
 [node name="Control" type="Control"]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
+offset_left = 15.0
+offset_top = 50.0
+offset_right = -56.0
+offset_bottom = -470.0
 grow_horizontal = 2
 grow_vertical = 2
 
@@ -19,5 +24,9 @@ offset_right = 700.0
 offset_bottom = 372.0
 text = "Play"
 script = ExtResource("1_glfsf")
+
+[node name="Text-1748391840210-1_png" type="Sprite2D" parent="."]
+position = Vector2(555, 84)
+texture = ExtResource("2_sxg3m")
 
 [connection signal="pressed" from="CanvasLayer/PlayButton" to="CanvasLayer/PlayButton" method="_on_pressed"]

@@ -15,5 +15,5 @@ metadata/_edit_group_ = true
 position = Vector2(-44.5, 4.5)
 shape = SubResource("RectangleShape2D_2poj3")
 
-[node name="Player" parent="." instance=ExtResource("1_ebmjs")]
-position = Vector2(146, 184)
+[node name="Player" parent="StaticBody2D" instance=ExtResource("1_ebmjs")]
+position = Vector2(-451, -326)
