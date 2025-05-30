@@ -1,0 +1,19 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+uid="uid://cqpiaxqjnyceq"
+path="res://.godot/imported/Haunted House Theme.mp3-0142da3af483ebdbc412277ec6ae3e85.mp3str"
+
+[deps]
+
+source_file="res://Sounds/Haunted House Theme.mp3"
+dest_files=["res://.godot/imported/Haunted House Theme.mp3-0142da3af483ebdbc412277ec6ae3e85.mp3str"]
+
+[params]
+
+loop=false
+loop_offset=0
+bpm=0
+beat_count=0
+bar_beats=4

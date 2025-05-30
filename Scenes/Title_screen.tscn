@@ -1,7 +1,9 @@
-[gd_scene load_steps=3 format=3 uid="uid://pttui37r384l"]
+[gd_scene load_steps=5 format=3 uid="uid://pttui37r384l"]
 
 [ext_resource type="Script" uid="uid://q35m5ewk00g" path="res://Scripts/play_button.gd" id="1_glfsf"]
+[ext_resource type="Texture2D" uid="uid://hl4qvjvm4au0" path="res://Assets/Haunted House (Upscaled).png" id="2_s30q0"]
 [ext_resource type="Texture2D" uid="uid://c47qx7b7yymy6" path="res://UI_Assets/text-1748391840210-1.png.png" id="2_sxg3m"]
+[ext_resource type="AudioStream" uid="uid://cqpiaxqjnyceq" path="res://Sounds/Haunted House Theme.mp3" id="4_wou8e"]
 
 [node name="Control" type="Control"]
 layout_mode = 3
@@ -17,16 +19,40 @@ grow_vertical = 2
 
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
 
-[node name="PlayButton" type="Button" parent="CanvasLayer"]
-offset_left = 409.0
-offset_top = 274.0
-offset_right = 700.0
-offset_bottom = 372.0
+[node name="TextureRect" type="TextureRect" parent="."]
+layout_mode = 0
+offset_left = -2.0
+offset_top = -54.0
+offset_right = 1918.0
+offset_bottom = 1026.0
+scale = Vector2(0.592228, 0.60524)
+texture = ExtResource("2_s30q0")
+stretch_mode = 1
+
+[node name="VBoxContainer" type="VBoxContainer" parent="."]
+offset_left = 509.0
+offset_top = 307.0
+offset_right = 550.0
+offset_bottom = 347.0
+scale = Vector2(2.66623, 1.73457)
+
+[node name="PlayButton" type="Button" parent="VBoxContainer"]
+layout_mode = 2
 text = "Play"
 script = ExtResource("1_glfsf")
 
+[node name="Button" type="Button" parent="VBoxContainer"]
+layout_mode = 2
+text = "Settings"
+
 [node name="Text-1748391840210-1_png" type="Sprite2D" parent="."]
-position = Vector2(555, 84)
+position = Vector2(557, 122)
 texture = ExtResource("2_sxg3m")
 
-[connection signal="pressed" from="CanvasLayer/PlayButton" to="CanvasLayer/PlayButton" method="_on_pressed"]
+[node name="HauntedHouseTheme" type="AudioStreamPlayer2D" parent="."]
+position = Vector2(518, 288)
+stream = ExtResource("4_wou8e")
+autoplay = true
+parameters/looping = true
+
+[connection signal="pressed" from="VBoxContainer/PlayButton" to="VBoxContainer/PlayButton" method="_on_pressed"]

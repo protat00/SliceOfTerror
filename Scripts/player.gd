@@ -2,11 +2,11 @@ extends CharacterBody2D
 
 enum State { IDLE, RUNNING, JUMPING, FALLING, DASHING, SLIDING, CROUCHING }
 
-@export var input_left: String = "ui_left"
-@export var input_right: String = "ui_right"
-@export var input_jump: String = "ui_accept"
+@export var input_left: String = "backward"
+@export var input_right: String = "forward"
+@export var input_jump: String = "jump"
 @export var input_dash: String = "ui_select"
-@export var input_crouch: String = "ui_down"
+@export var input_crouch: String = "slide"
 
 #controller variables
 @export var speed: float = 200.0
