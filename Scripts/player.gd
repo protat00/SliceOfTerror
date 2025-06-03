@@ -29,6 +29,7 @@ var slide_timer: float = 0.0
 
 func _ready():
 	crouch_collision.disabled = true
+	$Camera2D/CanvasLayer.visible = true
 
 func _physics_process(delta):
 	if not is_on_floor():
