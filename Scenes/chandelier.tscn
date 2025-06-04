@@ -1,0 +1,44 @@
+[gd_scene load_steps=7 format=3 uid="uid://d1icw4dgd8c1g"]
+
+[ext_resource type="Texture2D" uid="uid://clf8vy1rfbg5f" path="res://Assets/HauntedHotel/Tiles/black_and_white_image.png" id="1_ltyds"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_gsoaf"]
+atlas = ExtResource("1_ltyds")
+region = Rect2(0, 0, 64, 36)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_qgbrd"]
+atlas = ExtResource("1_ltyds")
+region = Rect2(64, 0, 64, 36)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_wv5iy"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_gsoaf")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_qgbrd")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
+
+[sub_resource type="Gradient" id="Gradient_ltyds"]
+offsets = PackedFloat32Array(0.454545, 1)
+colors = PackedColorArray(1, 1, 1, 1, 0, 0, 0, 1)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_gsoaf"]
+gradient = SubResource("Gradient_ltyds")
+fill = 1
+fill_from = Vector2(0.5, 0.477064)
+fill_to = Vector2(0.834862, 0.137615)
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D"]
+sprite_frames = SubResource("SpriteFrames_wv5iy")
+autoplay = "default"
+frame_progress = 0.162811
+
+[node name="PointLight2D" type="PointLight2D" parent="."]
+texture = SubResource("GradientTexture2D_gsoaf")
+texture_scale = 2.43

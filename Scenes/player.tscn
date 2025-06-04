@@ -1,4 +1,4 @@
-[gd_scene load_steps=16 format=3 uid="uid://ojlpv30i8afp"]
+[gd_scene load_steps=17 format=3 uid="uid://ojlpv30i8afp"]
 
 [ext_resource type="Script" uid="uid://d6mnse5g6n4c" path="res://Scripts/player.gd" id="1_fkybt"]
 [ext_resource type="Shader" uid="uid://xqjs30mogf2j" path="res://shader.gdshader" id="3_6t5aa"]
@@ -7,6 +7,10 @@
 [sub_resource type="AtlasTexture" id="AtlasTexture_6t5aa"]
 atlas = ExtResource("3_vgqql")
 region = Rect2(21, 20, 21, 20)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_vgqql"]
+atlas = ExtResource("3_vgqql")
+region = Rect2(63, 40, 21, 20)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_fkybt"]
 atlas = ExtResource("3_vgqql")
@@ -46,7 +50,10 @@ animations = [{
 "name": &"crouch",
 "speed": 5.0
 }, {
-"frames": [],
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_vgqql")
+}],
 "loop": true,
 "name": &"fall",
 "speed": 6.0
@@ -105,8 +112,8 @@ shader = ExtResource("3_6t5aa")
 shader_parameter/overlay = false
 shader_parameter/resolution = Vector2(320, 180)
 shader_parameter/brightness = 1.4
-shader_parameter/scanlines_opacity = 0.0
-shader_parameter/scanlines_width = 0.0
+shader_parameter/scanlines_opacity = 0.225
+shader_parameter/scanlines_width = 0.056
 shader_parameter/grille_opacity = 0.0
 shader_parameter/roll = true
 shader_parameter/roll_speed = 3.0
@@ -117,7 +124,7 @@ shader_parameter/aberration = 0.00800005
 shader_parameter/noise_opacity = 0.0
 shader_parameter/noise_speed = 1.0
 shader_parameter/static_noise_intensity = 0.06
-shader_parameter/pixelate = true
+shader_parameter/pixelate = false
 shader_parameter/discolor = true
 shader_parameter/warp_amount = 0.219
 shader_parameter/clip_warp = false
@@ -145,6 +152,7 @@ shape = SubResource("CircleShape2D_6t5aa")
 
 [node name="Camera2D" type="Camera2D" parent="."]
 position = Vector2(62, 140)
+scale = Vector2(1.5, 1.5)
 zoom = Vector2(2, 2)
 
 [node name="CanvasLayer" type="CanvasLayer" parent="Camera2D"]
