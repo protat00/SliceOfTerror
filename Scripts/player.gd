@@ -9,7 +9,7 @@ enum State { IDLE, RUNNING, JUMPING, FALLING, DASHING, SLIDING, CROUCHING }
 
 #controller variables
 @export var speed: float = 200.0
-@export var jump_velocity: float = -400.0
+@export var jump_velocity: float = -340.0
 @export var dash_speed: float = 400.0
 @export var slide_time: float = 0.5
 

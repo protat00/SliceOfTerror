@@ -102,7 +102,7 @@ animations = [{
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_cvnsp"]
 radius = 14.0
-height = 58.0
+height = 46.0
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_6t5aa"]
 radius = 19.0263
@@ -136,23 +136,21 @@ script = ExtResource("1_fkybt")
 metadata/_edit_group_ = true
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
-position = Vector2(73.5, 143.5)
+position = Vector2(-6.50001, -5.5)
 scale = Vector2(1.95238, 2.35)
 sprite_frames = SubResource("SpriteFrames_1l0tm")
 animation = &"fall"
 autoplay = "idle"
 
 [node name="NormalCollision" type="CollisionShape2D" parent="."]
-position = Vector2(73, 139)
+position = Vector2(-7, -7)
 shape = SubResource("CapsuleShape2D_cvnsp")
 
 [node name="CrouchCollision" type="CollisionShape2D" parent="."]
-position = Vector2(73, 149)
+position = Vector2(-7.00002, 0)
 shape = SubResource("CircleShape2D_6t5aa")
 
 [node name="Camera2D" type="Camera2D" parent="."]
-position = Vector2(62, 140)
-scale = Vector2(1.5, 1.5)
 zoom = Vector2(2, 2)
 
 [node name="CanvasLayer" type="CanvasLayer" parent="Camera2D"]
