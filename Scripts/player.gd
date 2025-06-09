@@ -75,16 +75,23 @@ func handle_input():
 			elif not crouching or not is_on_floor():
 				end_crouch()
 				current_state = State.FALLING if not is_on_floor() else State.IDLE
-		
+var bruh = 0		
 func update_movement(delta):
 	var direction = Input.get_axis(input_left, input_right)
-	
+
+	print(direction)
 	match current_state:
 		State.IDLE:
 			velocity.x = move_toward(velocity.x, 0, speed * 3 * delta)
+			print(bruh)
+			animated_sprite.flip_h = bruh > 0
 		State.RUNNING:
 			velocity.x = direction * speed
-			animated_sprite.flip_h = direction < 0
+			bruh = direction
+
+			if direction != 0:
+				animated_sprite.flip_h = direction < 0
+		
 		State.JUMPING, State.FALLING:
 			if direction != 0:
 				velocity.x = direction * speed
