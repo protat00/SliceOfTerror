@@ -25,20 +25,22 @@ animations = [{
 }]
 
 [sub_resource type="Gradient" id="Gradient_ltyds"]
-offsets = PackedFloat32Array(0.454545, 1)
+offsets = PackedFloat32Array(0.590909, 1)
 colors = PackedColorArray(1, 1, 1, 1, 0, 0, 0, 1)
 
 [sub_resource type="GradientTexture2D" id="GradientTexture2D_gsoaf"]
 gradient = SubResource("Gradient_ltyds")
 fill = 1
-fill_from = Vector2(0.5, 0.477064)
+fill_from = Vector2(0.504587, 0.504587)
 fill_to = Vector2(0.834862, 0.137615)
 
 [node name="chandelier" type="AnimatedSprite2D"]
+scale = Vector2(1.08172, 1.19397)
 sprite_frames = SubResource("SpriteFrames_wv5iy")
 autoplay = "default"
 frame_progress = 0.237019
 
 [node name="PointLight2D" type="PointLight2D" parent="."]
+scale = Vector2(0.923772, 0.92)
 texture = SubResource("GradientTexture2D_gsoaf")
 texture_scale = 2.43

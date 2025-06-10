@@ -1,6 +1,7 @@
 [gd_scene load_steps=2 format=3 uid="uid://bo5v8lw557rkc"]
 
-[ext_resource type="Texture2D" uid="uid://hl4qvjvm4au0" path="res://Assets/Haunted House (Upscaled).png" id="1_of3vt"]
+[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_j6m8q"]
+load_path = "res://.godot/imported/Haunted House (Upscaled).png-7b51399ec192ee69c3739c1e43a44cfa.ctex"
 
 [node name="setting_screen" type="Control"]
 layout_mode = 3
@@ -15,7 +16,7 @@ layout_mode = 0
 offset_right = 40.0
 offset_bottom = 40.0
 scale = Vector2(0.598954, 0.611218)
-texture = ExtResource("1_of3vt")
+texture = SubResource("CompressedTexture2D_j6m8q")
 
 [node name="RichTextLabel" type="RichTextLabel" parent="."]
 layout_mode = 0

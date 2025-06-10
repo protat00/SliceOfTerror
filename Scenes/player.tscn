@@ -96,7 +96,7 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_gymyn")
 }],
-"loop": true,
+"loop": false,
 "name": &"slide",
 "speed": 0.0
 }]
@@ -140,11 +140,12 @@ metadata/_edit_group_ = true
 position = Vector2(-6.50001, -5.5)
 scale = Vector2(1.95238, 2.35)
 sprite_frames = SubResource("SpriteFrames_1l0tm")
-animation = &"idle"
+animation = &"slide"
 autoplay = "idle"
 
 [node name="NormalCollision" type="CollisionShape2D" parent="."]
-position = Vector2(-7, -7)
+position = Vector2(-7, -4)
+scale = Vector2(1.00688, 0.982329)
 shape = SubResource("CapsuleShape2D_cvnsp")
 
 [node name="CrouchCollision" type="CollisionShape2D" parent="."]

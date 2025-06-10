@@ -79,11 +79,9 @@ var bruh = 0
 func update_movement(delta):
 	var direction = Input.get_axis(input_left, input_right)
 
-	print(direction)
 	match current_state:
 		State.IDLE:
 			velocity.x = move_toward(velocity.x, 0, speed * 3 * delta)
-			print(bruh)
 			animated_sprite.flip_h = bruh > 0
 		State.RUNNING:
 			velocity.x = direction * speed
@@ -102,6 +100,7 @@ func update_movement(delta):
 			velocity.x = move_toward(velocity.x, 0, speed * 4 * delta)
 
 func play_animation():
+	print(current_state)
 	match current_state:
 		State.IDLE: animated_sprite.play("idle")
 		State.RUNNING: animated_sprite.play("run")
