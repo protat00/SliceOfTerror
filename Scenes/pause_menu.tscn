@@ -1,0 +1,67 @@
+[gd_scene load_steps=6 format=3 uid="uid://chbv6ahglb02t"]
+
+[ext_resource type="Shader" uid="uid://b4mqe54ohnntt" path="res://Shaders/pause_menu.gdshader" id="1_emv3i"]
+[ext_resource type="Script" uid="uid://hp7puaxaqif2" path="res://Scripts/pause_menu.gd" id="1_k0w1u"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_k0w1u"]
+shader = ExtResource("1_emv3i")
+shader_parameter/lod = 0.0
+
+[sub_resource type="Animation" id="Animation_emv3i"]
+resource_name = "blur"
+length = 0.3
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_k0w1u"]
+_data = {
+&"blur": SubResource("Animation_emv3i")
+}
+
+[node name="PauseMenu" type="Control"]
+process_mode = 3
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_k0w1u")
+
+[node name="ColorRect" type="ColorRect" parent="."]
+material = SubResource("ShaderMaterial_k0w1u")
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="PanelContainer" type="PanelContainer" parent="."]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = -0.023
+anchor_right = -0.023
+offset_left = 367.496
+offset_top = 145.0
+offset_right = 864.496
+offset_bottom = 387.0
+
+[node name="VBoxContainer" type="VBoxContainer" parent="PanelContainer"]
+layout_mode = 2
+theme_override_constants/separation = 35
+
+[node name="Button" type="Button" parent="PanelContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 35
+text = "Play"
+
+[node name="Button2" type="Button" parent="PanelContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 35
+text = "Restart"
+
+[node name="Button3" type="Button" parent="PanelContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 35
+text = "Exit to main menu"
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+&"": SubResource("AnimationLibrary_k0w1u")
+}

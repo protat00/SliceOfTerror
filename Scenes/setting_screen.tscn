@@ -1,7 +1,6 @@
 [gd_scene load_steps=2 format=3 uid="uid://bo5v8lw557rkc"]
 
 [sub_resource type="CompressedTexture2D" id="CompressedTexture2D_j6m8q"]
-load_path = "res://.godot/imported/Haunted House (Upscaled).png-7b51399ec192ee69c3739c1e43a44cfa.ctex"
 
 [node name="setting_screen" type="Control"]
 layout_mode = 3

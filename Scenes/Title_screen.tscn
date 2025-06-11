@@ -1,25 +1,27 @@
-[gd_scene load_steps=7 format=3 uid="uid://pttui37r384l"]
+[gd_scene load_steps=9 format=3 uid="uid://pttui37r384l"]
 
 [ext_resource type="Script" uid="uid://q35m5ewk00g" path="res://Scripts/play_button.gd" id="1_glfsf"]
 [ext_resource type="Texture2D" uid="uid://bodrxq16nk2uw" path="res://Assets/hq720.jpg" id="1_wou8e"]
-[ext_resource type="Texture2D" uid="uid://b0a6dubmfo6k" path="res://Assets/text-1749523989601-1.png.png" id="4_w38ri"]
+[ext_resource type="FontFile" uid="uid://cbphda4k2lyp8" path="res://UI_Assets/MotionSicknessRegular-Yz3Yj.otf" id="2_oltrp"]
+[ext_resource type="Script" uid="uid://y6ogfftt7mx2" path="res://Scripts/quit_button.gd" id="3_75exb"]
 [ext_resource type="AudioStream" uid="uid://cqpiaxqjnyceq" path="res://Sounds/Haunted House Theme.mp3" id="4_wou8e"]
 [ext_resource type="Shader" uid="uid://xqjs30mogf2j" path="res://shader.gdshader" id="5_w38ri"]
+[ext_resource type="Texture2D" uid="uid://dheps4dej4sbu" path="res://Assets/text-1749677172106-1.png.png" id="7_oltrp"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_75exb"]
 shader = ExtResource("5_w38ri")
 shader_parameter/overlay = false
 shader_parameter/resolution = Vector2(320, 180)
 shader_parameter/brightness = 1.4
-shader_parameter/scanlines_opacity = 0.124
-shader_parameter/scanlines_width = 0.5
+shader_parameter/scanlines_opacity = 0.203
+shader_parameter/scanlines_width = 0.365
 shader_parameter/grille_opacity = 0.0
 shader_parameter/roll = true
-shader_parameter/roll_speed = 1.5
-shader_parameter/roll_size = 3.0
-shader_parameter/roll_variation = 1.971
-shader_parameter/distort_intensity = 0.021
-shader_parameter/aberration = 0.00800005
+shader_parameter/roll_speed = 2.0
+shader_parameter/roll_size = 4.075
+shader_parameter/roll_variation = 2.461
+shader_parameter/distort_intensity = 0.0
+shader_parameter/aberration = 0.03
 shader_parameter/noise_opacity = 0.0
 shader_parameter/noise_speed = 1.0
 shader_parameter/static_noise_intensity = 0.06
@@ -42,48 +44,6 @@ offset_bottom = -470.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="TextureRect" type="TextureRect" parent="."]
-layout_mode = 0
-offset_left = -2.0
-offset_top = -54.0
-offset_right = 1918.0
-offset_bottom = 1026.0
-scale = Vector2(0.592228, 0.60524)
-texture = ExtResource("1_wou8e")
-
-[node name="VBoxContainer" type="VBoxContainer" parent="."]
-layout_mode = 0
-offset_left = 453.0
-offset_top = 277.0
-offset_right = 523.0
-offset_bottom = 343.0
-scale = Vector2(2.73726, 2.31843)
-
-[node name="PlayButton" type="Button" parent="VBoxContainer"]
-layout_mode = 2
-text = "Play"
-script = ExtResource("1_glfsf")
-
-[node name="Button" type="Button" parent="VBoxContainer"]
-layout_mode = 2
-text = "Settings"
-
-[node name="Button2" type="Button" parent="VBoxContainer"]
-layout_mode = 2
-text = "Quit"
-
-[node name="HauntedHouseTheme" type="AudioStreamPlayer2D" parent="."]
-position = Vector2(518, 288)
-stream = ExtResource("4_wou8e")
-volume_db = 2.971
-autoplay = true
-parameters/looping = true
-
-[node name="Text-1749523989601-1_png" type="Sprite2D" parent="."]
-position = Vector2(563, 136)
-scale = Vector2(2.29956, 3.05665)
-texture = ExtResource("4_w38ri")
-
 [node name="CanvasLayer2" type="CanvasLayer" parent="."]
 
 [node name="ColorRect" type="ColorRect" parent="CanvasLayer2"]
@@ -99,4 +59,65 @@ offset_right = 1148.0
 offset_bottom = 639.0
 metadata/_edit_use_anchors_ = true
 
-[connection signal="pressed" from="VBoxContainer/PlayButton" to="VBoxContainer/PlayButton" method="_on_pressed"]
+[node name="VBoxContainer" type="VBoxContainer" parent="CanvasLayer2"]
+offset_left = 468.0
+offset_top = 327.0
+offset_right = 563.0
+offset_bottom = 430.0
+scale = Vector2(2.73726, 2.31843)
+alignment = 1
+
+[node name="PlayButton" type="Button" parent="CanvasLayer2/VBoxContainer"]
+layout_mode = 2
+theme_override_colors/font_hover_color = Color(0.854902, 0, 0, 1)
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_colors/font_focus_color = Color(0.854902, 0, 0, 1)
+theme_override_colors/font_pressed_color = Color(0.854902, 0, 0, 1)
+theme_override_fonts/font = ExtResource("2_oltrp")
+text = "Play"
+script = ExtResource("1_glfsf")
+
+[node name="SettingsButton" type="Button" parent="CanvasLayer2/VBoxContainer"]
+layout_mode = 2
+theme_override_colors/font_hover_color = Color(0.854902, 0, 0, 1)
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_colors/font_focus_color = Color(0.854902, 0, 0, 1)
+theme_override_colors/font_pressed_color = Color(0.854902, 0, 0, 1)
+theme_override_fonts/font = ExtResource("2_oltrp")
+theme_override_font_sizes/font_size = 18
+text = "Settings"
+
+[node name="QuitButton" type="Button" parent="CanvasLayer2/VBoxContainer"]
+layout_mode = 2
+theme_override_colors/font_hover_color = Color(0.854902, 0, 0, 1)
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_colors/font_focus_color = Color(0.854902, 0, 0, 1)
+theme_override_colors/font_pressed_color = Color(0.854902, 0, 0, 1)
+theme_override_fonts/font = ExtResource("2_oltrp")
+theme_override_font_sizes/font_size = 20
+text = "Quit"
+script = ExtResource("3_75exb")
+
+[node name="TextureRect" type="TextureRect" parent="."]
+layout_mode = 0
+offset_left = -16.0
+offset_top = -54.0
+offset_right = 1926.0
+offset_bottom = 1026.0
+scale = Vector2(0.592228, 0.60524)
+texture = ExtResource("1_wou8e")
+
+[node name="HauntedHouseTheme" type="AudioStreamPlayer2D" parent="."]
+position = Vector2(518, 288)
+stream = ExtResource("4_wou8e")
+volume_db = 2.971
+autoplay = true
+parameters/looping = true
+
+[node name="Title" type="Sprite2D" parent="."]
+position = Vector2(577.938, 130.563)
+scale = Vector2(2.31097, 3.27006)
+texture = ExtResource("7_oltrp")
+
+[connection signal="pressed" from="CanvasLayer2/VBoxContainer/PlayButton" to="CanvasLayer2/VBoxContainer/PlayButton" method="_on_pressed"]
+[connection signal="pressed" from="CanvasLayer2/VBoxContainer/QuitButton" to="CanvasLayer2/VBoxContainer/QuitButton" method="_on_pressed"]
