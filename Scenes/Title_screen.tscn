@@ -1,12 +1,22 @@
-[gd_scene load_steps=9 format=3 uid="uid://pttui37r384l"]
+[gd_scene load_steps=29 format=3 uid="uid://pttui37r384l"]
 
 [ext_resource type="Script" uid="uid://q35m5ewk00g" path="res://Scripts/play_button.gd" id="1_glfsf"]
 [ext_resource type="Texture2D" uid="uid://bodrxq16nk2uw" path="res://Assets/hq720.jpg" id="1_wou8e"]
 [ext_resource type="FontFile" uid="uid://cbphda4k2lyp8" path="res://UI_Assets/MotionSicknessRegular-Yz3Yj.otf" id="2_oltrp"]
 [ext_resource type="Script" uid="uid://y6ogfftt7mx2" path="res://Scripts/quit_button.gd" id="3_75exb"]
+[ext_resource type="Script" uid="uid://b3vegxfbjr73k" path="res://Scripts/settings_button.gd" id="4_67b70"]
 [ext_resource type="AudioStream" uid="uid://cqpiaxqjnyceq" path="res://Sounds/Haunted House Theme.mp3" id="4_wou8e"]
 [ext_resource type="Shader" uid="uid://xqjs30mogf2j" path="res://shader.gdshader" id="5_w38ri"]
 [ext_resource type="Texture2D" uid="uid://dheps4dej4sbu" path="res://Assets/text-1749677172106-1.png.png" id="7_oltrp"]
+[ext_resource type="Texture2D" uid="uid://1y4m15ig2itl" path="res://Assets/round ghost/round ghost idle/sprite_0.png" id="9_32d14"]
+[ext_resource type="Texture2D" uid="uid://gjjy5crcd246" path="res://Assets/round ghost/round ghost idle/sprite_2.png" id="9_c1gdy"]
+[ext_resource type="Texture2D" uid="uid://dvwbn1mbw6pgk" path="res://Assets/round ghost/round ghost idle/sprite_1.png" id="10_35yr4"]
+[ext_resource type="Texture2D" uid="uid://ctk2mae84w1m5" path="res://Assets/round ghost/round ghost idle/sprite_3.png" id="12_24fsc"]
+[ext_resource type="Texture2D" uid="uid://cj7pqjn4k4v4x" path="res://Assets/round ghost/round ghost idle/sprite_4.png" id="13_50ycc"]
+[ext_resource type="Texture2D" uid="uid://7fsb3hk5bbld" path="res://Assets/round ghost/round ghost idle/sprite_5.png" id="14_dfvrw"]
+[ext_resource type="Texture2D" uid="uid://blu8tm4ei1n3o" path="res://Assets/round ghost/round ghost idle/sprite_6.png" id="15_ba4cx"]
+[ext_resource type="Texture2D" uid="uid://dfpchoxvf0eyh" path="res://Assets/round ghost/round ghost idle/sprite_7.png" id="16_or6uf"]
+[ext_resource type="Texture2D" uid="uid://cyfnumwolviw3" path="res://Assets/round ghost/round ghost idle/sprite_8.png" id="17_cgjes"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_75exb"]
 shader = ExtResource("5_w38ri")
@@ -31,6 +41,77 @@ shader_parameter/warp_amount = 0.944
 shader_parameter/clip_warp = false
 shader_parameter/vignette_intensity = 0.5
 shader_parameter/vignette_opacity = 0.747
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_xpuq7"]
+atlas = ExtResource("9_32d14")
+region = Rect2(0, 0, 50, 50)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_bhi3s"]
+atlas = ExtResource("10_35yr4")
+region = Rect2(0, 0, 50, 50)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_r87vk"]
+atlas = ExtResource("9_c1gdy")
+region = Rect2(0, 0, 50, 50)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_sojpt"]
+atlas = ExtResource("12_24fsc")
+region = Rect2(0, 0, 50, 50)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_hsbmo"]
+atlas = ExtResource("13_50ycc")
+region = Rect2(0, 0, 50, 50)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_rc5vd"]
+atlas = ExtResource("14_dfvrw")
+region = Rect2(0, 0, 50, 50)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_wlc86"]
+atlas = ExtResource("15_ba4cx")
+region = Rect2(0, 0, 50, 50)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_cut0g"]
+atlas = ExtResource("16_or6uf")
+region = Rect2(0, 0, 50, 50)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_jl1yu"]
+atlas = ExtResource("17_cgjes")
+region = Rect2(0, 0, 50, 50)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_pr3xo"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_xpuq7")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_bhi3s")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_r87vk")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_sojpt")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_hsbmo")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_rc5vd")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_wlc86")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_cut0g")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_jl1yu")
+}],
+"loop": true,
+"name": &"idle",
+"speed": 4.0
+}]
 
 [node name="Control" type="Control"]
 layout_mode = 3
@@ -86,6 +167,7 @@ theme_override_colors/font_pressed_color = Color(0.854902, 0, 0, 1)
 theme_override_fonts/font = ExtResource("2_oltrp")
 theme_override_font_sizes/font_size = 18
 text = "Settings"
+script = ExtResource("4_67b70")
 
 [node name="QuitButton" type="Button" parent="CanvasLayer2/VBoxContainer"]
 layout_mode = 2
@@ -100,10 +182,10 @@ script = ExtResource("3_75exb")
 
 [node name="TextureRect" type="TextureRect" parent="."]
 layout_mode = 0
-offset_left = -16.0
-offset_top = -54.0
-offset_right = 1926.0
-offset_bottom = 1026.0
+offset_left = -14.0
+offset_top = -55.0
+offset_right = 1928.0
+offset_bottom = 1025.0
 scale = Vector2(0.592228, 0.60524)
 texture = ExtResource("1_wou8e")
 
@@ -119,5 +201,14 @@ position = Vector2(577.938, 130.563)
 scale = Vector2(2.31097, 3.27006)
 texture = ExtResource("7_oltrp")
 
+[node name="Ghostsigma" type="AnimatedSprite2D" parent="."]
+position = Vector2(256, 371)
+scale = Vector2(4.94, 4.42)
+sprite_frames = SubResource("SpriteFrames_pr3xo")
+animation = &"idle"
+autoplay = "idle"
+frame_progress = 0.450408
+
 [connection signal="pressed" from="CanvasLayer2/VBoxContainer/PlayButton" to="CanvasLayer2/VBoxContainer/PlayButton" method="_on_pressed"]
+[connection signal="pressed" from="CanvasLayer2/VBoxContainer/SettingsButton" to="CanvasLayer2/VBoxContainer/SettingsButton" method="_on_pressed"]
 [connection signal="pressed" from="CanvasLayer2/VBoxContainer/QuitButton" to="CanvasLayer2/VBoxContainer/QuitButton" method="_on_pressed"]

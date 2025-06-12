@@ -102,11 +102,11 @@ animations = [{
 }]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_cvnsp"]
-radius = 14.0
-height = 46.0
+radius = 13.9043
+height = 50.8994
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_6t5aa"]
-radius = 19.0263
+radius = 21.2132
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_vgqql"]
 shader = ExtResource("3_6t5aa")
@@ -137,8 +137,8 @@ script = ExtResource("1_fkybt")
 metadata/_edit_group_ = true
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
-position = Vector2(-6.50001, -5.5)
-scale = Vector2(1.95238, 2.35)
+position = Vector2(-6.5, -4.5)
+scale = Vector2(1.95238, 2.45)
 sprite_frames = SubResource("SpriteFrames_1l0tm")
 animation = &"slide"
 autoplay = "idle"
@@ -149,6 +149,7 @@ scale = Vector2(1.00688, 0.982329)
 shape = SubResource("CapsuleShape2D_cvnsp")
 
 [node name="CrouchCollision" type="CollisionShape2D" parent="."]
+visible = false
 position = Vector2(-7.00002, 0)
 shape = SubResource("CircleShape2D_6t5aa")
 

@@ -1,6 +1,8 @@
-[gd_scene load_steps=2 format=3 uid="uid://bo5v8lw557rkc"]
+[gd_scene load_steps=4 format=3 uid="uid://bo5v8lw557rkc"]
 
-[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_j6m8q"]
+[ext_resource type="Texture2D" uid="uid://bodrxq16nk2uw" path="res://Assets/hq720.jpg" id="1_judg0"]
+[ext_resource type="Texture2D" uid="uid://dpcb8uwq18le1" path="res://UI_Assets/Keyboard & Mouse/Default/keyboard_x_outline.png" id="2_eq5hj"]
+[ext_resource type="Script" uid="uid://q1idcfirx4bi" path="res://Scripts/Exit_settings.gd" id="3_goixg"]
 
 [node name="setting_screen" type="Control"]
 layout_mode = 3
@@ -12,13 +14,21 @@ grow_vertical = 2
 
 [node name="TextureRect" type="TextureRect" parent="."]
 layout_mode = 0
-offset_right = 40.0
-offset_bottom = 40.0
+offset_right = 1920.0
+offset_bottom = 1062.0
 scale = Vector2(0.598954, 0.611218)
-texture = SubResource("CompressedTexture2D_j6m8q")
+texture = ExtResource("1_judg0")
 
-[node name="RichTextLabel" type="RichTextLabel" parent="."]
+[node name="ExitSettings" type="Button" parent="."]
 layout_mode = 0
-offset_right = 40.0
-offset_bottom = 40.0
-scale = Vector2(6.85792, 3.05445)
+offset_right = 118.0
+offset_bottom = 82.0
+theme_override_colors/icon_hover_color = Color(0.854902, 0, 0, 1)
+theme_override_colors/icon_pressed_color = Color(0.854902, 0, 0, 1)
+theme_override_colors/icon_focus_color = Color(0.854902, 0, 0, 1)
+theme_override_colors/icon_normal_color = Color(1, 1, 1, 1)
+icon = ExtResource("2_eq5hj")
+icon_alignment = 1
+script = ExtResource("3_goixg")
+
+[connection signal="pressed" from="ExitSettings" to="ExitSettings" method="_on_pressed"]
