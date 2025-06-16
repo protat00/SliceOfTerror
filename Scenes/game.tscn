@@ -1,10 +1,12 @@
-[gd_scene load_steps=9 format=4 uid="uid://bsilhcjy0a1xp"]
+[gd_scene load_steps=11 format=4 uid="uid://bsilhcjy0a1xp"]
 
 [ext_resource type="PackedScene" uid="uid://ojlpv30i8afp" path="res://Scenes/player.tscn" id="1_ebmjs"]
+[ext_resource type="Script" uid="uid://c3t0fiuup3rkr" path="res://Scripts/game.gd" id="1_i6g32"]
 [ext_resource type="Texture2D" uid="uid://ijq42w3wydge" path="res://Assets/HauntedHotel/Tiles/black_and_white_image (1).png" id="2_qxrlw"]
 [ext_resource type="PackedScene" uid="uid://d1icw4dgd8c1g" path="res://Scenes/chandelier.tscn" id="3_wrm1d"]
 [ext_resource type="Texture2D" uid="uid://cxw25gabxe6a0" path="res://New Piskel (4)-1.png.png" id="4_3dryh"]
 [ext_resource type="Texture2D" uid="uid://drexwyoemy11q" path="res://New Piskel (4)-2.png.png" id="5_wowpa"]
+[ext_resource type="PackedScene" uid="uid://bodq3p3tfhi11" path="res://Scenes/pause_menu.tscn" id="7_1l0tm"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_wrm1d"]
 texture = ExtResource("2_qxrlw")
@@ -123,7 +125,8 @@ sources/3 = SubResource("TileSetAtlasSource_wrm1d")
 [sub_resource type="Environment" id="Environment_3dryh"]
 ambient_light_energy = 0.0
 
-[node name="Node2D" type="Node2D"]
+[node name="game" type="Node2D"]
+script = ExtResource("1_i6g32")
 
 [node name="TileMapLayer" type="TileMapLayer" parent="."]
 scale = Vector2(3, 3)
@@ -160,3 +163,16 @@ texture = ExtResource("5_wowpa")
 
 [node name="Player" parent="." instance=ExtResource("1_ebmjs")]
 position = Vector2(100, 252)
+
+[node name="PauseMenu" parent="Player" instance=ExtResource("7_1l0tm")]
+visible = false
+anchors_preset = 0
+anchor_right = 0.0
+anchor_bottom = 0.0
+offset_left = -122.0
+offset_top = -95.0
+offset_right = -122.0
+offset_bottom = -95.0
+grow_horizontal = 1
+grow_vertical = 1
+scale = Vector2(3.33691, 2.50945)

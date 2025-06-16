@@ -100,7 +100,6 @@ func update_movement(delta):
 			velocity.x = move_toward(velocity.x, 0, speed * 4 * delta)
 
 func play_animation():
-	print(current_state)
 	match current_state:
 		State.IDLE: animated_sprite.play("idle")
 		State.RUNNING: animated_sprite.play("run")
