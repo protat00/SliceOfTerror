@@ -1,8 +1,10 @@
-[gd_scene load_steps=2 format=3 uid="uid://bodq3p3tfhi11"]
+[gd_scene load_steps=3 format=3 uid="uid://bodq3p3tfhi11"]
 
 [ext_resource type="Script" uid="uid://hp7puaxaqif2" path="res://Scripts/pause_menu.gd" id="1_emv3i"]
+[ext_resource type="FontFile" uid="uid://cbphda4k2lyp8" path="res://UI_Assets/MotionSicknessRegular-Yz3Yj.otf" id="2_k0w1u"]
 
 [node name="pause_menu" type="Control"]
+process_mode = 3
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -23,12 +25,25 @@ layout_mode = 2
 
 [node name="Resume" type="Button" parent="MarginContainer/VBoxContainer"]
 layout_mode = 2
+theme_override_colors/font_hover_color = Color(0.854902, 0, 0, 1)
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_colors/font_focus_color = Color(0.854902, 0, 0, 1)
+theme_override_colors/font_pressed_color = Color(0.854902, 0, 0, 1)
+theme_override_fonts/font = ExtResource("2_k0w1u")
+theme_override_font_sizes/font_size = 20
 text = "Resume
 "
 
 [node name="Quit" type="Button" parent="MarginContainer/VBoxContainer"]
 layout_mode = 2
-text = "Quit
+theme_override_colors/font_hover_color = Color(0.854902, 0, 0, 1)
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_colors/font_focus_color = Color(0.854902, 0, 0, 1)
+theme_override_colors/font_pressed_color = Color(0.854902, 0, 0, 1)
+theme_override_fonts/font = ExtResource("2_k0w1u")
+theme_override_font_sizes/font_size = 20
+text = "Main menu
+
 "
 
 [connection signal="pressed" from="MarginContainer/VBoxContainer/Resume" to="." method="_on_resume_pressed"]

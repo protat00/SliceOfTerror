@@ -1,4 +1,4 @@
-[gd_scene load_steps=11 format=4 uid="uid://bsilhcjy0a1xp"]
+[gd_scene load_steps=12 format=4 uid="uid://bsilhcjy0a1xp"]
 
 [ext_resource type="PackedScene" uid="uid://ojlpv30i8afp" path="res://Scenes/player.tscn" id="1_ebmjs"]
 [ext_resource type="Script" uid="uid://c3t0fiuup3rkr" path="res://Scripts/game.gd" id="1_i6g32"]
@@ -125,8 +125,12 @@ sources/3 = SubResource("TileSetAtlasSource_wrm1d")
 [sub_resource type="Environment" id="Environment_3dryh"]
 ambient_light_energy = 0.0
 
-[node name="game" type="Node2D"]
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_1l0tm"]
+size = Vector2(1880, 25)
+
+[node name="game" type="Node2D" node_paths=PackedStringArray("pause_menu")]
 script = ExtResource("1_i6g32")
+pause_menu = NodePath("Player/PauseMenu")
 
 [node name="TileMapLayer" type="TileMapLayer" parent="."]
 scale = Vector2(3, 3)
@@ -165,14 +169,19 @@ texture = ExtResource("5_wowpa")
 position = Vector2(100, 252)
 
 [node name="PauseMenu" parent="Player" instance=ExtResource("7_1l0tm")]
-visible = false
 anchors_preset = 0
 anchor_right = 0.0
 anchor_bottom = 0.0
-offset_left = -122.0
-offset_top = -95.0
-offset_right = -122.0
-offset_bottom = -95.0
+offset_left = -110.0
+offset_top = -64.0
+offset_right = -110.0
+offset_bottom = -64.0
 grow_horizontal = 1
 grow_vertical = 1
-scale = Vector2(3.33691, 2.50945)
+scale = Vector2(1.70698, 1.49721)
+
+[node name="HitBox" type="Area2D" parent="." groups=["Enemy"]]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="HitBox"]
+position = Vector2(961, 489.5)
+shape = SubResource("RectangleShape2D_1l0tm")

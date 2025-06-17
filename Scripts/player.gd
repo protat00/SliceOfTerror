@@ -23,6 +23,7 @@ var slide_timer: float = 0.0
 @onready var normal_collision = $NormalCollision
 @onready var crouch_collision = $CrouchCollision
 @onready var animated_sprite = $AnimatedSprite2D
+@onready var game_manager : Node2D
 
 func _ready():
 	crouch_collision.disabled = true
@@ -134,3 +135,10 @@ func start_crouch():
 func end_crouch():
 	normal_collision.disabled = false
 	crouch_collision.disabled = true
+	
+	
+
+
+func _on_hit_box_body_shape_entered(body_rid: RID, body: Node2D, body_shape_index: int, local_shape_index: int) -> void:
+	if body.is_in_group("Enemy"):
+		game_manager.game_over()

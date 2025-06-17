@@ -1,11 +1,12 @@
 extends Control
 
-@onready var main = $"../.../"
+@onready var main = get_tree().current_scene
 
 func _on_resume_pressed() -> void:
-	main.Menu()
+	hide()
+	Engine.time_scale = 1
 	
 
 
 func _on_quit_pressed() -> void:
-	get_tree().quit
+	get_tree().change_scene_to_file("res://Scenes/Title_screen.tscn")

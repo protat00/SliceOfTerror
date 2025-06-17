@@ -5,6 +5,10 @@
 [ext_resource type="Texture2D" uid="uid://duouo5tmjlelk" path="res://Assets/HauntedHotel/Sprites/Player.png" id="3_vgqql"]
 [ext_resource type="Texture2D" uid="uid://c6ccibc6r1lj6" path="res://icon.svg" id="4_vgqql"]
 
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_cvnsp"]
+radius = 13.9043
+height = 50.8994
+
 [sub_resource type="AtlasTexture" id="AtlasTexture_6t5aa"]
 atlas = ExtResource("3_vgqql")
 region = Rect2(21, 20, 21, 20)
@@ -101,13 +105,6 @@ animations = [{
 "speed": 0.0
 }]
 
-[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_cvnsp"]
-radius = 13.9043
-height = 50.8994
-
-[sub_resource type="CircleShape2D" id="CircleShape2D_6t5aa"]
-radius = 21.2132
-
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_vgqql"]
 shader = ExtResource("3_6t5aa")
 shader_parameter/overlay = false
@@ -132,9 +129,17 @@ shader_parameter/clip_warp = false
 shader_parameter/vignette_intensity = 0.5
 shader_parameter/vignette_opacity = 0.747
 
+[sub_resource type="CircleShape2D" id="CircleShape2D_6t5aa"]
+radius = 21.2132
+
 [node name="Player" type="CharacterBody2D"]
 script = ExtResource("1_fkybt")
 metadata/_edit_group_ = true
+
+[node name="NormalCollision2" type="CollisionShape2D" parent="."]
+position = Vector2(-7, -4)
+scale = Vector2(1.00688, 0.982329)
+shape = SubResource("CapsuleShape2D_cvnsp")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 position = Vector2(-6.5, -4.5)
@@ -142,16 +147,6 @@ scale = Vector2(1.95238, 2.45)
 sprite_frames = SubResource("SpriteFrames_1l0tm")
 animation = &"slide"
 autoplay = "idle"
-
-[node name="NormalCollision" type="CollisionShape2D" parent="."]
-position = Vector2(-7, -4)
-scale = Vector2(1.00688, 0.982329)
-shape = SubResource("CapsuleShape2D_cvnsp")
-
-[node name="CrouchCollision" type="CollisionShape2D" parent="."]
-visible = false
-position = Vector2(-7.00002, 0)
-shape = SubResource("CircleShape2D_6t5aa")
 
 [node name="Camera2D" type="Camera2D" parent="."]
 zoom = Vector2(2, 2)
@@ -170,8 +165,23 @@ offset_left = 568.0
 offset_top = 311.0
 offset_right = 1148.0
 offset_bottom = 639.0
+mouse_filter = 2
 metadata/_edit_use_anchors_ = true
 
 [node name="Icon" type="Sprite2D" parent="."]
 position = Vector2(101, 437)
 texture = ExtResource("4_vgqql")
+
+[node name="HitBox" type="Area2D" parent="."]
+
+[node name="NormalCollision" type="CollisionShape2D" parent="HitBox"]
+position = Vector2(-7, -4)
+scale = Vector2(1.00688, 0.982329)
+shape = SubResource("CapsuleShape2D_cvnsp")
+
+[node name="CrouchCollision" type="CollisionShape2D" parent="HitBox"]
+visible = false
+position = Vector2(-7.00002, 0)
+shape = SubResource("CircleShape2D_6t5aa")
+
+[connection signal="body_shape_entered" from="HitBox" to="." method="_on_hit_box_body_shape_entered"]

@@ -1,10 +1,12 @@
 extends Node2D
 
 # Fix the node path - check your actual scene structure
-@onready var pause_menu: Control = $"pause_menu"  # or whatever the actual node name is
+@export var pause_menu : Control  # or whatever the actual node name is
 var paused = false
+var is_game_over: bool = false
 
 func _ready():
+	is_game_over = false
 	# Debug: Check if pause_menu was found
 	if pause_menu == null:
 		print("ERROR: pause_menu node not found! Check the node path.")
@@ -30,3 +32,7 @@ func pauseMenu():
 		Engine.time_scale = 0
 		
 	paused = !paused
+
+func game_over():
+	get_tree().paused =true
+	is_game_over = true
