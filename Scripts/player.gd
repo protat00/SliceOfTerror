@@ -25,11 +25,18 @@ var slide_timer: float = 0.0
 @onready var animated_sprite = $AnimatedSprite2D
 @onready var game_manager : Node2D
 
+@export var respawn_position: Vector2 = Vector2.ZERO
+var is_dead = false
+
 func _ready():
 	crouch_collision.disabled = true
 	$Camera2D/CanvasLayer.visible = true
+	respawn_position = global_position
 
 func _physics_process(delta):
+	if is_dead:
+		return  # Don't process movement when dead
+	
 	if not is_on_floor():
 		velocity.y += gravity * delta
 	
@@ -76,6 +83,7 @@ func handle_input():
 			elif not crouching or not is_on_floor():
 				end_crouch()
 				current_state = State.FALLING if not is_on_floor() else State.IDLE
+
 var bruh = 0		
 func update_movement(delta):
 	var direction = Input.get_axis(input_left, input_right)
@@ -108,6 +116,7 @@ func play_animation():
 		State.FALLING: animated_sprite.play("fall")
 		State.SLIDING: animated_sprite.play("slide")
 		State.CROUCHING: animated_sprite.play("crouch")
+
 func jump():
 	velocity.y = jump_velocity
 	can_double_jump = true
@@ -135,10 +144,40 @@ func start_crouch():
 func end_crouch():
 	normal_collision.disabled = false
 	crouch_collision.disabled = true
-	
-	
 
+func _on_hit_box_area_entered(area: Area2D) -> void:
+	if area.is_in_group("Enemy"):
+		print("DIE")
+		die()
 
-func _on_hit_box_body_shape_entered(body_rid: RID, body: Node2D, body_shape_index: int, local_shape_index: int) -> void:
-	if body.is_in_group("Enemy"):
-		game_manager.game_over()
+func die():
+	if is_dead:
+		return  # Prevent multiple deaths
+		
+	is_dead = true
+	print("Player died!")
+	velocity = Vector2.ZERO  # Stop movement immediately
+	current_state = State.IDLE
+	
+	# Optional: Play death animation
+	# animated_sprite.play("death")
+	
+	# Respawn after a short delay
+	await get_tree().create_timer(0.0).timeout
+	respawn()
+		
+func respawn():
+	is_dead = false
+	global_position = respawn_position
+	velocity = Vector2.ZERO
+	current_state = State.IDLE
+	print("Player respawned!")
+	
+	# Reset collision states
+	normal_collision.disabled = false
+	crouch_collision.disabled = true
+
+# Optional: Function to set new respawn points (call this at checkpoints)
+func set_respawn_point(new_position: Vector2):
+	respawn_position = new_position
+	print("New respawn point set!")

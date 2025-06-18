@@ -1,7 +1,12 @@
-[gd_scene load_steps=3 format=3 uid="uid://bodq3p3tfhi11"]
+[gd_scene load_steps=5 format=3 uid="uid://bodq3p3tfhi11"]
 
 [ext_resource type="Script" uid="uid://hp7puaxaqif2" path="res://Scripts/pause_menu.gd" id="1_emv3i"]
+[ext_resource type="Shader" uid="uid://b4mqe54ohnntt" path="res://Shaders/pause_menu.gdshader" id="2_1och7"]
 [ext_resource type="FontFile" uid="uid://cbphda4k2lyp8" path="res://UI_Assets/MotionSicknessRegular-Yz3Yj.otf" id="2_k0w1u"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_bpi0q"]
+shader = ExtResource("2_1och7")
+shader_parameter/amount = 1.0
 
 [node name="pause_menu" type="Control"]
 process_mode = 3
@@ -13,12 +18,20 @@ grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_emv3i")
 
+[node name="ColorRect" type="ColorRect" parent="."]
+material = SubResource("ShaderMaterial_bpi0q")
+layout_mode = 0
+offset_left = -1113.0
+offset_top = -516.0
+offset_right = -1073.0
+offset_bottom = -476.0
+scale = Vector2(79.0238, 41.6073)
+
 [node name="MarginContainer" type="MarginContainer" parent="."]
 layout_mode = 0
-offset_left = 5.0
-offset_top = -6.0
-offset_right = 75.0
-offset_bottom = 60.0
+offset_left = 1.0
+offset_right = 105.0
+offset_bottom = 80.0
 
 [node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer"]
 layout_mode = 2
