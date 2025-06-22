@@ -1,9 +1,8 @@
-[gd_scene load_steps=19 format=3 uid="uid://ojlpv30i8afp"]
+[gd_scene load_steps=18 format=3 uid="uid://ojlpv30i8afp"]
 
 [ext_resource type="Script" uid="uid://d6mnse5g6n4c" path="res://Scripts/player.gd" id="1_fkybt"]
 [ext_resource type="Shader" uid="uid://xqjs30mogf2j" path="res://shader.gdshader" id="3_6t5aa"]
 [ext_resource type="Texture2D" uid="uid://duouo5tmjlelk" path="res://Assets/HauntedHotel/Sprites/Player.png" id="3_vgqql"]
-[ext_resource type="Texture2D" uid="uid://c6ccibc6r1lj6" path="res://icon.svg" id="4_vgqql"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_6t5aa"]
 atlas = ExtResource("3_vgqql")
@@ -141,7 +140,7 @@ script = ExtResource("1_fkybt")
 position = Vector2(-6.5, -4.5)
 scale = Vector2(1.95238, 2.45)
 sprite_frames = SubResource("SpriteFrames_1l0tm")
-animation = &"slide"
+animation = &"idle"
 autoplay = "idle"
 
 [node name="NormalCollision" type="CollisionShape2D" parent="."]
@@ -172,10 +171,6 @@ offset_right = 1148.0
 offset_bottom = 639.0
 mouse_filter = 2
 metadata/_edit_use_anchors_ = true
-
-[node name="Icon" type="Sprite2D" parent="."]
-position = Vector2(101, 437)
-texture = ExtResource("4_vgqql")
 
 [node name="HitBox" type="Area2D" parent="."]
 
