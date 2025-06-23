@@ -268,3 +268,12 @@ func respawn():
 # Optional: Function to set new respawn points (call this at checkpoints)
 func set_respawn_point(new_position: Vector2):
 	respawn_position = new_position
+
+
+func _on_area_2d_body_entered(body: Node2D) -> void:
+	if Input.is_action_pressed("pick_up"):
+		print('hehehe')
+
+
+func _on_area_2d_body_exited(body: Node2D) -> void:
+	pass # Replace with function body.

@@ -7,9 +7,6 @@
 [ext_resource type="Texture2D" uid="uid://bp0nnma6e3vu2" path="res://Assets/undead-recruit/undead/lost-spirit-s-atk-5.png" id="5_kh3or"]
 [ext_resource type="Texture2D" uid="uid://c1r6vy4mhog8c" path="res://Assets/undead-recruit/undead/lost-spirit-s-atk-6.png" id="6_kuvnu"]
 
-[sub_resource type="CircleShape2D" id="CircleShape2D_1sn4e"]
-radius = 38.3275
-
 [sub_resource type="AtlasTexture" id="AtlasTexture_uj2p2"]
 atlas = ExtResource("1_jhlu6")
 region = Rect2(0, 0, 108, 108)
@@ -70,11 +67,11 @@ fill = 1
 fill_from = Vector2(0.504587, 0.504587)
 fill_to = Vector2(0.834862, 0.137615)
 
+[sub_resource type="CircleShape2D" id="CircleShape2D_1sn4e"]
+radius = 38.3275
+
 [node name="soul" type="CharacterBody2D"]
 scale = Vector2(0.454154, 0.47167)
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-shape = SubResource("CircleShape2D_1sn4e")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 sprite_frames = SubResource("SpriteFrames_r1q4j")
@@ -85,3 +82,8 @@ frame_progress = 0.893469
 scale = Vector2(0.923772, 0.92)
 texture = SubResource("GradientTexture2D_jhlu6")
 texture_scale = 2.43
+
+[node name="Area2D" type="Area2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+shape = SubResource("CircleShape2D_1sn4e")
