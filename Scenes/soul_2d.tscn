@@ -1,0 +1,87 @@
+[gd_scene load_steps=17 format=3 uid="uid://dec6u07k4els3"]
+
+[ext_resource type="Texture2D" uid="uid://b8ddtn5iiosx3" path="res://Assets/undead-recruit/undead/lost-spirit-s-atk-1.png" id="1_jhlu6"]
+[ext_resource type="Texture2D" uid="uid://bx138hl66m6bu" path="res://Assets/undead-recruit/undead/lost-spirit-s-atk-2.png" id="2_bewq1"]
+[ext_resource type="Texture2D" uid="uid://c0dunq6txuotc" path="res://Assets/undead-recruit/undead/lost-spirit-s-atk-3.png" id="3_jmkot"]
+[ext_resource type="Texture2D" uid="uid://diu6kahpaqerm" path="res://Assets/undead-recruit/undead/lost-spirit-s-atk-4.png" id="4_kl7rg"]
+[ext_resource type="Texture2D" uid="uid://bp0nnma6e3vu2" path="res://Assets/undead-recruit/undead/lost-spirit-s-atk-5.png" id="5_kh3or"]
+[ext_resource type="Texture2D" uid="uid://c1r6vy4mhog8c" path="res://Assets/undead-recruit/undead/lost-spirit-s-atk-6.png" id="6_kuvnu"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_1sn4e"]
+radius = 38.3275
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_uj2p2"]
+atlas = ExtResource("1_jhlu6")
+region = Rect2(0, 0, 108, 108)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_lubqf"]
+atlas = ExtResource("2_bewq1")
+region = Rect2(0, 0, 108, 108)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_2diys"]
+atlas = ExtResource("3_jmkot")
+region = Rect2(0, 0, 108, 108)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_0jolj"]
+atlas = ExtResource("4_kl7rg")
+region = Rect2(0, 0, 108, 108)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_jp0b8"]
+atlas = ExtResource("5_kh3or")
+region = Rect2(0, 0, 108, 108)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_fvmo4"]
+atlas = ExtResource("6_kuvnu")
+region = Rect2(0, 0, 108, 108)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_r1q4j"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_uj2p2")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_lubqf")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_2diys")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_0jolj")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_jp0b8")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_fvmo4")
+}],
+"loop": true,
+"name": &"default",
+"speed": 6.0
+}]
+
+[sub_resource type="Gradient" id="Gradient_ltyds"]
+offsets = PackedFloat32Array(0.590909, 1)
+colors = PackedColorArray(1, 1, 1, 1, 0, 0, 0, 1)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_jhlu6"]
+gradient = SubResource("Gradient_ltyds")
+fill = 1
+fill_from = Vector2(0.504587, 0.504587)
+fill_to = Vector2(0.834862, 0.137615)
+
+[node name="soul" type="CharacterBody2D"]
+scale = Vector2(0.454154, 0.47167)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("CircleShape2D_1sn4e")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+sprite_frames = SubResource("SpriteFrames_r1q4j")
+autoplay = "default"
+frame_progress = 0.893469
+
+[node name="PointLight2D" type="PointLight2D" parent="AnimatedSprite2D"]
+scale = Vector2(0.923772, 0.92)
+texture = SubResource("GradientTexture2D_jhlu6")
+texture_scale = 2.43

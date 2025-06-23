@@ -12,7 +12,7 @@
 [ext_resource type="Texture2D" uid="uid://cyfnumwolviw3" path="res://Assets/round ghost/round ghost idle/sprite_8.png" id="9_tk7xo"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_haro7"]
-radius = 14.0357
+radius = 21.0
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_scl1n"]
 atlas = ExtResource("1_8uf12")
@@ -92,11 +92,15 @@ script = ExtResource("1_po0sg")
 shape = SubResource("CircleShape2D_haro7")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+position = Vector2(4, 6)
+scale = Vector2(1.16, 1.24)
 sprite_frames = SubResource("SpriteFrames_hghv2")
 animation = &"Idle"
 autoplay = "Idle"
+frame_progress = 0.631563
 
 [node name="Area2D" type="Area2D" parent="."]
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+position = Vector2(0, -1)
 shape = SubResource("CircleShape2D_haro7")

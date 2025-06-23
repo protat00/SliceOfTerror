@@ -1,6 +1,6 @@
 extends CharacterBody2D
 
-enum State { IDLE, RUNNING, JUMPING, FALLING, DASHING, SLIDING, CROUCHING }
+enum State { IDLE, RUNNING, JUMPING, FALLING, DASHING, SLIDING, CROUCHING, DYING }
 
 @export var input_left: String = "backward"
 @export var input_right: String = "forward"
@@ -13,7 +13,12 @@ enum State { IDLE, RUNNING, JUMPING, FALLING, DASHING, SLIDING, CROUCHING }
 @export var dash_speed: float = 400.0
 @export var slide_time: float = 0.5
 
+# Death animation settings
+@export var death_animation_duration: float = 1.0
+@export var death_bounce_height: float = -200.0
+
 var gravity = ProjectSettings.get_setting("physics/2d/default_gravity")
+var death_tween: Tween  # Keep reference to the death tween
 var current_state: State = State.IDLE
 var can_double_jump: bool = false
 var has_double_jumped: bool = false
@@ -24,6 +29,11 @@ var slide_timer: float = 0.0
 @onready var crouch_collision = $CrouchCollision
 @onready var animated_sprite = $AnimatedSprite2D
 @onready var game_manager : Node2D
+
+# Store original sprite properties
+var original_sprite_scale: Vector2
+var original_sprite_modulate: Color
+var original_sprite_rotation: float
 
 # Try to get HitBox - this might fail if the node doesn't exist
 @onready var hit_box = get_node_or_null("HitBox")
@@ -37,60 +47,33 @@ func _ready():
 	respawn_position = global_position
 	add_to_group("Player")
 	
-	# Debug: Print all child nodes
-	print("=== PLAYER DEBUG INFO ===")
-	print("Player children:")
-	for child in get_children():
-		print("  - ", child.name, " (", child.get_class(), ")")
-		if child is Area2D:
-			print("    Area2D found! Groups: ", child.get_groups())
-			print("    Children of Area2D:")
-			for grandchild in child.get_children():
-				print("      - ", grandchild.name, " (", grandchild.get_class(), ")")
+	# Store original sprite properties
+	if animated_sprite:
+		original_sprite_scale = animated_sprite.scale
+		original_sprite_modulate = animated_sprite.modulate
+		original_sprite_rotation = animated_sprite.rotation
 	
 	# Check if HitBox exists
 	if hit_box == null:
-		print("ERROR: HitBox not found! Looking for Area2D nodes...")
 		var area_nodes = find_children("*", "Area2D", true, false)
 		if area_nodes.size() > 0:
-			print("Found Area2D nodes:")
 			for area in area_nodes:
-				print("  - ", area.name)
 				hit_box = area
 				break
-		else:
-			print("No Area2D nodes found at all!")
-			return
 	
 	if hit_box:
-		print("HitBox found: ", hit_box.name)
-		print("HitBox groups: ", hit_box.get_groups())
-		
-		# Connect signal
+		# Connect signals
 		if not hit_box.area_entered.is_connected(_on_hit_box_area_entered):
 			hit_box.area_entered.connect(_on_hit_box_area_entered)
-			print("Connected area_entered signal")
-		else:
-			print("area_entered signal already connected")
 			
-		# Also connect body_entered just in case
 		if not hit_box.body_entered.is_connected(_on_hit_box_body_entered):
 			hit_box.body_entered.connect(_on_hit_box_body_entered)
-			print("Connected body_entered signal")
-	else:
-		print("ERROR: No HitBox Area2D found!")
-	
-	print("=== END PLAYER DEBUG ===")
 
 func _physics_process(delta):
-	# Add debug info when dead
-	if is_dead:
-		# Print debug info every 60 frames (about once per second at 60 FPS)
-		if Engine.get_process_frames() % 60 == 0:
-			print("Player is dead, skipping physics process")
-		return  # Don't process movement when dead
+	if is_dead and current_state != State.DYING:
+		return  # Don't process movement when dead (unless playing death animation)
 	
-	if not is_on_floor():
+	if not is_on_floor() and current_state != State.DYING:
 		velocity.y += gravity * delta
 	
 	handle_input()
@@ -99,6 +82,10 @@ func _physics_process(delta):
 	move_and_slide()
 	
 func handle_input():
+	# Don't handle input during death animation
+	if current_state == State.DYING:
+		return
+		
 	var moving = Input.is_action_pressed(input_left) or Input.is_action_pressed(input_right)
 	var crouching = Input.is_action_pressed(input_crouch)
 	
@@ -139,6 +126,10 @@ func handle_input():
 
 var bruh = 0		
 func update_movement(delta):
+	# Don't update movement during death animation (let the death animation handle movement)
+	if current_state == State.DYING:
+		return
+		
 	var direction = Input.get_axis(input_left, input_right)
 
 	match current_state:
@@ -169,6 +160,13 @@ func play_animation():
 		State.FALLING: animated_sprite.play("fall")
 		State.SLIDING: animated_sprite.play("slide")
 		State.CROUCHING: animated_sprite.play("crouch")
+		State.DYING: 
+			# Check if you have a specific death animation, otherwise use a fallback
+			if animated_sprite.sprite_frames.has_animation("death"):
+				animated_sprite.play("death")
+			else:
+				# If no death animation exists, just stop the current animation
+				animated_sprite.stop()
 
 func jump():
 	velocity.y = jump_velocity
@@ -200,73 +198,73 @@ func end_crouch():
 
 # This should be called when an Area2D enters the HitBox
 func _on_hit_box_area_entered(area: Area2D) -> void:
-	print("🔥 AREA ENTERED DETECTED! 🔥")
-	print("Area name: ", area.name)
-	print("Area parent: ", area.get_parent().name if area.get_parent() else "No parent")
-	print("Area groups: ", area.get_groups())
-	
 	if area.is_in_group("Enemy"):
-		print("💀 ENEMY DETECTED - PLAYER SHOULD DIE! 💀")
 		die()
-	else:
-		print("❌ Area not in Enemy group")
 
 # This should be called when a CharacterBody2D enters the HitBox  
 func _on_hit_box_body_entered(body: Node2D) -> void:
-	print("🔥 BODY ENTERED DETECTED! 🔥")
-	print("Body name: ", body.name)
-	print("Body groups: ", body.get_groups())
-	
 	if body.is_in_group("Enemy"):
-		print("💀 ENEMY BODY DETECTED - PLAYER SHOULD DIE! 💀")
 		die()
-	else:
-		print("❌ Body not in Enemy group")
 
 func die():
-	print("🔥 DIE METHOD CALLED! 🔥")
-	print("Current is_dead state: ", is_dead)
-	
 	if is_dead:
-		print("❌ Already dead, returning early")
 		return  # Prevent multiple deaths
 		
 	is_dead = true
-	print("💀💀💀 PLAYER DIED! Setting is_dead to true 💀💀💀")
-	print("Stopping velocity and movement")
-	velocity = Vector2.ZERO  # Stop movement immediately
-	current_state = State.IDLE
+	current_state = State.DYING
 	
-	# Make player visually disappear or change color to show death
-	if animated_sprite:
-		animated_sprite.modulate = Color.RED  # Turn player red when dead
-		print("Player sprite turned red")
+	# Stop any existing death tween
+	if death_tween:
+		death_tween.kill()
 	
-	print("Starting respawn timer...")
-	# Respawn after a short delay
-	await get_tree().create_timer(1.0).timeout
-	print("Respawn timer finished, calling respawn()")
+	# Stop horizontal movement but allow death animation physics
+	velocity.x = 0
+	
+	# Start death animation with optional bounce effect
+	if death_bounce_height != 0:
+		velocity.y = death_bounce_height
+	
+	# Create death animation tween for visual effects
+	death_tween = create_tween()
+	death_tween.set_parallel(true)  # Allow multiple tweens to run simultaneously
+	
+	# Fade out effect
+	death_tween.tween_property(animated_sprite, "modulate:a", 0.0, death_animation_duration)
+	
+	# Optional: Scale effect (make player shrink)
+	death_tween.tween_property(animated_sprite, "scale", Vector2(0.5, 0.5), death_animation_duration)
+	
+	# Optional: Rotation effect
+	death_tween.tween_property(animated_sprite, "rotation", deg_to_rad(360), death_animation_duration)
+	
+	# Wait for animation to complete, then respawn
+	await death_tween.finished
 	respawn()
 		
 func respawn():
-	print("🔄 RESPAWN METHOD CALLED! 🔄")
+	# Kill the death tween completely before resetting
+	if death_tween:
+		death_tween.kill()
+		death_tween = null
+	
+	# Force immediate reset using original stored values
+	if animated_sprite:
+		animated_sprite.scale = original_sprite_scale
+		animated_sprite.modulate = original_sprite_modulate
+		animated_sprite.rotation = original_sprite_rotation
+		
+		# Force a visual update
+		animated_sprite.queue_redraw()
+	
 	is_dead = false
 	global_position = respawn_position
 	velocity = Vector2.ZERO
 	current_state = State.IDLE
-	print("🔄 Player respawned at position: ", respawn_position, " 🔄")
-	
-	# Reset visual appearance
-	if animated_sprite:
-		animated_sprite.modulate = Color.WHITE  # Reset color
-		print("Player sprite color reset")
 	
 	# Reset collision states
 	normal_collision.disabled = false
 	crouch_collision.disabled = true
-	print("Collision states reset")
 
 # Optional: Function to set new respawn points (call this at checkpoints)
 func set_respawn_point(new_position: Vector2):
 	respawn_position = new_position
-	print("New respawn point set!")

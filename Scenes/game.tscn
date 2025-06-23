@@ -1,4 +1,4 @@
-[gd_scene load_steps=13 format=4 uid="uid://bsilhcjy0a1xp"]
+[gd_scene load_steps=14 format=4 uid="uid://bsilhcjy0a1xp"]
 
 [ext_resource type="PackedScene" uid="uid://ojlpv30i8afp" path="res://Scenes/player.tscn" id="1_ebmjs"]
 [ext_resource type="Script" uid="uid://c3t0fiuup3rkr" path="res://Scripts/game.gd" id="1_i6g32"]
@@ -8,6 +8,7 @@
 [ext_resource type="Texture2D" uid="uid://drexwyoemy11q" path="res://New Piskel (4)-2.png.png" id="5_wowpa"]
 [ext_resource type="PackedScene" uid="uid://bodq3p3tfhi11" path="res://Scenes/pause_menu.tscn" id="7_1l0tm"]
 [ext_resource type="PackedScene" uid="uid://cxh6xq2l0xeo8" path="res://Scenes/enemy.tscn" id="8_v158k"]
+[ext_resource type="PackedScene" uid="uid://dec6u07k4els3" path="res://Scenes/soul_2d.tscn" id="9_h4fw4"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_wrm1d"]
 texture = ExtResource("2_qxrlw")
@@ -197,3 +198,6 @@ shape = SubResource("RectangleShape2D_1l0tm")
 
 [node name="Ghost" parent="." instance=ExtResource("8_v158k")]
 position = Vector2(373, 299)
+
+[node name="soul" parent="." instance=ExtResource("9_h4fw4")]
+position = Vector2(477, 302)

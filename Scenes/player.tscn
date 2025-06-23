@@ -131,7 +131,9 @@ shader_parameter/clip_warp = false
 shader_parameter/vignette_intensity = 0.5
 shader_parameter/vignette_opacity = 0.747
 
-[sub_resource type="CircleShape2D" id="CircleShape2D_vgqql"]
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_6t5aa"]
+radius = 14.0
+height = 50.0
 
 [node name="Player" type="CharacterBody2D" groups=["Player"]]
 script = ExtResource("1_fkybt")
@@ -175,7 +177,7 @@ metadata/_edit_use_anchors_ = true
 [node name="HitBox" type="Area2D" parent="."]
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="HitBox"]
-position = Vector2(-7, 6)
-shape = SubResource("CircleShape2D_vgqql")
+position = Vector2(-6, -4)
+shape = SubResource("CapsuleShape2D_6t5aa")
 
 [connection signal="area_entered" from="HitBox" to="." method="_on_hit_box_area_entered"]

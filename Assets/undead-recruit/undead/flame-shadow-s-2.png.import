@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://dqull4fwg64rk"
-path="res://.godot/imported/New Piskel (3).png-324a777f6e37400f657cca004e114d65.ctex"
+uid="uid://c15d1foyhxgnb"
+path="res://.godot/imported/flame-shadow-s-2.png-1b246d0983a1e9e56ece0b4f9bf7cd07.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Assets/New Piskel (3).png"
-dest_files=["res://.godot/imported/New Piskel (3).png-324a777f6e37400f657cca004e114d65.ctex"]
+source_file="res://Assets/undead-recruit/undead/flame-shadow-s-2.png"
+dest_files=["res://.godot/imported/flame-shadow-s-2.png-1b246d0983a1e9e56ece0b4f9bf7cd07.ctex"]
 
 [params]
 
