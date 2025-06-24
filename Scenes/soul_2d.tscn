@@ -1,7 +1,9 @@
-[gd_scene load_steps=17 format=3 uid="uid://dec6u07k4els3"]
+[gd_scene load_steps=19 format=3 uid="uid://dec6u07k4els3"]
 
+[ext_resource type="Script" uid="uid://yn53mbk4kcuq" path="res://Scenes/soul_2d.gd" id="1_bewq1"]
 [ext_resource type="Texture2D" uid="uid://b8ddtn5iiosx3" path="res://Assets/undead-recruit/undead/lost-spirit-s-atk-1.png" id="1_jhlu6"]
 [ext_resource type="Texture2D" uid="uid://bx138hl66m6bu" path="res://Assets/undead-recruit/undead/lost-spirit-s-atk-2.png" id="2_bewq1"]
+[ext_resource type="Texture2D" uid="uid://oho0febjgwog" path="res://New Piskel-1.png.png" id="2_jmkot"]
 [ext_resource type="Texture2D" uid="uid://c0dunq6txuotc" path="res://Assets/undead-recruit/undead/lost-spirit-s-atk-3.png" id="3_jmkot"]
 [ext_resource type="Texture2D" uid="uid://diu6kahpaqerm" path="res://Assets/undead-recruit/undead/lost-spirit-s-atk-4.png" id="4_kl7rg"]
 [ext_resource type="Texture2D" uid="uid://bp0nnma6e3vu2" path="res://Assets/undead-recruit/undead/lost-spirit-s-atk-5.png" id="5_kh3or"]
@@ -70,8 +72,11 @@ fill_to = Vector2(0.834862, 0.137615)
 [sub_resource type="CircleShape2D" id="CircleShape2D_1sn4e"]
 radius = 38.3275
 
-[node name="soul" type="CharacterBody2D"]
+[node name="soul" type="Area2D"]
 scale = Vector2(0.454154, 0.47167)
+script = ExtResource("1_bewq1")
+interaction_text = ""
+ui_background_texture = ExtResource("2_jmkot")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 sprite_frames = SubResource("SpriteFrames_r1q4j")
@@ -83,7 +88,6 @@ scale = Vector2(0.923772, 0.92)
 texture = SubResource("GradientTexture2D_jhlu6")
 texture_scale = 2.43
 
-[node name="Area2D" type="Area2D" parent="."]
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+scale = Vector2(1, 1)
 shape = SubResource("CircleShape2D_1sn4e")

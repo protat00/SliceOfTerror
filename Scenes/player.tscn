@@ -135,10 +135,10 @@ shader_parameter/vignette_opacity = 0.747
 radius = 14.0
 height = 50.0
 
-[node name="Player" type="CharacterBody2D" groups=["Player"]]
+[node name="Player" type="CharacterBody2D" groups=["Player", "player"]]
 script = ExtResource("1_fkybt")
 
-[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." groups=["Player", "player"]]
 position = Vector2(-6.5, -4.5)
 scale = Vector2(1.95238, 2.45)
 sprite_frames = SubResource("SpriteFrames_1l0tm")

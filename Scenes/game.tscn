@@ -202,7 +202,4 @@ position = Vector2(373, 299)
 [node name="soul" parent="." instance=ExtResource("9_h4fw4")]
 position = Vector2(477, 302)
 
-[connection signal="body_entered" from="soul/Area2D" to="Player" method="_on_area_2d_body_entered"]
-[connection signal="body_exited" from="soul/Area2D" to="Player" method="_on_area_2d_body_exited"]
-
 [editable path="soul"]

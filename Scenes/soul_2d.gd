@@ -1,0 +1,201 @@
+# InteractableItem.gd
+# Attach this to your Area2D node
+extends Area2D
+
+@export var item_name: String = "Item"
+@export var interaction_text: String = "Press E to pick up"
+@export var ui_background_texture: Texture2D  # Drag your image here in the inspector
+@export var ui_size: Vector2 = Vector2(200, 50)  # Adjustable UI size
+@export var ui_offset_distance: float = 80.0  # Distance from item center
+@export var ui_height_offset: float = -60.0  # Base height offset (negative = above item)
+@export var arc_intensity: float = 30.0  # How much the UI arcs around the item
+@export var smooth_follow_speed: float = 8.0  # How quickly UI follows player movement
+@export var idle_bob_speed: float = 2.0  # Speed of the idle bobbing animation
+@export var idle_bob_amount: float = 10.0  # How much the UI bobs up and down
+@export var idle_detection_threshold: float = 5.0  # How still the player needs to be to start bobbing
+
+var player_nearby: bool = false
+var player_ref: Node2D = null
+var last_player_position: Vector2
+var player_idle_time: float = 0.0
+var bob_timer: float = 0.0
+
+# UI nodes - created as children of this node
+var ui_canvas: CanvasLayer
+var ui_control: Control
+var ui_panel: Panel
+var ui_label: Label
+
+func _ready():
+	# Connect area signals
+	body_entered.connect(_on_body_entered)
+	body_exited.connect(_on_body_exited)
+	
+	# Wait one frame to ensure scene is ready
+	await get_tree().process_frame
+	
+	# Create UI
+	create_ui()
+	
+	# Debug print
+	print("InteractableItem ready. Texture assigned: ", ui_background_texture != null)
+
+func create_ui():
+	# Create CanvasLayer as child of this node
+	ui_canvas = CanvasLayer.new()
+	ui_canvas.layer = 100  # High layer to ensure visibility
+	add_child(ui_canvas)
+	
+	# Create Control node
+	ui_control = Control.new()
+	ui_control.set_anchors_and_offsets_preset(Control.PRESET_TOP_LEFT)
+	ui_canvas.add_child(ui_control)
+	
+	# Create panel
+	ui_panel = Panel.new()
+	ui_panel.size = ui_size
+	ui_panel.position = -ui_size / 2  # Center the panel
+	
+	# Apply custom texture if provided
+	if ui_background_texture:
+		var style = StyleBoxTexture.new()
+		style.texture = ui_background_texture
+		ui_panel.add_theme_stylebox_override("panel", style)
+		print("Applied texture to UI panel")
+	else:
+		# Fallback style
+		create_fallback_style()
+		print("Using fallback style")
+	
+	ui_control.add_child(ui_panel)
+	
+	# Create label
+	ui_label = Label.new()
+	ui_label.text = interaction_text
+	ui_label.position = Vector2(10, 10)
+	ui_label.size = Vector2(ui_size.x - 20, ui_size.y - 20)
+	ui_label.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+	ui_label.vertical_alignment = VERTICAL_ALIGNMENT_CENTER
+	ui_label.add_theme_color_override("font_color", Color.WHITE)
+	ui_label.add_theme_color_override("font_shadow_color", Color.BLACK)
+	ui_label.add_theme_constant_override("shadow_offset_x", 2)
+	ui_label.add_theme_constant_override("shadow_offset_y", 2)
+	ui_panel.add_child(ui_label)
+	
+	# Hide UI initially
+	ui_canvas.visible = false
+	
+	print("UI created successfully")
+
+func create_fallback_style():
+	var style = StyleBoxFlat.new()
+	style.bg_color = Color(0.2, 0.2, 0.2, 0.9)
+	style.corner_radius_top_left = 8
+	style.corner_radius_top_right = 8
+	style.corner_radius_bottom_left = 8
+	style.corner_radius_bottom_right = 8
+	style.border_width_left = 2
+	style.border_width_right = 2
+	style.border_width_top = 2
+	style.border_width_bottom = 2
+	style.border_color = Color.WHITE
+	ui_panel.add_theme_stylebox_override("panel", style)
+
+func _process(delta):
+	if player_nearby and player_ref and ui_canvas and ui_canvas.visible:
+		# Check if player is idle
+		check_player_idle_state(delta)
+		update_ui_position(delta)
+
+func check_player_idle_state(delta):
+	if not player_ref:
+		return
+	
+	var current_player_pos = player_ref.global_position
+	var player_movement = current_player_pos.distance_to(last_player_position)
+	
+	if player_movement < idle_detection_threshold * delta:
+		# Player is standing still
+		player_idle_time += delta
+	else:
+		# Player is moving
+		player_idle_time = 0.0
+		bob_timer = 0.0
+	
+	last_player_position = current_player_pos
+
+func update_ui_position(delta):
+	if not ui_control:
+		return
+		
+	# Get the direction from item to player
+	var item_to_player = (player_ref.global_position - global_position).normalized()
+	
+	# Calculate the angle around the item
+	var angle = atan2(item_to_player.y, item_to_player.x)
+	
+	# Create arc effect - UI appears on the opposite side of where player is
+	var arc_angle = angle + PI  # Opposite side
+	
+	# Calculate UI position with arc in world space
+	var ui_world_pos = global_position + Vector2(
+		cos(arc_angle) * ui_offset_distance,
+		sin(arc_angle) * ui_offset_distance + ui_height_offset
+	)
+	
+	# Add some vertical variation based on player's relative height
+	var height_difference = player_ref.global_position.y - global_position.y
+	var additional_arc = clamp(height_difference / 100.0, -1.0, 1.0) * arc_intensity
+	ui_world_pos.y += additional_arc
+	
+	# Add idle bobbing animation when player is standing still
+	if player_idle_time > 0.5:  # Start bobbing after 0.5 seconds of being idle
+		bob_timer += delta
+		var bob_offset = sin(bob_timer * idle_bob_speed) * idle_bob_amount
+		ui_world_pos.y += bob_offset
+	
+	# Simple world-to-screen conversion
+	var viewport = get_viewport()
+	var camera = viewport.get_camera_2d()
+	
+	var screen_pos: Vector2
+	if camera:
+		# Convert world position to screen position
+		screen_pos = ui_world_pos - camera.global_position + viewport.get_visible_rect().size / 2
+	else:
+		# No camera, use world position directly
+		screen_pos = ui_world_pos
+	
+	# Smooth follow movement
+	ui_control.global_position = ui_control.global_position.lerp(screen_pos, smooth_follow_speed * delta)
+
+func _on_body_entered(body):
+	if body.is_in_group("player"):
+		player_nearby = true
+		player_ref = body
+		last_player_position = body.global_position
+		player_idle_time = 0.0
+		bob_timer = 0.0
+		if ui_canvas:
+			ui_canvas.visible = true
+			print("UI should now be visible")
+
+func _on_body_exited(body):
+	if body.is_in_group("player"):
+		player_nearby = false
+		player_ref = null
+		if ui_canvas:
+			ui_canvas.visible = false
+			print("UI hidden")
+
+func _input(event):
+	if player_nearby and event.is_action_pressed("pick_up"):
+		interact()
+
+func interact():
+	print("Picked up: ", item_name)
+	queue_free()  # Remove the item
+
+func _exit_tree():
+	# UI will be automatically freed when this node is freed
+	pass
