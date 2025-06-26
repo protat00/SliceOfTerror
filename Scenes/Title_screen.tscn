@@ -189,13 +189,6 @@ offset_bottom = 1025.0
 scale = Vector2(0.592228, 0.60524)
 texture = ExtResource("1_wou8e")
 
-[node name="HauntedHouseTheme" type="AudioStreamPlayer2D" parent="."]
-position = Vector2(518, 288)
-stream = ExtResource("4_wou8e")
-volume_db = 2.971
-autoplay = true
-parameters/looping = true
-
 [node name="Title" type="Sprite2D" parent="."]
 position = Vector2(577.938, 130.563)
 scale = Vector2(2.31097, 3.27006)
@@ -208,6 +201,11 @@ sprite_frames = SubResource("SpriteFrames_pr3xo")
 animation = &"idle"
 autoplay = "idle"
 frame_progress = 0.450408
+
+[node name="HauntedHouseTheme" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("4_wou8e")
+autoplay = true
+parameters/looping = true
 
 [connection signal="pressed" from="CanvasLayer2/VBoxContainer/PlayButton" to="CanvasLayer2/VBoxContainer/PlayButton" method="_on_pressed"]
 [connection signal="pressed" from="CanvasLayer2/VBoxContainer/SettingsButton" to="CanvasLayer2/VBoxContainer/SettingsButton" method="_on_pressed"]

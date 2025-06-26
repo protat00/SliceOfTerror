@@ -89,5 +89,4 @@ texture = SubResource("GradientTexture2D_jhlu6")
 texture_scale = 2.43
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-scale = Vector2(1, 1)
 shape = SubResource("CircleShape2D_1sn4e")

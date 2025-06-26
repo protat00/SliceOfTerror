@@ -14,6 +14,11 @@ extends Area2D
 @export var idle_bob_amount: float = 10.0  # How much the UI bobs up and down
 @export var idle_detection_threshold: float = 5.0  # How still the player needs to be to start bobbing
 
+# Score settings
+@export var score_value: int = 1  # How many points this item is worth
+@export var score_ui_node: CanvasLayer  # Drag your ScoreUI here in the inspector
+@export var score_ui_path: String = ""  # Alternative: manual path (leave empty if using node reference)
+
 var player_nearby: bool = false
 var player_ref: Node2D = null
 var last_player_position: Vector2
@@ -26,10 +31,32 @@ var ui_control: Control
 var ui_panel: Panel
 var ui_label: Label
 
+# Score UI reference
+var score_ui: CanvasLayer
+
 func _ready():
 	# Connect area signals
 	body_entered.connect(_on_body_entered)
 	body_exited.connect(_on_body_exited)
+	
+	# Get reference to score UI - try multiple methods
+	if score_ui_node:
+		# Use the node reference if assigned in inspector
+		score_ui = score_ui_node
+		print("Found ScoreUI via node reference")
+	elif score_ui_path != "":
+		# Use manual path if provided
+		score_ui = get_node_or_null(score_ui_path)
+		if score_ui:
+			print("Found ScoreUI at path: ", score_ui_path)
+		else:
+			print("Warning: Could not find ScoreUI at path: ", score_ui_path)
+	else:
+		# Try to find it automatically
+		score_ui = find_score_ui()
+	
+	if not score_ui:
+		print("Warning: ScoreUI not found! Score will not be added when items are picked up.")
 	
 	# Wait one frame to ensure scene is ready
 	await get_tree().process_frame
@@ -39,6 +66,45 @@ func _ready():
 	
 	# Debug print
 	print("InteractableItem ready. Texture assigned: ", ui_background_texture != null)
+
+func find_score_ui() -> CanvasLayer:
+	# Try common locations for ScoreUI
+	var possible_paths = [
+		"/root/ScoreUI",
+		"/root/Main/ScoreUI", 
+		"/root/Game/ScoreUI",
+		"/root/Level/ScoreUI"
+	]
+	
+	for path in possible_paths:
+		var node = get_node_or_null(path)
+		if node and node is CanvasLayer:
+			print("Auto-found ScoreUI at: ", path)
+			return node
+	
+	# Try searching the scene tree
+	var root = get_tree().root
+	var found_ui = search_for_score_ui(root)
+	if found_ui:
+		print("Found ScoreUI via tree search: ", found_ui.get_path())
+		return found_ui
+	
+	return null
+
+func search_for_score_ui(node: Node) -> CanvasLayer:
+	# Check if this node is a CanvasLayer with ScoreUI-like name
+	if node is CanvasLayer and ("score" in node.name.to_lower() or "ui" in node.name.to_lower()):
+		# Check if it has the add_score method
+		if node.has_method("add_score"):
+			return node
+	
+	# Search children
+	for child in node.get_children():
+		var result = search_for_score_ui(child)
+		if result:
+			return result
+	
+	return null
 
 func create_ui():
 	# Create CanvasLayer as child of this node
@@ -194,6 +260,14 @@ func _input(event):
 
 func interact():
 	print("Picked up: ", item_name)
+	
+	# Add score when item is picked up
+	if score_ui and score_ui.has_method("add_score"):
+		score_ui.add_score(score_value)
+		print("Added ", score_value, " points to score!")
+	else:
+		print("Warning: Could not add score - ScoreUI not found or missing add_score method")
+	
 	queue_free()  # Remove the item
 
 func _exit_tree():
