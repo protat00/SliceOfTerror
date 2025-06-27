@@ -1,5 +1,6 @@
-[gd_scene load_steps=29 format=3 uid="uid://pttui37r384l"]
+[gd_scene load_steps=30 format=3 uid="uid://pttui37r384l"]
 
+[ext_resource type="Script" uid="uid://u76dbbmhxepa" path="res://Scripts/Main_Menu.gd" id="1_35yr4"]
 [ext_resource type="Script" uid="uid://q35m5ewk00g" path="res://Scripts/play_button.gd" id="1_glfsf"]
 [ext_resource type="Texture2D" uid="uid://bodrxq16nk2uw" path="res://Assets/hq720.jpg" id="1_wou8e"]
 [ext_resource type="FontFile" uid="uid://cbphda4k2lyp8" path="res://UI_Assets/MotionSicknessRegular-Yz3Yj.otf" id="2_oltrp"]
@@ -113,7 +114,7 @@ animations = [{
 "speed": 4.0
 }]
 
-[node name="Control" type="Control"]
+[node name="MainMenu" type="Control"]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -124,6 +125,7 @@ offset_right = -56.0
 offset_bottom = -470.0
 grow_horizontal = 2
 grow_vertical = 2
+script = ExtResource("1_35yr4")
 
 [node name="CanvasLayer2" type="CanvasLayer" parent="."]
 
@@ -202,7 +204,7 @@ animation = &"idle"
 autoplay = "idle"
 frame_progress = 0.450408
 
-[node name="HauntedHouseTheme" type="AudioStreamPlayer" parent="."]
+[node name="background_music" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("4_wou8e")
 autoplay = true
 parameters/looping = true
