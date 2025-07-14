@@ -19,11 +19,16 @@ extends Area2D
 @export var score_ui_node: CanvasLayer  # Drag your ScoreUI here in the inspector
 @export var score_ui_path: String = ""  # Alternative: manual path (leave empty if using node reference)
 
+# SOUL SYSTEM - NEW ADDITION
+@export var soul_value: int = 1  # How many souls this item gives
+@export var is_soul_item: bool = true  # Set to true if this is a soul pickup
+
 var player_nearby: bool = false
 var player_ref: Node2D = null
 var last_player_position: Vector2
 var player_idle_time: float = 0.0
 var bob_timer: float = 0.0
+var has_been_picked_up: bool = false  # Prevent double pickup
 
 # UI nodes - created as children of this node
 var ui_canvas: CanvasLayer
@@ -36,8 +41,10 @@ var score_ui: CanvasLayer
 
 func _ready():
 	# Connect area signals
-	body_entered.connect(_on_body_entered)
-	body_exited.connect(_on_body_exited)
+	if not body_entered.is_connected(_on_body_entered):
+		body_entered.connect(_on_body_entered)
+	if not body_exited.is_connected(_on_body_exited):
+		body_exited.connect(_on_body_exited)
 	
 	# Get reference to score UI - try multiple methods
 	if score_ui_node:
@@ -66,6 +73,7 @@ func _ready():
 	
 	# Debug print
 	print("InteractableItem ready. Texture assigned: ", ui_background_texture != null)
+	print("Soul item: ", is_soul_item, " | Soul value: ", soul_value)
 
 func find_score_ui() -> CanvasLayer:
 	# Try common locations for ScoreUI
@@ -236,7 +244,10 @@ func update_ui_position(delta):
 	ui_control.global_position = ui_control.global_position.lerp(screen_pos, smooth_follow_speed * delta)
 
 func _on_body_entered(body):
-	if body.is_in_group("player"):
+	if has_been_picked_up:
+		return
+		
+	if body.is_in_group("Player"):  # Make sure this matches your player group name
 		player_nearby = true
 		player_ref = body
 		last_player_position = body.global_position
@@ -247,7 +258,7 @@ func _on_body_entered(body):
 			print("UI should now be visible")
 
 func _on_body_exited(body):
-	if body.is_in_group("player"):
+	if body.is_in_group("Player"):
 		player_nearby = false
 		player_ref = null
 		if ui_canvas:
@@ -255,11 +266,24 @@ func _on_body_exited(body):
 			print("UI hidden")
 
 func _input(event):
-	if player_nearby and event.is_action_pressed("pick_up"):
+	if player_nearby and event.is_action_pressed("pick_up") and not has_been_picked_up:
 		interact()
 
 func interact():
+	if has_been_picked_up:
+		return
+		
+	has_been_picked_up = true
+	
 	print("Picked up: ", item_name)
+	
+	# SOUL SYSTEM - Give souls to player
+	if is_soul_item and player_ref and player_ref.has_method("add_soul"):
+		player_ref.add_soul(soul_value)
+		print("✨ Successfully added ", soul_value, " souls to player! ✨")
+		print("Player now has ", player_ref.get_soul_count(), " souls total")
+	elif is_soul_item:
+		print("❌ ERROR: Could not add soul to player - player missing add_soul method or no player reference")
 	
 	# Add score when item is picked up
 	if score_ui and score_ui.has_method("add_score"):

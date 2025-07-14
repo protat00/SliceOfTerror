@@ -17,6 +17,10 @@ enum State { IDLE, RUNNING, JUMPING, FALLING, DASHING, SLIDING, CROUCHING, DYING
 @export var death_animation_duration: float = 1.0
 @export var death_bounce_height: float = -200.0
 
+# Soul management
+var souls: int = 0
+signal souls_changed(new_count)
+
 var gravity = ProjectSettings.get_setting("physics/2d/default_gravity")
 var death_tween: Tween  # Keep reference to the death tween
 var current_state: State = State.IDLE
@@ -46,6 +50,8 @@ func _ready():
 	$Camera2D/CanvasLayer.visible = true
 	respawn_position = global_position
 	add_to_group("Player")
+	print("DEBUG: Player ready with ", souls, " souls")
+
 	
 	# Store original sprite properties
 	if animated_sprite:
@@ -269,11 +275,38 @@ func respawn():
 func set_respawn_point(new_position: Vector2):
 	respawn_position = new_position
 
+# Soul management methods
+func add_soul(amount: int = 1):
+	souls += amount
+	souls_changed.emit(souls)
+	print("Souls collected: ", souls)
 
-func _on_area_2d_body_entered(body: Node2D) -> void:
-	if Input.is_action_pressed("pick_up"):
-		print('hehehe')
+func remove_souls(amount: int = 1) -> bool:
+	if souls >= amount:
+		souls -= amount
+		souls_changed.emit(souls)
+		print("Souls used: ", amount, " | Remaining: ", souls)
+		return true
+	else:
+		print("Not enough souls! Have: ", souls, " | Need: ", amount)
+		return false
+
+func get_soul_count() -> int:
+	return souls
+
+func has_souls() -> bool:
+	return souls > 0
+
+# Optional: Method to get a soul display string for UI
+func get_soul_display() -> String:
+	return "Souls: " + str(souls)
 
 
-func _on_area_2d_body_exited(body: Node2D) -> void:
-	pass # Replace with function body.
+# Example of how to connect soul pickup to your existing InteractableItem
+# In your InteractableItem.gd interact() function, you can add:
+func interact():
+	print("Picked up: ", souls)
+	
+	# Add soul to player instead of just score
+	
+	queue_free()  # Remove the item
