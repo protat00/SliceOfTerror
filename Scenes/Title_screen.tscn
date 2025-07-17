@@ -6,7 +6,7 @@
 [ext_resource type="FontFile" uid="uid://cbphda4k2lyp8" path="res://UI_Assets/MotionSicknessRegular-Yz3Yj.otf" id="2_oltrp"]
 [ext_resource type="Script" uid="uid://y6ogfftt7mx2" path="res://Scripts/quit_button.gd" id="3_75exb"]
 [ext_resource type="Script" uid="uid://b3vegxfbjr73k" path="res://Scripts/settings_button.gd" id="4_67b70"]
-[ext_resource type="AudioStream" uid="uid://cqpiaxqjnyceq" path="res://Sounds/Haunted House Theme.mp3" id="4_wou8e"]
+[ext_resource type="AudioStream" uid="uid://cqpiaxqjnyceq" path="res://Audio/main_menu_music.mp3" id="4_wou8e"]
 [ext_resource type="Shader" uid="uid://xqjs30mogf2j" path="res://shader.gdshader" id="5_w38ri"]
 [ext_resource type="Texture2D" uid="uid://dheps4dej4sbu" path="res://Assets/text-1749677172106-1.png.png" id="7_oltrp"]
 [ext_resource type="Texture2D" uid="uid://1y4m15ig2itl" path="res://Assets/round ghost/round ghost idle/sprite_0.png" id="9_32d14"]
