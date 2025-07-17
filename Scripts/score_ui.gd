@@ -1,14 +1,13 @@
 extends CanvasLayer
-
 # Export values for customization
 @export var float_amplitude: float = 5.0   # How high/low it floats
 @export var float_speed: float = 1.0       # How fast it floats
 @export var horizontal_drift: float = 2.0  # Side-to-side drift
 @export var drift_speed: float = 0.8       # Speed of horizontal drift
 
-# Score management
-@export var current_score: int = 0
-@export var score_increment: int = 10
+# Soul count management (renamed from score)
+@export var current_soul_count: int = 0
+@export var soul_increment: int = 1
 
 # Item display settings
 @export var item_texture: Texture2D  # Drag your soul/item image here
@@ -23,6 +22,9 @@ var score_label: Label
 var item_icon: TextureRect
 
 func _ready():
+	# Add to group so other scripts can find this UI easily
+	add_to_group("SoulCountUI")
+	
 	# Get references to the UI elements
 	score_container = $ScoreContainer
 	score_label = $ScoreContainer/ScoreLabel
@@ -34,8 +36,8 @@ func _ready():
 	# Store the original position
 	original_position = score_container.position
 	
-	# Initialize score display
-	update_score_display()
+	# Initialize soul count display
+	update_soul_display()
 
 func create_item_icon():
 	# Create TextureRect for the item image
@@ -63,34 +65,40 @@ func _process(delta):
 	# Apply the floating animation
 	score_container.position = original_position + Vector2(horizontal_offset, vertical_offset)
 
-# Function to add score
-func add_score(points: int = 0):
-	if points == 0:
-		points = score_increment
-	
-	current_score += points
-	update_score_display()
-	
-	# Optional: Add a little bounce effect when score increases
-	create_score_bounce()
+# Function to add souls (when picking up items)
+func add_souls(amount: int = 1):
+	current_soul_count += amount
+	update_soul_display()
+	create_bounce_effect()
+	print("Souls added. Current count: ", current_soul_count)
 
-# Function to set score directly
-func set_score(new_score: int):
-	current_score = new_score
-	update_score_display()
+# Function to remove souls (when delivering items) - THIS IS THE KEY ADDITION
+func remove_souls(amount: int = 1):
+	current_soul_count -= amount
+	# Make sure we don't go below 0
+	if current_soul_count < 0:
+		current_soul_count = 0
+	update_soul_display()
+	create_bounce_effect()
+	print("Souls removed. Current count: ", current_soul_count)
 
-# Update the score text display
-func update_score_display():
+# Function to set soul count directly
+func set_soul_count(new_count: int):
+	current_soul_count = new_count
+	update_soul_display()
+
+# Update the soul count display
+func update_soul_display():
 	if score_label:
 		if show_image and item_texture:
 			# Show just the number when using image display
-			score_label.text = str(current_score)
+			score_label.text = str(current_soul_count)
 		else:
-			# Show "Score: X" when not using image
-			score_label.text = "Score: " + str(current_score)
+			# Show "Souls: X" when not using image
+			score_label.text = "Souls: " + str(current_soul_count)
 
-# Create a subtle bounce effect when score increases
-func create_score_bounce():
+# Create a subtle bounce effect when count changes
+func create_bounce_effect():
 	var tween = create_tween()
 	var original_scale = score_container.scale
 	
@@ -98,11 +106,22 @@ func create_score_bounce():
 	tween.tween_property(score_container, "scale", original_scale * 1.1, 0.1)
 	tween.tween_property(score_container, "scale", original_scale, 0.1)
 
-# Reset score to zero
-func reset_score():
-	current_score = 0
-	update_score_display()
+# Reset soul count to zero
+func reset_soul_count():
+	current_soul_count = 0
+	update_soul_display()
 
-# Get current score (useful for other scripts)
+# Get current soul count (useful for other scripts)
+func get_soul_count() -> int:
+	return current_soul_count
+
+# Check if player has souls to deliver
+func has_souls() -> bool:
+	return current_soul_count > 0
+
+# Legacy functions for backward compatibility (if you're using them elsewhere)
+func add_score(points: int = 0):
+	add_souls(points if points > 0 else 1)
+
 func get_score() -> int:
-	return current_score
+	return current_soul_count

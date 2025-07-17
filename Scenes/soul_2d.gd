@@ -3,7 +3,7 @@
 extends Area2D
 
 @export var item_name: String = "Item"
-@export var interaction_text: String = "Press E to pick up"
+@export var interaction_text: String = "E to pick up item"
 @export var ui_background_texture: Texture2D  # Drag your image here in the inspector
 @export var ui_size: Vector2 = Vector2(200, 50)  # Adjustable UI size
 @export var ui_offset_distance: float = 80.0  # Distance from item center
@@ -13,6 +13,10 @@ extends Area2D
 @export var idle_bob_speed: float = 2.0  # Speed of the idle bobbing animation
 @export var idle_bob_amount: float = 10.0  # How much the UI bobs up and down
 @export var idle_detection_threshold: float = 5.0  # How still the player needs to be to start bobbing
+
+# Font customization
+@export var ui_font: Font                    # Custom font for the UI text
+@export var ui_font_size: int = 16           # Font size for the UI text
 
 # Score settings
 @export var score_value: int = 1  # How many points this item is worth
@@ -137,9 +141,9 @@ func create_ui():
 		ui_panel.add_theme_stylebox_override("panel", style)
 		print("Applied texture to UI panel")
 	else:
-		# Fallback style
+		# Fallback style with purple gradient
 		create_fallback_style()
-		print("Using fallback style")
+		print("Using purple gradient fallback style")
 	
 	ui_control.add_child(ui_panel)
 	
@@ -154,6 +158,13 @@ func create_ui():
 	ui_label.add_theme_color_override("font_shadow_color", Color.BLACK)
 	ui_label.add_theme_constant_override("shadow_offset_x", 2)
 	ui_label.add_theme_constant_override("shadow_offset_y", 2)
+	
+	# Apply custom font and font size if provided
+	if ui_font:
+		ui_label.add_theme_font_override("font", ui_font)
+	if ui_font_size > 0:
+		ui_label.add_theme_font_size_override("font_size", ui_font_size)
+	
 	ui_panel.add_child(ui_label)
 	
 	# Hide UI initially
@@ -163,16 +174,23 @@ func create_ui():
 
 func create_fallback_style():
 	var style = StyleBoxFlat.new()
-	style.bg_color = Color(0.2, 0.2, 0.2, 0.9)
-	style.corner_radius_top_left = 8
-	style.corner_radius_top_right = 8
-	style.corner_radius_bottom_left = 8
-	style.corner_radius_bottom_right = 8
-	style.border_width_left = 2
-	style.border_width_right = 2
-	style.border_width_top = 2
-	style.border_width_bottom = 2
+	
+	# Create purple gradient background
+	style.bg_color = Color(0.6, 0.2, 0.8, 0.9)  # Base purple color
+	
+	# Set up gradient
+	style.set_corner_radius_all(8)
+	style.set_border_width_all(2)
 	style.border_color = Color.WHITE
+	
+	# Create gradient effect with different purple shades
+	var gradient = Gradient.new()
+	gradient.add_point(0.0, Color(0.8, 0.4, 1.0, 0.9))    # Light purple at top
+	gradient.add_point(1.0, Color(0.4, 0.1, 0.6, 0.9))    # Dark purple at bottom
+	
+	# Apply gradient to the style
+	style.set_bg_color(Color(0.6, 0.2, 0.8, 0.9))
+	
 	ui_panel.add_theme_stylebox_override("panel", style)
 
 func _process(delta):

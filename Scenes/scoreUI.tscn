@@ -3,7 +3,7 @@
 [ext_resource type="Script" uid="uid://bnueae7x7ytnk" path="res://Scripts/score_ui.gd" id="1_47jr6"]
 [ext_resource type="Texture2D" uid="uid://bx138hl66m6bu" path="res://Assets/undead-recruit/undead/lost-spirit-s-atk-2.png" id="2_plnwt"]
 
-[node name="ScoreUI" type="CanvasLayer"]
+[node name="ScoreUI" type="CanvasLayer" groups=["SoulCountUI"]]
 scale = Vector2(1.74092, 1.74092)
 transform = Transform2D(1.74092, 0, 0, 1.74092, 0, 0)
 script = ExtResource("1_47jr6")

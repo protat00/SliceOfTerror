@@ -202,7 +202,7 @@ position = Vector2(373, 299)
 
 [node name="soul" parent="." instance=ExtResource("9_h4fw4")]
 position = Vector2(477, 302)
-interaction_text = "Press E to pick up"
+interaction_text = "E to pick up item"
 ui_background_texture = null
 
 [node name="ScoreUI" parent="." instance=ExtResource("10_ldgsr")]
