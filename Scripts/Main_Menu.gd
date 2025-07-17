@@ -1,24 +1,15 @@
 extends Control
 
-@onready var background_music = $background_music
-
 func _ready():
-	# If returning from settings, restore music
-	if GameGlobal.was_music_playing and GameGlobal.music_resource:
-		background_music.stream = GameGlobal.music_resource
-		background_music.play()
-		background_music.seek(GameGlobal.music_position)
-		# Reset the flag
-		GameGlobal.was_music_playing = false
-	else:
-		# First time loading, start music normally
-		background_music.play()
+	# Load and play your background music
+ # In AudioManager.gd
+	const MAIN_MENU_MUSIC = preload("res://audio/main_menu_music.ogg")
+	const GAME_MUSIC = preload("res://audio/game_music.ogg")
+	const BOSS_MUSIC = preload("res://audio/boss_music.ogg")
+
+func play_main_menu_music():
+	play_music(MAIN_MENU_MUSIC)
 
 func _on_settings_button_pressed():
-	# Save current music state before leaving
-	GameGlobal.music_position = background_music.get_playback_position()
-	GameGlobal.was_music_playing = background_music.playing
-	GameGlobal.music_resource = background_music.stream
-	
-	# Change to settings scene
-	get_tree().change_scene_to_file("res://path/to/your/settings.tscn")
+	# The music will continue playing when you load the settings scene
+	get_tree().change_scene_to_file("res://scenes/SettingsMenu.tscn")

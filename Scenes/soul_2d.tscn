@@ -74,6 +74,7 @@ radius = 38.3275
 [node name="soul" type="Area2D"]
 scale = Vector2(0.454154, 0.47167)
 script = ExtResource("1_bewq1")
+metadata/_edit_group_ = true
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 sprite_frames = SubResource("SpriteFrames_r1q4j")

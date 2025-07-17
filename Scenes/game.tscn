@@ -198,12 +198,13 @@ position = Vector2(1295, 541)
 shape = SubResource("RectangleShape2D_1l0tm")
 
 [node name="Ghost" parent="." instance=ExtResource("8_v158k")]
-position = Vector2(373, 299)
+position = Vector2(1250, 279)
 
 [node name="soul" parent="." instance=ExtResource("9_h4fw4")]
-position = Vector2(477, 302)
-interaction_text = "E to pick up item"
-ui_background_texture = null
+position = Vector2(897, 262)
+
+[node name="CollisionShape2D" parent="soul" index="1"]
+position = Vector2(4.40379, 0)
 
 [node name="ScoreUI" parent="." instance=ExtResource("10_ldgsr")]
 

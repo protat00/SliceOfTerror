@@ -15,6 +15,10 @@ run/main_scene="uid://pttui37r384l"
 config/features=PackedStringArray("4.4", "Forward Plus")
 config/icon="res://icon.svg"
 
+[autoload]
+
+AudioManager="*res://Scripts/AudioManager.gd"
+
 [global_group]
 
 Enemy=""
