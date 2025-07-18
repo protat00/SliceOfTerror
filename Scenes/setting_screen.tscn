@@ -22,9 +22,18 @@ offset_bottom = 1062.0
 scale = Vector2(0.598954, 0.611218)
 texture = ExtResource("1_judg0")
 
+[node name="VBoxContainer" type="VBoxContainer" parent="."]
+layout_mode = 0
+offset_left = 412.0
+offset_top = 121.0
+offset_right = 474.0
+offset_bottom = 161.0
+scale = Vector2(4.46649, 4.46649)
+
 [node name="ExitSettings" type="Button" parent="."]
 layout_mode = 0
-offset_right = 118.0
+offset_left = 2.0
+offset_right = 120.0
 offset_bottom = 82.0
 theme_override_colors/icon_hover_color = Color(0.854902, 0, 0, 1)
 theme_override_colors/icon_pressed_color = Color(0.854902, 0, 0, 1)
@@ -37,4 +46,5 @@ script = ExtResource("3_goixg")
 [node name="background_music" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("5_goixg")
 
+[connection signal="pressed" from="ExitSettings" to="." method="_on_exit_settings_pressed"]
 [connection signal="pressed" from="ExitSettings" to="ExitSettings" method="_on_pressed"]
