@@ -17,6 +17,11 @@ enum State { IDLE, RUNNING, JUMPING, FALLING, DASHING, SLIDING, CROUCHING, DYING
 @export var death_animation_duration: float = 1.0
 @export var death_bounce_height: float = -200.0
 
+# Respawn image settings
+@export var respawn_image: Texture2D  # Drag your image here in the inspector
+@export var respawn_image_duration: float = 0.5
+@export var respawn_image_size: Vector2 = Vector2(200, 200)  # Width and Height of the image
+
 # Soul management
 var souls: int = 0
 signal souls_changed(new_count)
@@ -44,6 +49,10 @@ var original_sprite_rotation: float
 
 @export var respawn_position: Vector2 = Vector2.ZERO
 var is_dead = false
+
+# Respawn image overlay components
+var respawn_overlay: Control
+var respawn_image_rect: TextureRect
 
 func _ready():
 	crouch_collision.disabled = true
@@ -74,6 +83,35 @@ func _ready():
 			
 		if not hit_box.body_entered.is_connected(_on_hit_box_body_entered):
 			hit_box.body_entered.connect(_on_hit_box_body_entered)
+
+	# Setup respawn image overlay
+	setup_respawn_overlay()
+
+func setup_respawn_overlay():
+	# Create the overlay control node
+	respawn_overlay = Control.new()
+	respawn_overlay.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
+	respawn_overlay.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	respawn_overlay.visible = false
+	
+	# Create the image display
+	respawn_image_rect = TextureRect.new()
+	respawn_image_rect.set_anchors_and_offsets_preset(Control.PRESET_CENTER)
+	respawn_image_rect.expand_mode = TextureRect.EXPAND_FIT_WIDTH_PROPORTIONAL
+	respawn_image_rect.stretch_mode = TextureRect.STRETCH_KEEP_ASPECT_CENTERED
+	
+	# Set initial size (adjustable via exported variable)
+	respawn_image_rect.custom_minimum_size = respawn_image_size
+	
+	# Add to the overlay
+	respawn_overlay.add_child(respawn_image_rect)
+	
+	# Add overlay to the camera's CanvasLayer for screen-space display
+	if has_node("Camera2D/CanvasLayer"):
+		$Camera2D/CanvasLayer.add_child(respawn_overlay)
+	else:
+		# Fallback: add to the player node
+		add_child(respawn_overlay)
 
 func _physics_process(delta):
 	if is_dead and current_state != State.DYING:
@@ -270,6 +308,9 @@ func respawn():
 	# Reset collision states
 	normal_collision.disabled = false
 	crouch_collision.disabled = true
+	
+	# Show respawn image
+	show_respawn_image()
 
 # Optional: Function to set new respawn points (call this at checkpoints)
 func set_respawn_point(new_position: Vector2):
@@ -310,3 +351,27 @@ func interact():
 	# Add soul to player instead of just score
 	
 	queue_free()  # Remove the item
+
+# Show respawn image overlay
+func show_respawn_image():
+	if respawn_image and respawn_overlay and respawn_image_rect:
+		# Set the image texture
+		respawn_image_rect.texture = respawn_image
+		
+		# Show the overlay
+		respawn_overlay.visible = true
+		
+		# Create tween for fade in/out effect
+		var image_tween = create_tween()
+		
+		# Start fully visible
+		respawn_overlay.modulate.a = 1.0
+		
+		# Wait for most of the duration, then fade out
+		image_tween.tween_interval(respawn_image_duration * 0.8)
+		image_tween.tween_property(respawn_overlay, "modulate:a", 0.0, respawn_image_duration * 0.2)
+		
+		# Hide the overlay when done
+		await image_tween.finished
+		respawn_overlay.visible = false
+		respawn_overlay.modulate.a = 1.0  # Reset alpha for next time
