@@ -1,4 +1,4 @@
-[gd_scene load_steps=30 format=3 uid="uid://pttui37r384l"]
+[gd_scene load_steps=29 format=3 uid="uid://pttui37r384l"]
 
 [ext_resource type="Script" uid="uid://u76dbbmhxepa" path="res://Scripts/Main_Menu.gd" id="1_35yr4"]
 [ext_resource type="Script" uid="uid://q35m5ewk00g" path="res://Scripts/play_button.gd" id="1_glfsf"]
@@ -6,7 +6,6 @@
 [ext_resource type="FontFile" uid="uid://cbphda4k2lyp8" path="res://UI_Assets/MotionSicknessRegular-Yz3Yj.otf" id="2_oltrp"]
 [ext_resource type="Script" uid="uid://y6ogfftt7mx2" path="res://Scripts/quit_button.gd" id="3_75exb"]
 [ext_resource type="Script" uid="uid://b3vegxfbjr73k" path="res://Scripts/settings_button.gd" id="4_67b70"]
-[ext_resource type="AudioStream" uid="uid://cqpiaxqjnyceq" path="res://Audio/main_menu_music.mp3" id="4_wou8e"]
 [ext_resource type="Shader" uid="uid://xqjs30mogf2j" path="res://shader.gdshader" id="5_w38ri"]
 [ext_resource type="Texture2D" uid="uid://dheps4dej4sbu" path="res://Assets/text-1749677172106-1.png.png" id="7_oltrp"]
 [ext_resource type="Texture2D" uid="uid://1y4m15ig2itl" path="res://Assets/round ghost/round ghost idle/sprite_0.png" id="9_32d14"]
@@ -203,11 +202,6 @@ sprite_frames = SubResource("SpriteFrames_pr3xo")
 animation = &"idle"
 autoplay = "idle"
 frame_progress = 0.450408
-
-[node name="background_music" type="AudioStreamPlayer" parent="."]
-stream = ExtResource("4_wou8e")
-autoplay = true
-parameters/looping = true
 
 [connection signal="pressed" from="CanvasLayer2/VBoxContainer/PlayButton" to="CanvasLayer2/VBoxContainer/PlayButton" method="_on_pressed"]
 [connection signal="pressed" from="CanvasLayer2/VBoxContainer/SettingsButton" to="CanvasLayer2/VBoxContainer/SettingsButton" method="_on_pressed"]

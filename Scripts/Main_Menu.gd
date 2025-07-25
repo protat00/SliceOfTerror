@@ -1,9 +1,8 @@
 extends Control
 
 func _ready():
-	# Load and play your background music
+	# Load and play your background music using the new scene-aware method
 	var bg_music = load("res://Audio/main_menu_music.mp3")  # Use your actual file name
-	AudioManager.play_music(bg_music)
-
-func _on_settings_button_pressed():
-	get_tree().change_scene_to_file("res://scenes/SettingsMenu.tscn")
+	
+	# Use the new scene-aware music method
+	AudioManager.play_music_for_scene(bg_music, "main_menu")
