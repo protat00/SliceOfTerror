@@ -22,6 +22,17 @@ enum State { IDLE, RUNNING, JUMPING, FALLING, DASHING, SLIDING, CROUCHING, DYING
 @export var respawn_image_duration: float = 0.5
 @export var respawn_image_size: Vector2 = Vector2(200, 200)  # Width and Height of the image
 
+# Walking sound settings
+@export_group("Walking Sound")
+@export var walking_sound: AudioStream  # Drag your walking sound file here
+@export var walking_volume: float = 0.0  # Volume in dB (-80 to 24)
+@export var walking_pitch_min: float = 0.9  # Minimum pitch variation
+@export var walking_pitch_max: float = 1.1  # Maximum pitch variation
+
+# Coyote jump settings
+@export_group("Coyote Jump")
+@export var coyote_time: float = 0.15  # Time in seconds after leaving ground where jump is still allowed
+
 # Soul management
 var souls: int = 0
 signal souls_changed(new_count)
@@ -29,14 +40,20 @@ signal souls_changed(new_count)
 var gravity = ProjectSettings.get_setting("physics/2d/default_gravity")
 var death_tween: Tween  # Keep reference to the death tween
 var current_state: State = State.IDLE
+var previous_state: State = State.IDLE  # Track previous state for sound management
 var can_double_jump: bool = false
 var has_double_jumped: bool = false
 var dash_timer: float = 0.0
 var slide_timer: float = 0.0
 
+# Coyote jump variables
+var coyote_timer: float = 0.0
+var was_on_floor: bool = false
+
 @onready var normal_collision = $NormalCollision
 @onready var crouch_collision = $CrouchCollision
 @onready var animated_sprite = $AnimatedSprite2D
+@onready var walking_audio: AudioStreamPlayer2D = $WalkingAudio
 @onready var game_manager : Node2D
 
 # Store original sprite properties
@@ -61,6 +78,8 @@ func _ready():
 	add_to_group("Player")
 	print("DEBUG: Player ready with ", souls, " souls")
 
+	# Setup walking audio
+	setup_walking_audio()
 	
 	# Store original sprite properties
 	if animated_sprite:
@@ -86,6 +105,20 @@ func _ready():
 
 	# Setup respawn image overlay
 	setup_respawn_overlay()
+
+func setup_walking_audio():
+	# Create AudioStreamPlayer2D if it doesn't exist
+	if not has_node("WalkingAudio"):
+		walking_audio = AudioStreamPlayer2D.new()
+		walking_audio.name = "WalkingAudio"
+		add_child(walking_audio)
+	
+	# Configure the audio player
+	if walking_audio:
+		walking_audio.stream = walking_sound
+		walking_audio.volume_db = walking_volume
+		walking_audio.autoplay = false
+		walking_audio.bus = "SFX"  # Optional: use SFX bus if you have one
 
 func setup_respawn_overlay():
 	# Create the overlay control node
@@ -117,13 +150,58 @@ func _physics_process(delta):
 	if is_dead and current_state != State.DYING:
 		return  # Don't process movement when dead (unless playing death animation)
 	
+	# Handle coyote time
+	handle_coyote_time(delta)
+	
 	if not is_on_floor() and current_state != State.DYING:
 		velocity.y += gravity * delta
 	
+	# Store previous state before updating
+	previous_state = current_state
+	
 	handle_input()
 	update_movement(delta)
+	handle_walking_sound()  # Handle walking sound based on state changes
 	play_animation()
 	move_and_slide()
+
+func handle_walking_sound():
+	# Only play walking sound when running on the ground
+	if current_state == State.RUNNING and is_on_floor():
+		# Start playing if not already playing
+		if not walking_audio.playing:
+			play_walking_sound()
+	else:
+		# Stop playing if currently playing
+		if walking_audio.playing:
+			walking_audio.stop()
+
+func play_walking_sound():
+	if walking_sound and walking_audio:
+		# Add slight pitch variation for more natural sound
+		walking_audio.pitch_scale = randf_range(walking_pitch_min, walking_pitch_max)
+		walking_audio.play()
+
+func handle_coyote_time(delta):
+	# Track if player was on floor last frame
+	var on_floor_now = is_on_floor()
+	
+	if on_floor_now:
+		# Reset coyote timer when on ground
+		coyote_timer = coyote_time
+		was_on_floor = true
+	elif was_on_floor and not on_floor_now:
+		# Just left the ground, keep the coyote timer active
+		was_on_floor = false
+		# Don't reset timer here - let it count down from the current value
+	else:
+		# In air, count down coyote timer
+		if coyote_timer > 0.0:
+			coyote_timer -= delta
+
+func can_coyote_jump() -> bool:
+	# Can coyote jump if timer is still active, not on floor, and haven't jumped yet
+	return coyote_timer > 0.0 and not is_on_floor() and current_state == State.FALLING
 	
 func handle_input():
 	# Don't handle input during death animation
@@ -149,10 +227,19 @@ func handle_input():
 				current_state = State.IDLE
 		
 		State.JUMPING, State.FALLING:
-			if Input.is_action_just_pressed(input_jump) and can_double_jump:
-				double_jump()
+			if Input.is_action_just_pressed(input_jump):
+				if is_on_floor():
+					# If somehow back on floor, do regular jump
+					jump()
+				elif can_double_jump and has_double_jumped == false:
+					double_jump()
+				elif can_coyote_jump():
+					coyote_jump()
 			elif is_on_floor():
 				current_state = State.IDLE if abs(velocity.x) < 10 else State.RUNNING
+				# Reset jump abilities when landing
+				can_double_jump = false
+				has_double_jumped = false
 				
 		State.SLIDING:
 			slide_timer -= get_physics_process_delta_time()
@@ -217,11 +304,21 @@ func jump():
 	can_double_jump = true
 	has_double_jumped = false
 	current_state = State.JUMPING
+	coyote_timer = 0.0  # Use up coyote time when jumping
+
+func coyote_jump():
+	# Same as regular jump but doesn't grant double jump ability
+	velocity.y = jump_velocity
+	current_state = State.JUMPING
+	coyote_timer = 0.0  # Use up coyote time
+	# Don't set can_double_jump = true for coyote jump
+	print("Coyote jump activated! Timer was: ", coyote_timer)
 
 func double_jump():
 	velocity.y = jump_velocity * 0.8
 	has_double_jumped = true
 	can_double_jump = false
+	coyote_timer = 0.0  # Use up coyote time if any remains
 
 func start_slide():
 	if is_on_floor():
@@ -256,6 +353,10 @@ func die():
 		
 	is_dead = true
 	current_state = State.DYING
+	
+	# Stop walking sound when dying
+	if walking_audio.playing:
+		walking_audio.stop()
 	
 	# Stop any existing death tween
 	if death_tween:
@@ -304,6 +405,12 @@ func respawn():
 	global_position = respawn_position
 	velocity = Vector2.ZERO
 	current_state = State.IDLE
+	
+	# Reset jump and coyote states
+	can_double_jump = false
+	has_double_jumped = false
+	coyote_timer = 0.0
+	was_on_floor = false
 	
 	# Reset collision states
 	normal_collision.disabled = false

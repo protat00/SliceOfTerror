@@ -1,10 +1,9 @@
-[gd_scene load_steps=7 format=3 uid="uid://bo5v8lw557rkc"]
+[gd_scene load_steps=6 format=3 uid="uid://bo5v8lw557rkc"]
 
 [ext_resource type="Script" uid="uid://dht8j4tth0m7b" path="res://Scripts/setting_screen.gd" id="1_eq5hj"]
 [ext_resource type="Texture2D" uid="uid://bodrxq16nk2uw" path="res://Assets/hq720.jpg" id="1_judg0"]
 [ext_resource type="Texture2D" uid="uid://dpcb8uwq18le1" path="res://UI_Assets/Keyboard & Mouse/Default/keyboard_x_outline.png" id="2_eq5hj"]
 [ext_resource type="Shader" uid="uid://xqjs30mogf2j" path="res://shader.gdshader" id="2_goixg"]
-[ext_resource type="AudioStream" uid="uid://cqpiaxqjnyceq" path="res://Audio/main_menu_music.mp3" id="5_goixg"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_jykvo"]
 shader = ExtResource("2_goixg")
@@ -30,13 +29,7 @@ shader_parameter/clip_warp = false
 shader_parameter/vignette_intensity = 0.5
 shader_parameter/vignette_opacity = 0.747
 
-[node name="setting_screen" type="Control"]
-layout_mode = 3
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
+[node name="setting_screen" type="CanvasLayer"]
 script = ExtResource("1_eq5hj")
 
 [node name="TextureRect" type="TextureRect" parent="."]
@@ -45,9 +38,7 @@ offset_bottom = 1062.0
 scale = Vector2(0.598954, 0.611218)
 texture = ExtResource("1_judg0")
 
-[node name="CanvasLayer2" type="CanvasLayer" parent="."]
-
-[node name="ColorRect" type="ColorRect" parent="CanvasLayer2"]
+[node name="ColorRect" type="ColorRect" parent="."]
 material = SubResource("ShaderMaterial_jykvo")
 anchors_preset = -1
 anchor_left = -0.496528
@@ -60,17 +51,9 @@ offset_right = 1148.0
 offset_bottom = 639.0
 metadata/_edit_use_anchors_ = true
 
-[node name="VBoxContainer" type="VBoxContainer" parent="CanvasLayer2"]
-offset_left = 412.0
-offset_top = 121.0
-offset_right = 474.0
-offset_bottom = 161.0
-scale = Vector2(4.46649, 4.46649)
-
 [node name="ExitSettings" type="Button" parent="."]
-offset_left = 2.0
-offset_right = 120.0
-offset_bottom = 82.0
+offset_right = 108.0
+offset_bottom = 72.0
 theme_override_colors/icon_hover_color = Color(0.854902, 0, 0, 1)
 theme_override_colors/icon_pressed_color = Color(0.854902, 0, 0, 1)
 theme_override_colors/icon_focus_color = Color(0.854902, 0, 0, 1)
@@ -78,5 +61,16 @@ theme_override_colors/icon_normal_color = Color(1, 1, 1, 1)
 icon = ExtResource("2_eq5hj")
 icon_alignment = 1
 
-[node name="background_music" type="AudioStreamPlayer" parent="."]
-stream = ExtResource("5_goixg")
+[node name="VBoxContainer" type="VBoxContainer" parent="."]
+offset_left = 209.0
+offset_top = 165.0
+offset_right = 317.0
+offset_bottom = 205.0
+scale = Vector2(1.69283, 1.69283)
+
+[node name="Button" type="Button" parent="VBoxContainer"]
+layout_mode = 2
+theme_override_colors/font_hover_color = Color(0.854902, 0, 0, 1)
+theme_override_colors/font_outline_color = Color(0.854902, 0, 0, 1)
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+text = "MUSIC MUTE"

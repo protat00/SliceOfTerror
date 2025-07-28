@@ -1,33 +1,10 @@
-extends Control
+extends CanvasLayer
 @onready var vbox = $VBoxContainer
-var music_button: Button
+@onready var music_button: Button = $VBoxContainer/Button
 
 func _ready():
 	# Wait for the scene to be fully loaded
-	await get_tree().process_frame
 	
-	# Create the music button
-	music_button = Button.new()
-	music_button.name = "MusicButton"
-	
-	# Set size
-	music_button.custom_minimum_size = Vector2(300, 80)  # Adjust size here (width, height)
-	
-	# Option 1: Add to Control node for free positioning
-	add_child(music_button)  # Add directly to the Control node (not VBoxContainer)
-	music_button.position = Vector2(100, 50)  # Set position (x, y) relative to parent
-	
-	# Option 2: If you want to keep it in VBoxContainer, comment out the above and uncomment below
-	# vbox.add_child(music_button)
-	# vbox.move_child(music_button, 0)  # Move to top
-	# music_button.offset = Vector2(20, 10)  # Adjust offset within VBoxContainer
-	
-	# Set font size
-	var font = Theme.new()
-	font.set_font_size("font_size", "Button", 24)  # Adjust font size here
-	music_button.theme = font
-	
-	# Connect and setup
 	music_button.pressed.connect(_on_music_button_pressed)
 	update_music_button_text()
 	

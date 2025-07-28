@@ -1,8 +1,9 @@
-[gd_scene load_steps=19 format=3 uid="uid://ojlpv30i8afp"]
+[gd_scene load_steps=20 format=3 uid="uid://ojlpv30i8afp"]
 
 [ext_resource type="Script" uid="uid://d6mnse5g6n4c" path="res://Scripts/player.gd" id="1_fkybt"]
 [ext_resource type="Texture2D" uid="uid://bicoukqdqa33p" path="res://maxresdefault.jpg" id="2_vgqql"]
 [ext_resource type="Shader" uid="uid://xqjs30mogf2j" path="res://shader.gdshader" id="3_6t5aa"]
+[ext_resource type="AudioStream" uid="uid://bxukkekvesycm" path="res://Audio/walking-on-wood-363349.mp3" id="3_fkybt"]
 [ext_resource type="Texture2D" uid="uid://duouo5tmjlelk" path="res://Assets/HauntedHotel/Sprites/Player.png" id="3_vgqql"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_6t5aa"]
@@ -103,7 +104,7 @@ animations = [{
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_cvnsp"]
 radius = 13.9043
-height = 50.8994
+height = 44.7915
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_6t5aa"]
 radius = 15.0
@@ -140,6 +141,7 @@ height = 50.0
 script = ExtResource("1_fkybt")
 respawn_image = ExtResource("2_vgqql")
 respawn_image_duration = 1.5
+walking_sound = ExtResource("3_fkybt")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." groups=["Player", "player"]]
 position = Vector2(-6.5, -4.5)
@@ -149,12 +151,12 @@ animation = &"idle"
 autoplay = "idle"
 
 [node name="NormalCollision" type="CollisionShape2D" parent="."]
-position = Vector2(-7, -4)
+position = Vector2(-6, -1)
 scale = Vector2(1.00688, 0.982329)
 shape = SubResource("CapsuleShape2D_cvnsp")
 
 [node name="CrouchCollision" type="CollisionShape2D" parent="."]
-position = Vector2(-7.00002, 6)
+position = Vector2(-5, 6)
 shape = SubResource("CircleShape2D_6t5aa")
 
 [node name="Camera2D" type="Camera2D" parent="."]
@@ -180,7 +182,7 @@ metadata/_edit_use_anchors_ = true
 [node name="HitBox" type="Area2D" parent="."]
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="HitBox"]
-position = Vector2(-6, -4)
+position = Vector2(-7, -4)
 shape = SubResource("CapsuleShape2D_6t5aa")
 
 [connection signal="area_entered" from="HitBox" to="." method="_on_hit_box_area_entered"]
