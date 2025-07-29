@@ -1,4 +1,4 @@
-[gd_scene load_steps=29 format=3 uid="uid://pttui37r384l"]
+[gd_scene load_steps=30 format=3 uid="uid://pttui37r384l"]
 
 [ext_resource type="Script" uid="uid://u76dbbmhxepa" path="res://Scripts/Main_Menu.gd" id="1_35yr4"]
 [ext_resource type="Script" uid="uid://q35m5ewk00g" path="res://Scripts/play_button.gd" id="1_glfsf"]
@@ -23,8 +23,8 @@ shader = ExtResource("5_w38ri")
 shader_parameter/overlay = false
 shader_parameter/resolution = Vector2(320, 180)
 shader_parameter/brightness = 1.5
-shader_parameter/scanlines_opacity = 0.104
-shader_parameter/scanlines_width = 0.237
+shader_parameter/scanlines_opacity = 0.075
+shader_parameter/scanlines_width = 0.201
 shader_parameter/grille_opacity = 0.0
 shader_parameter/roll = true
 shader_parameter/roll_speed = 2.0
@@ -37,10 +37,13 @@ shader_parameter/noise_speed = 1.18
 shader_parameter/static_noise_intensity = 0.06
 shader_parameter/pixelate = false
 shader_parameter/discolor = true
-shader_parameter/warp_amount = 0.944
+shader_parameter/warp_amount = 0.529
 shader_parameter/clip_warp = false
 shader_parameter/vignette_intensity = 0.5
-shader_parameter/vignette_opacity = 0.747
+shader_parameter/vignette_opacity = 0.709
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_1och7"]
+bg_color = Color(0.6, 0.6, 0.6, 0)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_xpuq7"]
 atlas = ExtResource("9_32d14")
@@ -142,11 +145,11 @@ offset_bottom = 639.0
 metadata/_edit_use_anchors_ = true
 
 [node name="VBoxContainer" type="VBoxContainer" parent="CanvasLayer2"]
-offset_left = 468.0
-offset_top = 327.0
-offset_right = 563.0
-offset_bottom = 430.0
-scale = Vector2(2.73726, 2.31843)
+offset_left = 434.0
+offset_top = 298.0
+offset_right = 529.0
+offset_bottom = 401.0
+scale = Vector2(3.59567, 3.0455)
 alignment = 1
 
 [node name="PlayButton" type="Button" parent="CanvasLayer2/VBoxContainer"]
@@ -156,6 +159,16 @@ theme_override_colors/font_color = Color(1, 1, 1, 1)
 theme_override_colors/font_focus_color = Color(0.854902, 0, 0, 1)
 theme_override_colors/font_pressed_color = Color(0.854902, 0, 0, 1)
 theme_override_fonts/font = ExtResource("2_oltrp")
+theme_override_styles/disabled_mirrored = SubResource("StyleBoxFlat_1och7")
+theme_override_styles/disabled = SubResource("StyleBoxFlat_1och7")
+theme_override_styles/hover_pressed_mirrored = SubResource("StyleBoxFlat_1och7")
+theme_override_styles/hover_pressed = SubResource("StyleBoxFlat_1och7")
+theme_override_styles/hover_mirrored = SubResource("StyleBoxFlat_1och7")
+theme_override_styles/hover = SubResource("StyleBoxFlat_1och7")
+theme_override_styles/pressed_mirrored = SubResource("StyleBoxFlat_1och7")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_1och7")
+theme_override_styles/normal_mirrored = SubResource("StyleBoxFlat_1och7")
+theme_override_styles/normal = SubResource("StyleBoxFlat_1och7")
 text = "Play"
 script = ExtResource("1_glfsf")
 
@@ -167,6 +180,16 @@ theme_override_colors/font_focus_color = Color(0.854902, 0, 0, 1)
 theme_override_colors/font_pressed_color = Color(0.854902, 0, 0, 1)
 theme_override_fonts/font = ExtResource("2_oltrp")
 theme_override_font_sizes/font_size = 18
+theme_override_styles/disabled_mirrored = SubResource("StyleBoxFlat_1och7")
+theme_override_styles/disabled = SubResource("StyleBoxFlat_1och7")
+theme_override_styles/hover_pressed_mirrored = SubResource("StyleBoxFlat_1och7")
+theme_override_styles/hover_pressed = SubResource("StyleBoxFlat_1och7")
+theme_override_styles/hover_mirrored = SubResource("StyleBoxFlat_1och7")
+theme_override_styles/hover = SubResource("StyleBoxFlat_1och7")
+theme_override_styles/pressed_mirrored = SubResource("StyleBoxFlat_1och7")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_1och7")
+theme_override_styles/normal_mirrored = SubResource("StyleBoxFlat_1och7")
+theme_override_styles/normal = SubResource("StyleBoxFlat_1och7")
 text = "Settings"
 script = ExtResource("4_67b70")
 
@@ -178,6 +201,16 @@ theme_override_colors/font_focus_color = Color(0.854902, 0, 0, 1)
 theme_override_colors/font_pressed_color = Color(0.854902, 0, 0, 1)
 theme_override_fonts/font = ExtResource("2_oltrp")
 theme_override_font_sizes/font_size = 20
+theme_override_styles/disabled_mirrored = SubResource("StyleBoxFlat_1och7")
+theme_override_styles/disabled = SubResource("StyleBoxFlat_1och7")
+theme_override_styles/hover_pressed_mirrored = SubResource("StyleBoxFlat_1och7")
+theme_override_styles/hover_pressed = SubResource("StyleBoxFlat_1och7")
+theme_override_styles/hover_mirrored = SubResource("StyleBoxFlat_1och7")
+theme_override_styles/hover = SubResource("StyleBoxFlat_1och7")
+theme_override_styles/pressed_mirrored = SubResource("StyleBoxFlat_1och7")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_1och7")
+theme_override_styles/normal_mirrored = SubResource("StyleBoxFlat_1och7")
+theme_override_styles/normal = SubResource("StyleBoxFlat_1och7")
 text = "Quit"
 script = ExtResource("3_75exb")
 

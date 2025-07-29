@@ -85,7 +85,7 @@ autoplay = "default"
 frame_progress = 0.893469
 
 [node name="PointLight2D" type="PointLight2D" parent="AnimatedSprite2D"]
-scale = Vector2(0.923772, 0.92)
+scale = Vector2(1.36984, 1.36424)
 texture = SubResource("GradientTexture2D_jhlu6")
 texture_scale = 2.43
 

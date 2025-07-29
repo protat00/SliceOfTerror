@@ -41,6 +41,6 @@ autoplay = "default"
 frame_progress = 0.237019
 
 [node name="PointLight2D" type="PointLight2D" parent="."]
-scale = Vector2(0.923772, 0.92)
+scale = Vector2(1.83838, 1.47206)
 texture = SubResource("GradientTexture2D_gsoaf")
 texture_scale = 2.43

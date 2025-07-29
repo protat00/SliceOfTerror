@@ -1,4 +1,4 @@
-[gd_scene load_steps=15 format=4 uid="uid://bsilhcjy0a1xp"]
+[gd_scene load_steps=18 format=4 uid="uid://bsilhcjy0a1xp"]
 
 [ext_resource type="PackedScene" uid="uid://ojlpv30i8afp" path="res://Scenes/player.tscn" id="1_ebmjs"]
 [ext_resource type="Script" uid="uid://c3t0fiuup3rkr" path="res://Scripts/game.gd" id="1_i6g32"]
@@ -10,6 +10,8 @@
 [ext_resource type="PackedScene" uid="uid://cxh6xq2l0xeo8" path="res://Scenes/enemy.tscn" id="8_v158k"]
 [ext_resource type="PackedScene" uid="uid://dec6u07k4els3" path="res://Scenes/soul_2d.tscn" id="9_h4fw4"]
 [ext_resource type="PackedScene" uid="uid://g5oqrkbyujb5" path="res://Scenes/scoreUI.tscn" id="10_ldgsr"]
+[ext_resource type="Script" uid="uid://dnx3mdcujvq2p" path="res://Scripts/slide_instructions.gd" id="11_o5yvi"]
+[ext_resource type="FontFile" uid="uid://xy2jqo6cs670" path="res://UI_Assets/BloodySilenceBold-d9BgK.ttf" id="12_rku1e"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_wrm1d"]
 texture = ExtResource("2_qxrlw")
@@ -131,6 +133,9 @@ ambient_light_energy = 0.0
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_1l0tm"]
 size = Vector2(2634, 25)
 
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_ldgsr"]
+size = Vector2(51.1932, 169)
+
 [node name="game" type="Node2D" node_paths=PackedStringArray("pause_menu")]
 script = ExtResource("1_i6g32")
 pause_menu = NodePath("Player/PauseMenu")
@@ -146,24 +151,39 @@ environment = SubResource("Environment_3dryh")
 
 [node name="chandelier" parent="." instance=ExtResource("3_wrm1d")]
 position = Vector2(228, 160)
+metadata/_edit_group_ = true
 
 [node name="chandelier2" parent="." instance=ExtResource("3_wrm1d")]
 position = Vector2(500, 164)
+metadata/_edit_group_ = true
 
 [node name="chandelier3" parent="." instance=ExtResource("3_wrm1d")]
 position = Vector2(784, 161)
+metadata/_edit_group_ = true
 
 [node name="chandelier4" parent="." instance=ExtResource("3_wrm1d")]
 position = Vector2(1085, 158)
+metadata/_edit_group_ = true
 
 [node name="chandelier5" parent="." instance=ExtResource("3_wrm1d")]
 position = Vector2(1376, 162)
+metadata/_edit_group_ = true
 
 [node name="chandelier6" parent="." instance=ExtResource("3_wrm1d")]
 position = Vector2(1634, 258)
+metadata/_edit_group_ = true
 
 [node name="chandelier7" parent="." instance=ExtResource("3_wrm1d")]
-position = Vector2(1957, 259)
+position = Vector2(2054, 258)
+metadata/_edit_group_ = true
+
+[node name="chandelier8" parent="." instance=ExtResource("3_wrm1d")]
+position = Vector2(2329, 279)
+metadata/_edit_group_ = true
+
+[node name="chandelier9" parent="." instance=ExtResource("3_wrm1d")]
+position = Vector2(2665, 257)
+metadata/_edit_group_ = true
 
 [node name="NewPiskel(4)-1_png" type="Sprite2D" parent="."]
 position = Vector2(312, 196)
@@ -192,6 +212,8 @@ grow_vertical = 1
 scale = Vector2(1.70698, 1.49721)
 
 [node name="Border" type="Area2D" parent="." groups=["Enemy"]]
+position = Vector2(9, -7)
+scale = Vector2(1.24, 1)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Border" groups=["Enemy"]]
 position = Vector2(1295, 541)
@@ -207,5 +229,25 @@ position = Vector2(897, 262)
 position = Vector2(4.40379, 0)
 
 [node name="ScoreUI" parent="." instance=ExtResource("10_ldgsr")]
+
+[node name="DirectionalLight2D" type="DirectionalLight2D" parent="."]
+position = Vector2(17, -23)
+color = Color(0.955963, 0.955963, 0.955963, 1)
+energy = 0.7
+blend_mode = 1
+
+[node name="SlideInstructions" type="Area2D" parent="."]
+position = Vector2(-1, 0)
+scale = Vector2(1.15534, 0.980583)
+script = ExtResource("11_o5yvi")
+display_text = "Hold S/Shift to slide while moving."
+ui_size = Vector2(260, 75)
+ui_font = ExtResource("12_rku1e")
+ui_font_size = 24
+background_color = Color(0.6, 0.2, 0.8, 0.690196)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="SlideInstructions"]
+position = Vector2(1083.17, 231.495)
+shape = SubResource("RectangleShape2D_ldgsr")
 
 [editable path="soul"]
