@@ -16,11 +16,11 @@ func _ready():
 		print("ExitSettings button not found!")
 
 func _on_music_button_pressed():
-	AudioManager.set_music_enabled(not AudioManager.music_enabled)
+	MusicManager.set_music_enabled(not MusicManager.music_enabled)
 	update_music_button_text()
 
 func update_music_button_text():
-	if AudioManager.music_enabled:
+	if MusicManager.music_enabled:
 		music_button.text = "Music: ON"
 	else:
 		music_button.text = "Music: OFF"

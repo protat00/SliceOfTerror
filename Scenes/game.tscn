@@ -1,4 +1,4 @@
-[gd_scene load_steps=18 format=4 uid="uid://bsilhcjy0a1xp"]
+[gd_scene load_steps=20 format=4 uid="uid://bsilhcjy0a1xp"]
 
 [ext_resource type="PackedScene" uid="uid://ojlpv30i8afp" path="res://Scenes/player.tscn" id="1_ebmjs"]
 [ext_resource type="Script" uid="uid://c3t0fiuup3rkr" path="res://Scripts/game.gd" id="1_i6g32"]
@@ -12,6 +12,7 @@
 [ext_resource type="PackedScene" uid="uid://g5oqrkbyujb5" path="res://Scenes/scoreUI.tscn" id="10_ldgsr"]
 [ext_resource type="Script" uid="uid://dnx3mdcujvq2p" path="res://Scripts/slide_instructions.gd" id="11_o5yvi"]
 [ext_resource type="FontFile" uid="uid://xy2jqo6cs670" path="res://UI_Assets/BloodySilenceBold-d9BgK.ttf" id="12_rku1e"]
+[ext_resource type="Script" uid="uid://vicq6r8nvcyo" path="res://Scripts/jump_instructions.gd" id="13_rfjv2"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_wrm1d"]
 texture = ExtResource("2_qxrlw")
@@ -134,7 +135,10 @@ ambient_light_energy = 0.0
 size = Vector2(2634, 25)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_ldgsr"]
-size = Vector2(51.1932, 169)
+size = Vector2(53.6637, 169)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_1phco"]
+size = Vector2(124.5, 33)
 
 [node name="game" type="Node2D" node_paths=PackedStringArray("pause_menu")]
 script = ExtResource("1_i6g32")
@@ -247,7 +251,26 @@ ui_font_size = 24
 background_color = Color(0.6, 0.2, 0.8, 0.690196)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="SlideInstructions"]
-position = Vector2(1083.17, 231.495)
+position = Vector2(1075.87, 231.495)
+scale = Vector2(1, 1)
 shape = SubResource("RectangleShape2D_ldgsr")
+
+[node name="JumpInstructions" type="Area2D" parent="."]
+script = ExtResource("13_rfjv2")
+display_text = "You can double tap spacebar/w to
+ double jump!
+"
+ui_size = Vector2(300, 75)
+ui_font = ExtResource("12_rku1e")
+ui_font_size = 27
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="JumpInstructions"]
+position = Vector2(449.25, 315)
+shape = SubResource("RectangleShape2D_1phco")
+
+[node name="NewPiskel(4)-2_png2" type="Sprite2D" parent="."]
+position = Vector2(997, 189)
+scale = Vector2(2.34375, 2.71875)
+texture = ExtResource("5_wowpa")
 
 [editable path="soul"]

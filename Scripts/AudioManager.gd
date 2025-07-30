@@ -73,3 +73,14 @@ func is_playing_music(music_resource: AudioStream) -> bool:
 	if music_player and music_player.playing and current_music_stream:
 		return current_music_stream == music_resource
 	return false
+	
+# Add to your MusicManager autoload
+func set_volume(volume_db: float):
+	music_player.volume_db = volume_db
+
+func get_volume() -> float:
+	return music_player.volume_db
+
+func fade_volume(target_volume: float, duration: float):
+	var tween = create_tween()
+	tween.tween_property(music_player, "volume_db", target_volume, duration)

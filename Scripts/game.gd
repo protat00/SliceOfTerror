@@ -1,5 +1,4 @@
 extends Node2D
-
 # Fix the node path - check your actual scene structure
 @export var pause_menu : Control  # or whatever the actual node name is
 var paused = false
@@ -13,8 +12,12 @@ func _ready():
 	else:
 		print("pause_menu found successfully")
 		pause_menu.hide()  # Start with menu hidden
+	
+	# Add game music
+	var game_music = load("res://Audio/game_ambient_music.mp3")  # Use your actual file path
+	MusicManager.play_music_for_scene(game_music, "Game")
 
-func _process(_delta):
+func _process(delta):
 	if Input.is_action_just_pressed("pause"):
 		pauseMenu()
 	
@@ -34,5 +37,12 @@ func pauseMenu():
 	paused = !paused
 
 func game_over():
-	get_tree().paused =true
+	get_tree().paused = true
 	is_game_over = true
+	# Set volume directly
+	MusicManager.set_volume(-12.0)
+
+# Fade music in/out
+	MusicManager.fade_volume(-30.0, 2.0)  # Fade to -30db over 2 seconds
+	
+	
