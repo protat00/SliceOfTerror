@@ -35,14 +35,14 @@ func pauseMenu():
 		Engine.time_scale = 0
 		
 	paused = !paused
-
-func game_over():
-	get_tree().paused = true
-	is_game_over = true
-	# Set volume directly
-	MusicManager.set_volume(-12.0)
-
-# Fade music in/out
-	MusicManager.fade_volume(-30.0, 2.0)  # Fade to -30db over 2 seconds
+	
+	var game_music = load("res://Audio/game_ambient_music.mp3")
+	MusicManager.play_music_for_scene(game_music, "res://Audio/game_ambient_music.mp3")
+	
+	# Debug the volume change
+	await get_tree().create_timer(0.1).timeout
+	print("Current volume before: ", MusicManager.get_volume())
+	MusicManager.set_volume(-20.0)
+	print("Current volume after: ", MusicManager.get_volume())
 	
 	

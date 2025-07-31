@@ -2,7 +2,7 @@ extends Node
 var music_player: AudioStreamPlayer
 var music_enabled: bool = true
 var current_music_stream: AudioStream
-var current_music_scene: String = ""  # Track which scene's music is playing
+var current_music_scene: String = ""
 
 func _ready():
 	music_player = AudioStreamPlayer.new()
@@ -74,13 +74,16 @@ func is_playing_music(music_resource: AudioStream) -> bool:
 		return current_music_stream == music_resource
 	return false
 	
-# Add to your MusicManager autoload
 func set_volume(volume_db: float):
-	music_player.volume_db = volume_db
+	if music_player:
+		music_player.volume_db = volume_db
 
 func get_volume() -> float:
-	return music_player.volume_db
+	if music_player:
+		return music_player.volume_db
+	return 0.0  # This line was missing or not reachable
 
 func fade_volume(target_volume: float, duration: float):
-	var tween = create_tween()
-	tween.tween_property(music_player, "volume_db", target_volume, duration)
+	if music_player:
+		var tween = create_tween()
+		tween.tween_property(music_player, "volume_db", target_volume, duration)

@@ -252,7 +252,6 @@ background_color = Color(0.6, 0.2, 0.8, 0.690196)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="SlideInstructions"]
 position = Vector2(1075.87, 231.495)
-scale = Vector2(1, 1)
 shape = SubResource("RectangleShape2D_ldgsr")
 
 [node name="JumpInstructions" type="Area2D" parent="."]

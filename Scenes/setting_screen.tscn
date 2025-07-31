@@ -74,3 +74,7 @@ theme_override_colors/font_hover_color = Color(0.854902, 0, 0, 1)
 theme_override_colors/font_outline_color = Color(0.854902, 0, 0, 1)
 theme_override_colors/font_color = Color(1, 1, 1, 1)
 text = "MUSIC MUTE"
+
+[node name="VolumeSlider" type="HSlider" parent="VBoxContainer"]
+custom_minimum_size = Vector2(200, 0)
+layout_mode = 2
