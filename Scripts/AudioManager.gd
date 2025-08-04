@@ -87,3 +87,14 @@ func fade_volume(target_volume: float, duration: float):
 	if music_player:
 		var tween = create_tween()
 		tween.tween_property(music_player, "volume_db", target_volume, duration)
+		
+		# Add this to your MusicManager _ready() function
+
+	music_player = AudioStreamPlayer.new()
+	add_child(music_player)
+	
+	# Debug: Check AudioStreamPlayer settings
+	print("AudioStreamPlayer bus: ", music_player.bus)
+	print("AudioStreamPlayer volume_db: ", music_player.volume_db)
+	
+	load_music_setting()

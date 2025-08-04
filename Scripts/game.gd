@@ -14,9 +14,6 @@ func _ready():
 		pause_menu.hide()  # Start with menu hidden
 	
 	# Add game music
-	var game_music = load("res://Audio/game_ambient_music.mp3")  # Use your actual file path
-	MusicManager.play_music_for_scene(game_music, "Game")
-
 func _process(delta):
 	if Input.is_action_just_pressed("pause"):
 		pauseMenu()
@@ -36,13 +33,5 @@ func pauseMenu():
 		
 	paused = !paused
 	
-	var game_music = load("res://Audio/game_ambient_music.mp3")
-	MusicManager.play_music_for_scene(game_music, "res://Audio/game_ambient_music.mp3")
-	
-	# Debug the volume change
-	await get_tree().create_timer(0.1).timeout
-	print("Current volume before: ", MusicManager.get_volume())
-	MusicManager.set_volume(-20.0)
-	print("Current volume after: ", MusicManager.get_volume())
 	
 	

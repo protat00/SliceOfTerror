@@ -1,4 +1,4 @@
-[gd_scene load_steps=20 format=4 uid="uid://bsilhcjy0a1xp"]
+[gd_scene load_steps=21 format=4 uid="uid://bsilhcjy0a1xp"]
 
 [ext_resource type="PackedScene" uid="uid://ojlpv30i8afp" path="res://Scenes/player.tscn" id="1_ebmjs"]
 [ext_resource type="Script" uid="uid://c3t0fiuup3rkr" path="res://Scripts/game.gd" id="1_i6g32"]
@@ -13,6 +13,7 @@
 [ext_resource type="Script" uid="uid://dnx3mdcujvq2p" path="res://Scripts/slide_instructions.gd" id="11_o5yvi"]
 [ext_resource type="FontFile" uid="uid://xy2jqo6cs670" path="res://UI_Assets/BloodySilenceBold-d9BgK.ttf" id="12_rku1e"]
 [ext_resource type="Script" uid="uid://vicq6r8nvcyo" path="res://Scripts/jump_instructions.gd" id="13_rfjv2"]
+[ext_resource type="AudioStream" uid="uid://boxamyb6g5rbf" path="res://Audio/game_ambient_music.mp3" id="14_1phco"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_wrm1d"]
 texture = ExtResource("2_qxrlw")
@@ -199,6 +200,11 @@ position = Vector2(694, 196)
 scale = Vector2(2.21875, 2.78125)
 texture = ExtResource("5_wowpa")
 
+[node name="NewPiskel(4)-2_png2" type="Sprite2D" parent="."]
+position = Vector2(997, 199)
+scale = Vector2(2.34375, 2.71875)
+texture = ExtResource("5_wowpa")
+
 [node name="Player" parent="." instance=ExtResource("1_ebmjs")]
 position = Vector2(101, 306)
 
@@ -267,9 +273,10 @@ ui_font_size = 27
 position = Vector2(449.25, 315)
 shape = SubResource("RectangleShape2D_1phco")
 
-[node name="NewPiskel(4)-2_png2" type="Sprite2D" parent="."]
-position = Vector2(997, 189)
-scale = Vector2(2.34375, 2.71875)
-texture = ExtResource("5_wowpa")
+[node name="GameAmbientMusic" type="AudioStreamPlayer" parent="JumpInstructions"]
+stream = ExtResource("14_1phco")
+volume_db = -23.6
+autoplay = true
+parameters/looping = true
 
 [editable path="soul"]
