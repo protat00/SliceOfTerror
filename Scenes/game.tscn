@@ -250,6 +250,7 @@ blend_mode = 1
 position = Vector2(-1, 0)
 scale = Vector2(1.15534, 0.980583)
 script = ExtResource("11_o5yvi")
+ui_offset = Vector2(0, -100)
 display_text = "Hold S/Shift to slide while moving."
 ui_size = Vector2(260, 75)
 ui_font = ExtResource("12_rku1e")

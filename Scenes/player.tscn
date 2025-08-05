@@ -101,12 +101,12 @@ animations = [{
 "speed": 0.0
 }]
 
-[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_cvnsp"]
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_vgqql"]
 radius = 15.418
-height = 43.5442
+height = 45.3585
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_6t5aa"]
-radius = 15.0
+radius = 14.0
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_vgqql"]
 shader = ExtResource("3_6t5aa")
@@ -150,6 +150,8 @@ fill_to = Vector2(0.834862, 0.137615)
 script = ExtResource("1_fkybt")
 respawn_image_duration = 1.5
 walking_sound = ExtResource("3_fkybt")
+walking_volume = -15.0
+coyote_time = 10.0
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." groups=["Player", "player"]]
 position = Vector2(-6.5, -4.5)
@@ -159,12 +161,12 @@ animation = &"idle"
 autoplay = "idle"
 
 [node name="NormalCollision" type="CollisionShape2D" parent="."]
-position = Vector2(-5, -3)
+position = Vector2(-6, -4)
 scale = Vector2(0.908031, 1.10233)
-shape = SubResource("CapsuleShape2D_cvnsp")
+shape = SubResource("CapsuleShape2D_vgqql")
 
 [node name="CrouchCollision" type="CollisionShape2D" parent="."]
-position = Vector2(-5, 6)
+position = Vector2(-6, 7)
 shape = SubResource("CircleShape2D_6t5aa")
 
 [node name="Camera2D" type="Camera2D" parent="."]
@@ -188,9 +190,10 @@ mouse_filter = 2
 metadata/_edit_use_anchors_ = true
 
 [node name="HitBox" type="Area2D" parent="."]
+position = Vector2(-2, 0)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="HitBox"]
-position = Vector2(-5, -3)
+position = Vector2(-4, -3)
 shape = SubResource("CapsuleShape2D_6t5aa")
 
 [node name="PointLight2D" type="PointLight2D" parent="."]

@@ -41,6 +41,7 @@ scale = Vector2(0.598954, 0.611218)
 texture = ExtResource("1_judg0")
 
 [node name="ColorRect" type="ColorRect" parent="."]
+visible = false
 material = SubResource("ShaderMaterial_jykvo")
 anchors_preset = -1
 anchor_left = -0.496528
@@ -64,18 +65,19 @@ icon = ExtResource("2_eq5hj")
 icon_alignment = 1
 
 [node name="VolumeLabel" type="Label" parent="."]
-offset_left = 177.0
-offset_top = 268.0
-offset_right = 217.0
-offset_bottom = 291.0
+offset_left = 212.0
+offset_top = 255.0
+offset_right = 346.0
+offset_bottom = 310.0
+text = "Music"
 script = ExtResource("5_jykvo")
 
 [node name="VolumeSlider" type="HSlider" parent="."]
 custom_minimum_size = Vector2(200, 0)
 offset_left = 300.0
 offset_top = 243.0
-offset_right = 704.0
-offset_bottom = 320.0
+offset_right = 560.0
+offset_bottom = 321.0
 script = ExtResource("6_y8hlo")
 
 [node name="VBoxContainer" type="VBoxContainer" parent="."]

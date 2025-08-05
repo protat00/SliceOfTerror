@@ -1,9 +1,16 @@
 extends Area2D
 
+# UI Positioning Settings
+@export_group("UI Positioning")
+@export var ui_offset: Vector2 = Vector2(0, -60)  ## X and Y offset from player (+ = right/down, - = left/up)
+@export var show_position_preview: bool = false  ## Shows a yellow circle in editor to preview UI position
+@export var adaptive_positioning: bool = true  ## Automatically prevents UI from covering player
+@export var min_distance_from_player: float = 80.0  ## Minimum distance to maintain from player center
+
 # Text display settings
+@export_group("Text Content")
 @export_multiline var display_text: String = "Press E to interact with souls\nWASD to move"
 @export var ui_size: Vector2 = Vector2(200, 50)
-@export var ui_height_offset: float = -60.0
 @export var ui_font: Font
 @export var ui_font_size: int = 16
 
@@ -48,6 +55,24 @@ func _ready():
 	
 	# Create the UI
 	create_text_ui()
+
+# Debug visualization in editor
+func _draw():
+	if Engine.is_editor_hint() and show_position_preview:
+		# Draw a small circle showing where the UI will appear relative to this trigger
+		var preview_pos = ui_offset
+		draw_circle(preview_pos, 8, Color.YELLOW)
+		draw_circle(preview_pos, 4, Color.BLACK)
+		
+		# Draw the minimum distance circle
+		draw_circle(Vector2.ZERO, min_distance_from_player, Color.YELLOW, false, 1.5)
+		
+		# Draw a line from center to UI position
+		draw_line(Vector2.ZERO, preview_pos, Color.YELLOW, 2.0)
+		
+		# Draw UI box preview
+		var box_pos = preview_pos - ui_size / 2
+		draw_rect(Rect2(box_pos, ui_size), Color.YELLOW, false, 1.0)
 
 func _on_body_entered(body):
 	if body.is_in_group("Player"):
@@ -137,6 +162,26 @@ func create_panel_style():
 	
 	ui_panel.add_theme_stylebox_override("panel", style)
 
+func get_adaptive_ui_position(base_position: Vector2) -> Vector2:
+	if not adaptive_positioning or not current_player:
+		return base_position
+	
+	# Calculate distance from base position to player
+	var distance_to_player = base_position.distance_to(current_player.global_position)
+	
+	# If we're too close to the player, push the UI away
+	if distance_to_player < min_distance_from_player:
+		var direction_from_player = (base_position - current_player.global_position).normalized()
+		
+		# If the direction is zero (exactly on player), default to upward
+		if direction_from_player.length() < 0.1:
+			direction_from_player = Vector2.UP
+		
+		# Push UI to minimum distance
+		return current_player.global_position + (direction_from_player * min_distance_from_player)
+	
+	return base_position
+
 func update_ui_position_with_arc_and_bob(delta):
 	if not ui_control or not current_player:
 		return
@@ -160,8 +205,11 @@ func update_ui_position_with_arc_and_bob(delta):
 		# Reduce bobbing when moving fast (for smoother arc effect)
 		bobbing_offset *= (1.0 - (speed_factor * 0.5))
 	
-	# Target position: above player with arc offset and bobbing
-	var target_world_pos = current_player.global_position + Vector2(0, ui_height_offset + bobbing_offset) + arc_offset
+	# Calculate base target position using the new ui_offset
+	var base_target_pos = current_player.global_position + ui_offset + Vector2(0, bobbing_offset) + arc_offset
+	
+	# Apply adaptive positioning if enabled
+	var target_world_pos = get_adaptive_ui_position(base_target_pos)
 	
 	# Convert to screen position
 	var viewport = get_viewport()
