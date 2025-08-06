@@ -4,7 +4,6 @@ extends CanvasLayer
 
 func _ready():
 	# Wait for the scene to be fully loaded
-	
 	music_button.pressed.connect(_on_music_button_pressed)
 	update_music_button_text()
 	
@@ -26,4 +25,6 @@ func update_music_button_text():
 		music_button.text = "Music: OFF"
 
 func _on_exit_settings_pressed() -> void:
+	# Since settings is a separate scene, we need to go back to main menu
+	# But we want to avoid restarting the music
 	get_tree().change_scene_to_file("res://Scenes/Title_screen.tscn")

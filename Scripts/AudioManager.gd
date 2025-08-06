@@ -8,6 +8,20 @@ func _ready():
 	music_player = AudioStreamPlayer.new()
 	add_child(music_player)
 	
+	music_player = AudioStreamPlayer.new()
+	add_child(music_player)
+	
+	# Load and apply volume setting
+	load_volume_setting()
+
+func load_volume_setting():
+	var config = ConfigFile.new()
+	if config.load("user://settings.cfg") == OK:
+		var volume_value = config.get_value("audio", "volume", 0.5)
+		var volume_db = 20.0 * log(volume_value) / log(10.0) if volume_value > 0.0 else -80.0
+		var master_bus = AudioServer.get_bus_index("Master")
+		AudioServer.set_bus_volume_db(master_bus, volume_db)
+	
 	# Load the saved music setting
 	load_music_setting()
 
@@ -24,6 +38,24 @@ func play_music_for_scene(stream: AudioStream, scene_name: String, volume: float
 			
 			music_player.stream = stream
 			music_player.volume_db = volume
+			music_player.play()
+			
+	if current_music_scene != scene_name or not music_player.playing:
+		current_music_scene = scene_name
+		current_music_stream = stream
+		
+	if music_enabled:
+		if music_player.playing:
+			music_player.stop()
+			
+			music_player.stream = stream
+			music_player.volume_db = volume
+			# Make sure the music loops
+			if stream is AudioStreamOggVorbis:
+				stream.loop = true
+			elif stream is AudioStreamMP3:
+				stream.loop = true
+			
 			music_player.play()
 
 func play_music(stream: AudioStream, volume: float = 0.0):

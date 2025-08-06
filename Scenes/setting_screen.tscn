@@ -41,7 +41,6 @@ scale = Vector2(0.598954, 0.611218)
 texture = ExtResource("1_judg0")
 
 [node name="ColorRect" type="ColorRect" parent="."]
-visible = false
 material = SubResource("ShaderMaterial_jykvo")
 anchors_preset = -1
 anchor_left = -0.496528
@@ -67,8 +66,8 @@ icon_alignment = 1
 [node name="VolumeLabel" type="Label" parent="."]
 offset_left = 212.0
 offset_top = 255.0
-offset_right = 346.0
-offset_bottom = 310.0
+offset_right = 329.0
+offset_bottom = 302.0
 text = "Music"
 script = ExtResource("5_jykvo")
 

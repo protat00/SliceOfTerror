@@ -6,7 +6,9 @@ func _ready():
 	min_value = 0.0
 	max_value = 1.0
 	step = 0.01
-	value = 0.5  # Start at 50% volume
+	
+	# Load saved volume or default to 50%
+	load_volume_setting()
 	
 	# Connect the slider to the function
 	value_changed.connect(_on_volume_changed)
@@ -27,4 +29,19 @@ func _on_volume_changed(new_value: float):
 	var master_bus = AudioServer.get_bus_index("Master")
 	AudioServer.set_bus_volume_db(master_bus, volume_db)
 	
+	# Save the volume setting
+	save_volume_setting(new_value)
+	
 	print("Slider value: ", new_value, " Volume dB: ", volume_db)
+
+func save_volume_setting(volume_value: float):
+	var config = ConfigFile.new()
+	config.set_value("audio", "volume", volume_value)
+	config.save("user://settings.cfg")
+
+func load_volume_setting():
+	var config = ConfigFile.new()
+	if config.load("user://settings.cfg") == OK:
+		value = config.get_value("audio", "volume", 0.5)  # Default to 50% if not found
+	else:
+		value = 0.5  # Default volume
