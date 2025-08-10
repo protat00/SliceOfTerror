@@ -86,6 +86,10 @@ var is_dead = false
 var respawn_overlay: Control
 var respawn_image_rect: TextureRect
 
+# To check current lives
+var lives = $LifeManager.get_current_lives()
+
+
 func _ready():
 	crouch_collision.disabled = true
 	$Camera2D/CanvasLayer.visible = true
@@ -479,3 +483,7 @@ func show_respawn_image():
 		await image_tween.finished
 		respawn_overlay.visible = false
 		respawn_overlay.modulate.a = 1.0
+	$LifeManager.lose_life()
+
+# When player gets a life pickup
+	$LifeManager.gain_life()
