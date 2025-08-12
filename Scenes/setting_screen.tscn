@@ -64,10 +64,10 @@ icon = ExtResource("2_eq5hj")
 icon_alignment = 1
 
 [node name="VolumeLabel" type="Label" parent="."]
-offset_left = 212.0
-offset_top = 255.0
-offset_right = 329.0
-offset_bottom = 302.0
+offset_left = 248.0
+offset_top = 268.0
+offset_right = 365.0
+offset_bottom = 315.0
 text = "Music"
 script = ExtResource("5_jykvo")
 

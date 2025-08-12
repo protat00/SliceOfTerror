@@ -1,4 +1,4 @@
-[gd_scene load_steps=24 format=3 uid="uid://bltlmneknadxs"]
+[gd_scene load_steps=26 format=3 uid="uid://bltlmneknadxs"]
 
 [ext_resource type="Texture2D" uid="uid://dt06nrqbqffs5" path="res://black-and-white-image.png" id="1_3j6d3"]
 [ext_resource type="Script" uid="uid://baw41wicvh6o7" path="res://Scripts/life_manager.gd" id="1_dsnsf"]
@@ -38,7 +38,7 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_d8g2w")
 }],
-"loop": true,
+"loop": false,
 "name": &"death",
 "speed": 5.0
 }, {
@@ -58,6 +58,16 @@ animations = [{
 "name": &"idle",
 "speed": 5.0
 }]
+
+[sub_resource type="Gradient" id="Gradient_ltyds"]
+offsets = PackedFloat32Array(0.590909, 1)
+colors = PackedColorArray(1, 1, 1, 1, 0, 0, 0, 1)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_dsnsf"]
+gradient = SubResource("Gradient_ltyds")
+fill = 1
+fill_from = Vector2(0.504587, 0.504587)
+fill_to = Vector2(0.834862, 0.137615)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_46iov"]
 atlas = ExtResource("1_3j6d3")
@@ -91,7 +101,7 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_fk0ev")
 }],
-"loop": true,
+"loop": false,
 "name": &"death",
 "speed": 5.0
 }, {
@@ -144,7 +154,7 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_ym4qy")
 }],
-"loop": true,
+"loop": false,
 "name": &"death",
 "speed": 5.0
 }, {
@@ -165,22 +175,45 @@ animations = [{
 "speed": 5.0
 }]
 
-[node name="Node2D" type="Node2D"]
+[node name="Hearts" type="Node2D"]
 
 [node name="LifeManager" type="Node2D" parent="."]
 script = ExtResource("1_dsnsf")
 
 [node name="Heart1" type="AnimatedSprite2D" parent="."]
 sprite_frames = SubResource("SpriteFrames_46iov")
-animation = &"empty"
+animation = &"death"
+autoplay = "idle"
 script = ExtResource("3_rqfbk")
 
+[node name="PointLight2D" type="PointLight2D" parent="Heart1"]
+position = Vector2(0, -2)
+scale = Vector2(0.128001, -0.136148)
+texture = SubResource("GradientTexture2D_dsnsf")
+texture_scale = 2.43
+
 [node name="Heart2" type="AnimatedSprite2D" parent="."]
+position = Vector2(18, 0)
 sprite_frames = SubResource("SpriteFrames_j1mrj")
-animation = &"empty"
+animation = &"death"
+autoplay = "idle"
 script = ExtResource("4_ym4qy")
 
+[node name="PointLight2D" type="PointLight2D" parent="Heart2"]
+position = Vector2(0, -2)
+scale = Vector2(0.128001, -0.136148)
+texture = SubResource("GradientTexture2D_dsnsf")
+texture_scale = 2.43
+
 [node name="Heart3" type="AnimatedSprite2D" parent="."]
+position = Vector2(37, 0)
 sprite_frames = SubResource("SpriteFrames_r5it8")
 animation = &"death"
+autoplay = "idle"
 script = ExtResource("5_mm032")
+
+[node name="PointLight2D" type="PointLight2D" parent="Heart3"]
+position = Vector2(0, -2)
+scale = Vector2(0.128001, -0.136148)
+texture = SubResource("GradientTexture2D_dsnsf")
+texture_scale = 2.43

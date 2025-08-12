@@ -86,17 +86,16 @@ var is_dead = false
 var respawn_overlay: Control
 var respawn_image_rect: TextureRect
 
-# To check current lives
-var lives = $LifeManager.get_current_lives()
-
-
 func _ready():
 	crouch_collision.disabled = true
 	$Camera2D/CanvasLayer.visible = true
 	respawn_position = global_position
 	add_to_group("Player")
-	print("DEBUG: Player ready with ", souls, " souls")
-
+	
+	# Initialize hearts when the player is ready
+	# Use call_deferred to ensure the scene is fully loaded
+	call_deferred("initialize_life_system")
+	
 	setup_walking_audio()
 	
 	if animated_sprite:
@@ -119,6 +118,18 @@ func _ready():
 			hit_box.body_entered.connect(_on_hit_box_body_entered)
 
 	setup_respawn_overlay()
+	
+	# Connect to LifeManager signals
+	if not LifeManager.game_over.is_connected(_on_game_over):
+		LifeManager.game_over.connect(_on_game_over)
+
+func initialize_life_system():
+	# Initialize the hearts in the LifeManager
+	LifeManager.initialize_hearts()
+	
+	# Get current lives for debugging
+	var lives = LifeManager.get_current_lives()
+	print("DEBUG: Player ready with ", lives, " lives and ", souls, " souls")
 
 func setup_walking_audio():
 	if not has_node("WalkingAudio"):
@@ -314,10 +325,6 @@ func apply_momentum_movement(direction: float, delta: float, custom_friction: fl
 		# No input - apply friction
 		velocity.x = move_toward(velocity.x, 0, custom_friction * delta)
 
-
-
-
-
 func play_animation():
 	match current_state:
 		State.IDLE: animated_sprite.play("idle")
@@ -407,8 +414,14 @@ func die():
 	death_tween.tween_property(animated_sprite, "scale", Vector2(0.5, 0.5), death_animation_duration)
 	death_tween.tween_property(animated_sprite, "rotation", deg_to_rad(360), death_animation_duration)
 	
+	# Lose a life when dying
+	LifeManager.lose_life()
+	
 	await death_tween.finished
-	respawn()
+	
+	# Only respawn if we still have lives
+	if LifeManager.has_lives():
+		respawn()
 		
 func respawn():
 	if death_tween:
@@ -483,7 +496,18 @@ func show_respawn_image():
 		await image_tween.finished
 		respawn_overlay.visible = false
 		respawn_overlay.modulate.a = 1.0
-	$LifeManager.lose_life()
 
-# When player gets a life pickup
-	$LifeManager.gain_life()
+# Called when LifeManager signals game over
+func _on_game_over():
+	print("Game Over! All lives lost.")
+	# Add your game over logic here
+	# For example:
+	# get_tree().change_scene_to_file("res://GameOverScene.tscn")
+
+# Function to gain a life (for pickups, etc.)
+func gain_life():
+	LifeManager.gain_life()
+
+# Function to check current lives
+func get_lives() -> int:
+	return LifeManager.get_current_lives()

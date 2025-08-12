@@ -1,6 +1,6 @@
 [gd_scene load_steps=19 format=3 uid="uid://dec6u07k4els3"]
 
-[ext_resource type="Script" uid="uid://yn53mbk4kcuq" path="res://Scenes/soul_2d.gd" id="1_bewq1"]
+[ext_resource type="Script" uid="uid://yn53mbk4kcuq" path="res://Scripts/soul_2d.gd" id="1_bewq1"]
 [ext_resource type="Texture2D" uid="uid://b8ddtn5iiosx3" path="res://Assets/undead-recruit/undead/lost-spirit-s-atk-1.png" id="1_jhlu6"]
 [ext_resource type="Texture2D" uid="uid://bx138hl66m6bu" path="res://Assets/undead-recruit/undead/lost-spirit-s-atk-2.png" id="2_bewq1"]
 [ext_resource type="FontFile" uid="uid://xy2jqo6cs670" path="res://UI_Assets/BloodySilenceBold-d9BgK.ttf" id="2_jmkot"]
