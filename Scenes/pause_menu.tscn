@@ -1,4 +1,4 @@
-[gd_scene load_steps=7 format=3 uid="uid://bodq3p3tfhi11"]
+[gd_scene load_steps=6 format=3 uid="uid://bodq3p3tfhi11"]
 
 [ext_resource type="Script" uid="uid://hp7puaxaqif2" path="res://Scripts/pause_menu.gd" id="1_emv3i"]
 [ext_resource type="Shader" uid="uid://b4mqe54ohnntt" path="res://Shaders/pause_menu.gdshader" id="2_1och7"]
@@ -8,15 +8,8 @@
 shader = ExtResource("2_1och7")
 shader_parameter/amount = 1.0
 
-[sub_resource type="Gradient" id="Gradient_ltyds"]
-offsets = PackedFloat32Array(0.590909, 1)
-colors = PackedColorArray(1, 1, 1, 1, 0, 0, 0, 1)
-
-[sub_resource type="GradientTexture2D" id="GradientTexture2D_1och7"]
-gradient = SubResource("Gradient_ltyds")
-fill = 1
-fill_from = Vector2(0.504587, 0.504587)
-fill_to = Vector2(0.834862, 0.137615)
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_1och7"]
+bg_color = Color(0.6, 0.6, 0.6, 0)
 
 [node name="pause_menu" type="Control"]
 process_mode = 3
@@ -37,33 +30,17 @@ offset_right = -1073.0
 offset_bottom = -476.0
 scale = Vector2(79.0238, 41.6073)
 
-[node name="PointLight2D" type="PointLight2D" parent="."]
-position = Vector2(55.2619, 30.3831)
-scale = Vector2(0.755377, 0.650937)
-texture = SubResource("GradientTexture2D_1och7")
-texture_scale = 2.43
-
 [node name="MarginContainer" type="MarginContainer" parent="."]
 layout_mode = 0
 offset_left = 1.0
 offset_right = 105.0
-offset_bottom = 80.0
+offset_bottom = 101.0
 
 [node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer"]
 layout_mode = 2
+theme_override_constants/separation = 4
 
 [node name="Resume" type="Button" parent="MarginContainer/VBoxContainer"]
-layout_mode = 2
-theme_override_colors/font_hover_color = Color(0.854902, 0, 0, 1)
-theme_override_colors/font_color = Color(1, 1, 1, 1)
-theme_override_colors/font_focus_color = Color(0.854902, 0, 0, 1)
-theme_override_colors/font_pressed_color = Color(0.854902, 0, 0, 1)
-theme_override_fonts/font = ExtResource("3_1och7")
-theme_override_font_sizes/font_size = 26
-text = "Resume
-"
-
-[node name="Quit" type="Button" parent="MarginContainer/VBoxContainer"]
 layout_mode = 2
 theme_override_colors/font_hover_color = Color(0.436071, 0, 0, 1)
 theme_override_colors/font_color = Color(0.854902, 0, 0, 1)
@@ -71,6 +48,38 @@ theme_override_colors/font_focus_color = Color(0.436071, 0, 0, 1)
 theme_override_colors/font_pressed_color = Color(0.436071, 0, 0, 1)
 theme_override_fonts/font = ExtResource("3_1och7")
 theme_override_font_sizes/font_size = 26
+theme_override_styles/disabled_mirrored = SubResource("StyleBoxFlat_1och7")
+theme_override_styles/disabled = SubResource("StyleBoxFlat_1och7")
+theme_override_styles/hover_pressed_mirrored = SubResource("StyleBoxFlat_1och7")
+theme_override_styles/hover_pressed = SubResource("StyleBoxFlat_1och7")
+theme_override_styles/hover_mirrored = SubResource("StyleBoxFlat_1och7")
+theme_override_styles/hover = SubResource("StyleBoxFlat_1och7")
+theme_override_styles/pressed_mirrored = SubResource("StyleBoxFlat_1och7")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_1och7")
+theme_override_styles/normal_mirrored = SubResource("StyleBoxFlat_1och7")
+theme_override_styles/normal = SubResource("StyleBoxFlat_1och7")
+text = "Resume
+"
+
+[node name="Quit" type="Button" parent="MarginContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 0
+theme_override_colors/font_hover_color = Color(0.436071, 0, 0, 1)
+theme_override_colors/font_color = Color(0.854902, 0, 0, 1)
+theme_override_colors/font_focus_color = Color(0.436071, 0, 0, 1)
+theme_override_colors/font_pressed_color = Color(0.436071, 0, 0, 1)
+theme_override_fonts/font = ExtResource("3_1och7")
+theme_override_font_sizes/font_size = 26
+theme_override_styles/disabled_mirrored = SubResource("StyleBoxFlat_1och7")
+theme_override_styles/disabled = SubResource("StyleBoxFlat_1och7")
+theme_override_styles/hover_pressed_mirrored = SubResource("StyleBoxFlat_1och7")
+theme_override_styles/hover_pressed = SubResource("StyleBoxFlat_1och7")
+theme_override_styles/hover_mirrored = SubResource("StyleBoxFlat_1och7")
+theme_override_styles/hover = SubResource("StyleBoxFlat_1och7")
+theme_override_styles/pressed_mirrored = SubResource("StyleBoxFlat_1och7")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_1och7")
+theme_override_styles/normal_mirrored = SubResource("StyleBoxFlat_1och7")
+theme_override_styles/normal = SubResource("StyleBoxFlat_1och7")
 text = "Main menu
 
 "

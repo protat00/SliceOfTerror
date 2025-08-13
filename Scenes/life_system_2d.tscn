@@ -46,7 +46,7 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_iga8c")
 }],
-"loop": true,
+"loop": false,
 "name": &"empty",
 "speed": 5.0
 }, {
@@ -109,7 +109,7 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_hxcm7")
 }],
-"loop": true,
+"loop": false,
 "name": &"empty",
 "speed": 5.0
 }, {
@@ -162,7 +162,7 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_mm032")
 }],
-"loop": true,
+"loop": false,
 "name": &"empty",
 "speed": 5.0
 }, {
@@ -182,7 +182,7 @@ script = ExtResource("1_dsnsf")
 
 [node name="Heart1" type="AnimatedSprite2D" parent="."]
 sprite_frames = SubResource("SpriteFrames_46iov")
-animation = &"death"
+animation = &"empty"
 autoplay = "idle"
 script = ExtResource("3_rqfbk")
 
@@ -195,7 +195,7 @@ texture_scale = 2.43
 [node name="Heart2" type="AnimatedSprite2D" parent="."]
 position = Vector2(18, 0)
 sprite_frames = SubResource("SpriteFrames_j1mrj")
-animation = &"death"
+animation = &"empty"
 autoplay = "idle"
 script = ExtResource("4_ym4qy")
 
@@ -208,7 +208,7 @@ texture_scale = 2.43
 [node name="Heart3" type="AnimatedSprite2D" parent="."]
 position = Vector2(37, 0)
 sprite_frames = SubResource("SpriteFrames_r5it8")
-animation = &"death"
+animation = &"empty"
 autoplay = "idle"
 script = ExtResource("5_mm032")
 

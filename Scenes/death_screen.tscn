@@ -1,7 +1,116 @@
-[gd_scene load_steps=3 format=3 uid="uid://bdwrylpiya384"]
+[gd_scene load_steps=28 format=3 uid="uid://bdwrylpiya384"]
 
 [ext_resource type="FontFile" uid="uid://cbphda4k2lyp8" path="res://UI_Assets/MotionSicknessRegular-Yz3Yj.otf" id="1_8hps1"]
+[ext_resource type="Script" uid="uid://d1cf6l73liust" path="res://Scripts/death_screen.gd" id="1_dnmne"]
 [ext_resource type="Texture2D" uid="uid://bodrxq16nk2uw" path="res://Assets/hq720.jpg" id="1_rwas2"]
+[ext_resource type="Shader" uid="uid://xqjs30mogf2j" path="res://shader.gdshader" id="2_egfcw"]
+[ext_resource type="Texture2D" uid="uid://1y4m15ig2itl" path="res://Assets/round ghost/round ghost idle/sprite_0.png" id="7_lif08"]
+[ext_resource type="Texture2D" uid="uid://dvwbn1mbw6pgk" path="res://Assets/round ghost/round ghost idle/sprite_1.png" id="8_5qxwy"]
+[ext_resource type="Texture2D" uid="uid://gjjy5crcd246" path="res://Assets/round ghost/round ghost idle/sprite_2.png" id="9_pdnpo"]
+[ext_resource type="Texture2D" uid="uid://ctk2mae84w1m5" path="res://Assets/round ghost/round ghost idle/sprite_3.png" id="10_bflvx"]
+[ext_resource type="Texture2D" uid="uid://cj7pqjn4k4v4x" path="res://Assets/round ghost/round ghost idle/sprite_4.png" id="11_bvgs1"]
+[ext_resource type="Texture2D" uid="uid://7fsb3hk5bbld" path="res://Assets/round ghost/round ghost idle/sprite_5.png" id="12_q167q"]
+[ext_resource type="Texture2D" uid="uid://blu8tm4ei1n3o" path="res://Assets/round ghost/round ghost idle/sprite_6.png" id="13_gv44h"]
+[ext_resource type="Script" uid="uid://b44vbtvmvlum8" path="res://Scripts/return_menu.gd" id="13_pkspk"]
+[ext_resource type="Script" uid="uid://1iifi1e4qcev" path="res://Scripts/restart_button.gd" id="14_egfcw"]
+[ext_resource type="Texture2D" uid="uid://dfpchoxvf0eyh" path="res://Assets/round ghost/round ghost idle/sprite_7.png" id="14_ifccr"]
+[ext_resource type="Script" uid="uid://bbx4arofpcgav" path="res://Scripts/leave_button_death.gd" id="15_dnmne"]
+[ext_resource type="Texture2D" uid="uid://cyfnumwolviw3" path="res://Assets/round ghost/round ghost idle/sprite_8.png" id="15_tihgn"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_fckvw"]
+shader = ExtResource("2_egfcw")
+shader_parameter/overlay = false
+shader_parameter/resolution = Vector2(320, 180)
+shader_parameter/brightness = 1.5
+shader_parameter/scanlines_opacity = 0.075
+shader_parameter/scanlines_width = 0.201
+shader_parameter/grille_opacity = 0.0
+shader_parameter/roll = true
+shader_parameter/roll_speed = 2.0
+shader_parameter/roll_size = 4.075
+shader_parameter/roll_variation = 2.461
+shader_parameter/distort_intensity = 0.0
+shader_parameter/aberration = 0.03
+shader_parameter/noise_opacity = 0.241
+shader_parameter/noise_speed = 1.18
+shader_parameter/static_noise_intensity = 0.06
+shader_parameter/pixelate = false
+shader_parameter/discolor = true
+shader_parameter/warp_amount = 0.529
+shader_parameter/clip_warp = false
+shader_parameter/vignette_intensity = 0.5
+shader_parameter/vignette_opacity = 0.709
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_xpuq7"]
+atlas = ExtResource("7_lif08")
+region = Rect2(0, 0, 50, 50)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_bhi3s"]
+atlas = ExtResource("8_5qxwy")
+region = Rect2(0, 0, 50, 50)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_r87vk"]
+atlas = ExtResource("9_pdnpo")
+region = Rect2(0, 0, 50, 50)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_sojpt"]
+atlas = ExtResource("10_bflvx")
+region = Rect2(0, 0, 50, 50)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_hsbmo"]
+atlas = ExtResource("11_bvgs1")
+region = Rect2(0, 0, 50, 50)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_rc5vd"]
+atlas = ExtResource("12_q167q")
+region = Rect2(0, 0, 50, 50)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_wlc86"]
+atlas = ExtResource("13_gv44h")
+region = Rect2(0, 0, 50, 50)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_cut0g"]
+atlas = ExtResource("14_ifccr")
+region = Rect2(0, 0, 50, 50)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_jl1yu"]
+atlas = ExtResource("15_tihgn")
+region = Rect2(0, 0, 50, 50)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_5g23r"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_xpuq7")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_bhi3s")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_r87vk")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_sojpt")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_hsbmo")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_rc5vd")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_wlc86")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_cut0g")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_jl1yu")
+}],
+"loop": true,
+"name": &"idle",
+"speed": 4.0
+}]
 
 [node name="DeathScreen" type="Control"]
 layout_mode = 3
@@ -10,6 +119,23 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+script = ExtResource("1_dnmne")
+
+[node name="CanvasLayer2" type="CanvasLayer" parent="."]
+visible = false
+
+[node name="ColorRect" type="ColorRect" parent="CanvasLayer2"]
+material = SubResource("ShaderMaterial_fckvw")
+anchors_preset = -1
+anchor_left = -0.496528
+anchor_top = -0.486111
+anchor_right = 0.00434028
+anchor_bottom = 0.0138889
+offset_left = 568.0
+offset_top = 311.0
+offset_right = 1148.0
+offset_bottom = 639.0
+metadata/_edit_use_anchors_ = true
 
 [node name="TextureRect" type="TextureRect" parent="."]
 layout_mode = 0
@@ -20,24 +146,68 @@ texture = ExtResource("1_rwas2")
 
 [node name="Label" type="Label" parent="."]
 layout_mode = 0
-offset_left = 284.0
-offset_top = 152.0
-offset_right = 807.0
-offset_bottom = 246.0
+offset_left = 240.0
+offset_top = 101.0
+offset_right = 910.0
+offset_bottom = 260.0
 theme_override_colors/font_color = Color(0.854902, 0, 0, 1)
 theme_override_fonts/font = ExtResource("1_8hps1")
-theme_override_font_sizes/font_size = 93
+theme_override_font_sizes/font_size = 125
 text = "Game Over!"
 
+[node name="Ghostsigma" type="AnimatedSprite2D" parent="."]
+position = Vector2(203.761, 427.378)
+scale = Vector2(3.96955, 3.70488)
+sprite_frames = SubResource("SpriteFrames_5g23r")
+animation = &"idle"
+autoplay = "idle"
+
+[node name="Ghostsigma2" type="AnimatedSprite2D" parent="."]
+position = Vector2(969, 422)
+scale = Vector2(3.88608, 3.38515)
+sprite_frames = SubResource("SpriteFrames_5g23r")
+animation = &"idle"
+autoplay = "idle"
+
 [node name="VBoxContainer" type="VBoxContainer" parent="."]
-layout_mode = 0
-offset_right = 40.0
-offset_bottom = 40.0
+offset_left = 449.0
+offset_top = 303.0
+offset_right = 545.0
+offset_bottom = 404.0
+scale = Vector2(3.21037, 3.21037)
+
+[node name="MainMenu" type="Button" parent="VBoxContainer"]
+layout_mode = 2
+text = "Main menu"
+script = ExtResource("13_pkspk")
 
 [node name="RestartButton" type="Button" parent="VBoxContainer"]
 layout_mode = 2
 text = "Restart"
+script = ExtResource("14_egfcw")
 
 [node name="QuitButton" type="Button" parent="VBoxContainer"]
 layout_mode = 2
 text = "Quit"
+script = ExtResource("15_dnmne")
+
+[node name="StatsContainer" type="VBoxContainer" parent="."]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="DeathsLabel" type="Label" parent="StatsContainer"]
+layout_mode = 2
+text = "Deaths: 0"
+
+[node name="TimeLabel" type="Label" parent="StatsContainer"]
+layout_mode = 2
+text = "Time: 00:00"
+
+[node name="SoulsLabel" type="Label" parent="StatsContainer"]
+layout_mode = 2
+text = "Souls: 0"
+
+[connection signal="pressed" from="VBoxContainer/MainMenu" to="VBoxContainer/MainMenu" method="_on_pressed"]
+[connection signal="pressed" from="VBoxContainer/RestartButton" to="VBoxContainer/RestartButton" method="_on_pressed"]
+[connection signal="pressed" from="VBoxContainer/QuitButton" to="VBoxContainer/QuitButton" method="_on_pressed"]
