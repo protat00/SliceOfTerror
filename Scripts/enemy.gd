@@ -276,7 +276,7 @@ func update_ui_position(delta):
 	# Apply smooth following to the bobbing position
 	ui_control.global_position = ui_control.global_position.lerp(base_ui_position, smooth_follow_speed * delta)
 
-func update_gradient_animation(delta):
+func update_gradient_animation(_delta):
 	# Animation removed - using static purple gradient box instead
 	pass
 

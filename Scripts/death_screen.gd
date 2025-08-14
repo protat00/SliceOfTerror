@@ -2,8 +2,8 @@
 # Attach this to your DeathScreen scene root node
 extends Control
 
-@export var main_menu_scene_path: String = "res://MainMenu.tscn"
-@export var gameplay_scene_path: String = "res://Main.tscn"
+@export var main_menu_scene_path: String = "res://Scenes/Title_screen.tscn"  # Based on your file structure
+@export var gameplay_scene_path: String = "res://Scenes/game.tscn"  # Based on your file structure
 @export var show_stats: bool = true
 
 # Get references to your existing UI elements

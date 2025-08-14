@@ -122,7 +122,6 @@ grow_vertical = 2
 script = ExtResource("1_dnmne")
 
 [node name="CanvasLayer2" type="CanvasLayer" parent="."]
-visible = false
 
 [node name="ColorRect" type="ColorRect" parent="CanvasLayer2"]
 material = SubResource("ShaderMaterial_fckvw")
@@ -136,6 +135,46 @@ offset_top = 311.0
 offset_right = 1148.0
 offset_bottom = 639.0
 metadata/_edit_use_anchors_ = true
+
+[node name="VBoxContainer" type="VBoxContainer" parent="CanvasLayer2"]
+offset_left = 414.0
+offset_top = 262.0
+offset_right = 510.0
+offset_bottom = 363.0
+scale = Vector2(3.21037, 3.21037)
+
+[node name="MainMenu" type="Button" parent="CanvasLayer2/VBoxContainer"]
+layout_mode = 2
+text = "Main menu"
+script = ExtResource("13_pkspk")
+
+[node name="RestartButton" type="Button" parent="CanvasLayer2/VBoxContainer"]
+layout_mode = 2
+text = "Restart"
+script = ExtResource("14_egfcw")
+
+[node name="QuitButton" type="Button" parent="CanvasLayer2/VBoxContainer"]
+layout_mode = 2
+text = "Quit"
+script = ExtResource("15_dnmne")
+
+[node name="StatsContainer" type="VBoxContainer" parent="CanvasLayer2"]
+offset_left = 243.0
+offset_top = 224.0
+offset_right = 331.0
+offset_bottom = 301.0
+
+[node name="DeathsLabel" type="Label" parent="CanvasLayer2/StatsContainer"]
+layout_mode = 2
+text = "Deaths: 0"
+
+[node name="TimeLabel" type="Label" parent="CanvasLayer2/StatsContainer"]
+layout_mode = 2
+text = "Time: 00:00"
+
+[node name="SoulsLabel" type="Label" parent="CanvasLayer2/StatsContainer"]
+layout_mode = 2
+text = "Souls: 0"
 
 [node name="TextureRect" type="TextureRect" parent="."]
 layout_mode = 0
@@ -169,45 +208,6 @@ sprite_frames = SubResource("SpriteFrames_5g23r")
 animation = &"idle"
 autoplay = "idle"
 
-[node name="VBoxContainer" type="VBoxContainer" parent="."]
-offset_left = 449.0
-offset_top = 303.0
-offset_right = 545.0
-offset_bottom = 404.0
-scale = Vector2(3.21037, 3.21037)
-
-[node name="MainMenu" type="Button" parent="VBoxContainer"]
-layout_mode = 2
-text = "Main menu"
-script = ExtResource("13_pkspk")
-
-[node name="RestartButton" type="Button" parent="VBoxContainer"]
-layout_mode = 2
-text = "Restart"
-script = ExtResource("14_egfcw")
-
-[node name="QuitButton" type="Button" parent="VBoxContainer"]
-layout_mode = 2
-text = "Quit"
-script = ExtResource("15_dnmne")
-
-[node name="StatsContainer" type="VBoxContainer" parent="."]
-layout_mode = 0
-offset_right = 40.0
-offset_bottom = 40.0
-
-[node name="DeathsLabel" type="Label" parent="StatsContainer"]
-layout_mode = 2
-text = "Deaths: 0"
-
-[node name="TimeLabel" type="Label" parent="StatsContainer"]
-layout_mode = 2
-text = "Time: 00:00"
-
-[node name="SoulsLabel" type="Label" parent="StatsContainer"]
-layout_mode = 2
-text = "Souls: 0"
-
-[connection signal="pressed" from="VBoxContainer/MainMenu" to="VBoxContainer/MainMenu" method="_on_pressed"]
-[connection signal="pressed" from="VBoxContainer/RestartButton" to="VBoxContainer/RestartButton" method="_on_pressed"]
-[connection signal="pressed" from="VBoxContainer/QuitButton" to="VBoxContainer/QuitButton" method="_on_pressed"]
+[connection signal="pressed" from="CanvasLayer2/VBoxContainer/MainMenu" to="CanvasLayer2/VBoxContainer/MainMenu" method="_on_pressed"]
+[connection signal="pressed" from="CanvasLayer2/VBoxContainer/RestartButton" to="CanvasLayer2/VBoxContainer/RestartButton" method="_on_pressed"]
+[connection signal="pressed" from="CanvasLayer2/VBoxContainer/QuitButton" to="CanvasLayer2/VBoxContainer/QuitButton" method="_on_pressed"]

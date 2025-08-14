@@ -171,7 +171,7 @@ position = Vector2(-6, 7)
 shape = SubResource("CircleShape2D_6t5aa")
 
 [node name="Hearts" parent="." instance=ExtResource("5_fkybt")]
-position = Vector2(158, -131)
+position = Vector2(138, -114)
 scale = Vector2(2.45109, 2.45109)
 
 [node name="Camera2D" type="Camera2D" parent="."]

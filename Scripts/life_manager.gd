@@ -9,9 +9,12 @@ signal game_over
 signal player_died
 
 @export var max_lives: int = 3
-@export var game_over_scene_path: String = "res://death_screen.tscn"  # Your death scene path
+@export var game_over_scene_path: String = "res://Scenes/death_screen.tscn"  # Your death scene path
 @export var game_over_delay: float = 1.5  # Delay before switching to death scene
 @export var fade_duration: float = 1.0  # Duration of fade transition
+@export var screen_shake_enabled: bool = true
+@export var screen_shake_intensity: float = 15.0  # How strong the shake is
+@export var screen_shake_duration: float = 0.8  # How long the shake lasts
 @export var enable_death_sound: bool = true
 @export var death_sound: AudioStream  # Optional death sound effect
 
@@ -34,6 +37,11 @@ func _ready():
 	current_lives = max_lives
 	session_start_time = Time.get_ticks_msec() / 1000.0
 	
+	# Use the CORRECT death scene path (it's in the Scenes folder!)
+	game_over_scene_path = "res://Scenes/death_screen.tscn"
+	print("Death scene path set to: ", game_over_scene_path)
+	print("Scene exists: ", ResourceLoader.exists(game_over_scene_path))
+	
 	# Create audio player for death sounds
 	audio_player = AudioStreamPlayer.new()
 	add_child(audio_player)
@@ -41,6 +49,43 @@ func _ready():
 	
 	# Create fade overlay
 	create_fade_overlay()
+
+# Add this debug function
+func debug_scene_paths():
+	print("=== DEBUGGING SCENE PATHS ===")
+	
+	# Test different possible paths
+	var possible_paths = [
+		"res://death_screen.tscn",
+		"res://Scenes/death_screen.tscn",
+		"res://scenes/death_screen.tscn", 
+		"res://DeathScreen.tscn",
+		"res://death_scene.tscn"
+	]
+	
+	for path in possible_paths:
+		print("Testing path: ", path)
+		print("  Exists: ", ResourceLoader.exists(path))
+		print("  File access: ", FileAccess.file_exists(path))
+	
+	print("\n=== ALL .tscn FILES IN PROJECT ===")
+	list_all_tscn_files("res://")
+	
+func list_all_tscn_files(path: String, indent: String = ""):
+	var dir = DirAccess.open(path)
+	if dir:
+		dir.list_dir_begin()
+		var file_name = dir.get_next()
+		while file_name != "":
+			var full_path = path + "/" + file_name if path != "res://" else "res://" + file_name
+			if dir.current_is_dir() and not file_name.begins_with("."):
+				print(indent + "📁 " + file_name + "/")
+				list_all_tscn_files(full_path, indent + "  ")
+			elif file_name.ends_with(".tscn"):
+				print(indent + "📄 " + full_path)
+				if "death" in file_name.to_lower():
+					print(indent + "   ⭐ THIS LOOKS LIKE YOUR DEATH SCENE!")
+			file_name = dir.get_next()
 
 # Create the fade overlay that will be used for transitions
 func create_fade_overlay():
@@ -97,10 +142,14 @@ func initialize_hearts():
 
 # Call this function when the player takes damage
 func lose_life():
+	print("lose_life() called - Current lives: ", current_lives, " - Is transitioning: ", is_transitioning)
+	
 	if current_lives > 0 and not is_transitioning:
 		current_lives -= 1
 		total_deaths += 1
 		deaths_this_level += 1
+		
+		print("Life lost! Lives now: ", current_lives)
 		
 		# Play death sound
 		if enable_death_sound and death_sound and audio_player:
@@ -116,28 +165,47 @@ func lose_life():
 		life_lost.emit(current_lives)
 		
 		if current_lives <= 0:
+			print("GAME OVER TRIGGERED! Starting game over sequence...")
 			game_over.emit()
 			print("Game Over! Total deaths this session: ", total_deaths)
 			# Start game over sequence with fade
 			start_game_over_sequence()
 		else:
 			print("Lives remaining: ", current_lives)
+	else:
+		print("lose_life() blocked - either no lives left or already transitioning")
 
-# Start the game over sequence with fade transition
+# Start the game over sequence with screen shake and fade transition
 func start_game_over_sequence():
+	print("start_game_over_sequence() called")
+	
 	if is_transitioning:
+		print("Already transitioning, skipping...")
 		return
 	
 	is_transitioning = true
+	print("Setting is_transitioning to true")
 	
-	# Wait for game over delay
-	if game_over_delay > 0:
-		await get_tree().create_timer(game_over_delay).timeout
+	# Add screen shake effect on game over
+	if screen_shake_enabled:
+		print("Starting screen shake effect...")
+		await add_death_screen_shake()
+		print("Screen shake completed")
+	
+	# Wait for game over delay (reduced since shake takes time)
+	var remaining_delay = game_over_delay - (screen_shake_duration if screen_shake_enabled else 0.0)
+	if remaining_delay > 0:
+		print("Waiting for remaining delay: ", remaining_delay, " seconds")
+		await get_tree().create_timer(remaining_delay).timeout
+		print("Game over delay finished")
 	
 	# Start fade out
+	print("Starting fade to black...")
 	await fade_to_black()
+	print("Fade to black completed")
 	
 	# Change to death scene
+	print("Changing to death scene...")
 	change_to_death_scene()
 
 # Fade to black
@@ -215,18 +283,20 @@ func set_max_lives(new_max: int):
 	if current_lives > max_lives:
 		current_lives = max_lives
 
-# Change to death scene
+# Change to death scene - SIMPLE VERSION
 func change_to_death_scene():
-	if game_over_scene_path != "":
-		if ResourceLoader.exists(game_over_scene_path):
-			get_tree().change_scene_to_file(game_over_scene_path)
-		else:
-			print("ERROR: Death scene not found at: ", game_over_scene_path)
-			# Fallback: restart current scene
-			restart_current_scene()
-	else:
-		print("No death scene path set! Restarting current scene...")
-		restart_current_scene()
+	print("=== ATTEMPTING SCENE CHANGE ===")
+	print("Current scene: ", get_tree().current_scene.scene_file_path)
+	print("Target scene: ", game_over_scene_path)
+	
+	# Try the simple approach
+	var result = get_tree().change_scene_to_file(game_over_scene_path)
+	print("Scene change result: ", result)
+	
+	if result != OK:
+		print("Scene change FAILED! Error code: ", result)
+		print("Trying to restart current scene as fallback...")
+		get_tree().reload_current_scene()
 
 # Restart the current scene with fade
 func restart_current_scene():
@@ -322,3 +392,96 @@ func set_death_sound(sound: AudioStream):
 # Toggle death sound
 func toggle_death_sound(enabled: bool):
 	enable_death_sound = enabled
+
+# Screen shake effect for game over
+func add_death_screen_shake():
+	var camera = get_camera()
+	
+	if camera:
+		print("Shaking camera...")
+		await shake_camera(camera)
+	else:
+		print("No camera found, shaking entire scene...")
+		await shake_scene()
+
+# Shake the camera
+func shake_camera(camera: Camera2D):
+	var original_position = camera.global_position
+	var tween = create_tween()
+	var shake_steps = int(screen_shake_duration * 60)  # 60 FPS
+	
+	# Create intense shake that gradually decreases
+	for i in range(shake_steps):
+		var progress = float(i) / float(shake_steps)
+		var current_intensity = screen_shake_intensity * (1.0 - progress * 0.7)  # Decrease over time
+		
+		var shake_offset = Vector2(
+			randf_range(-current_intensity, current_intensity),
+			randf_range(-current_intensity, current_intensity)
+		)
+		
+		tween.tween_property(camera, "global_position", original_position + shake_offset, 1.0 / 60.0)
+	
+	# Return to original position
+	tween.tween_property(camera, "global_position", original_position, 0.1)
+	await tween.finished
+
+# Shake the entire scene if no camera found
+func shake_scene():
+	var current_scene = get_tree().current_scene
+	if not current_scene:
+		return
+	
+	var original_position = current_scene.position
+	var tween = create_tween()
+	var shake_steps = int(screen_shake_duration * 60)
+	
+	for i in range(shake_steps):
+		var progress = float(i) / float(shake_steps)
+		var current_intensity = screen_shake_intensity * (1.0 - progress * 0.7)
+		
+		var shake_offset = Vector2(
+			randf_range(-current_intensity, current_intensity),
+			randf_range(-current_intensity, current_intensity)
+		)
+		
+		tween.tween_property(current_scene, "position", original_position + shake_offset, 1.0 / 60.0)
+	
+	# Return to original position
+	tween.tween_property(current_scene, "position", original_position, 0.1)
+	await tween.finished
+
+# Find the camera in the current scene
+func get_camera() -> Camera2D:
+	var current_scene = get_tree().current_scene
+	if not current_scene:
+		return null
+	
+	# Look for Camera2D in the scene
+	var camera = current_scene.find_child("Camera2D", true, false) as Camera2D
+	if camera:
+		return camera
+	
+	# Look for any node that has a Camera2D
+	return find_camera_recursive(current_scene)
+
+func find_camera_recursive(node: Node) -> Camera2D:
+	if node is Camera2D:
+		return node as Camera2D
+	
+	for child in node.get_children():
+		var result = find_camera_recursive(child)
+		if result:
+			return result
+	
+	return null
+
+# Set screen shake properties
+func set_screen_shake_enabled(enabled: bool):
+	screen_shake_enabled = enabled
+
+func set_screen_shake_intensity(intensity: float):
+	screen_shake_intensity = intensity
+
+func set_screen_shake_duration(duration: float):
+	screen_shake_duration = duration
