@@ -206,4 +206,6 @@ scale = Vector2(1.11787, 0.895118)
 texture = SubResource("GradientTexture2D_fkybt")
 texture_scale = 2.43
 
+[node name="WalkingAudio" type="AudioStreamPlayer2D" parent="."]
+
 [connection signal="area_entered" from="HitBox" to="." method="_on_hit_box_area_entered"]
