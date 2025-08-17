@@ -1,8 +1,7 @@
-[gd_scene load_steps=22 format=3 uid="uid://ojlpv30i8afp"]
+[gd_scene load_steps=21 format=3 uid="uid://ojlpv30i8afp"]
 
 [ext_resource type="Script" uid="uid://d6mnse5g6n4c" path="res://Scripts/player.gd" id="1_fkybt"]
 [ext_resource type="Shader" uid="uid://xqjs30mogf2j" path="res://shader.gdshader" id="3_6t5aa"]
-[ext_resource type="AudioStream" uid="uid://bxukkekvesycm" path="res://Audio/walking-on-wood-363349.mp3" id="3_fkybt"]
 [ext_resource type="Texture2D" uid="uid://duouo5tmjlelk" path="res://Assets/HauntedHotel/Sprites/Player.png" id="3_vgqql"]
 [ext_resource type="PackedScene" uid="uid://bltlmneknadxs" path="res://Scenes/life_system_2d.tscn" id="5_fkybt"]
 
@@ -150,7 +149,6 @@ fill_to = Vector2(0.834862, 0.137615)
 [node name="Player" type="CharacterBody2D" groups=["Player", "player"]]
 script = ExtResource("1_fkybt")
 respawn_image_duration = 1.5
-walking_sound = ExtResource("3_fkybt")
 walking_volume = -15.0
 coyote_time = 10.0
 
@@ -205,7 +203,5 @@ shape = SubResource("CapsuleShape2D_6t5aa")
 scale = Vector2(1.11787, 0.895118)
 texture = SubResource("GradientTexture2D_fkybt")
 texture_scale = 2.43
-
-[node name="WalkingAudio" type="AudioStreamPlayer2D" parent="."]
 
 [connection signal="area_entered" from="HitBox" to="." method="_on_hit_box_area_entered"]

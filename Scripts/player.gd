@@ -132,6 +132,7 @@ func initialize_life_system():
 	print("DEBUG: Player ready with ", lives, " lives and ", souls, " souls")
 
 func setup_walking_audio():
+	return
 	if not has_node("WalkingAudio"):
 		walking_audio = AudioStreamPlayer2D.new()
 		walking_audio.name = "WalkingAudio"
@@ -212,6 +213,7 @@ func handle_walking_sound():
 			walking_audio.stop()
 
 func play_walking_sound():
+	return
 	if walking_sound and walking_audio:
 		walking_audio.pitch_scale = randf_range(walking_pitch_min, walking_pitch_max)
 		walking_audio.play()

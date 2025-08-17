@@ -5,12 +5,9 @@ var current_music_stream: AudioStream
 var current_music_scene: String = ""
 
 func _ready():
-	music_player = AudioStreamPlayer.new()
-	add_child(music_player)
+
 	
-	music_player = AudioStreamPlayer.new()
-	add_child(music_player)
-	
+
 	# Load and apply volume setting
 	load_volume_setting()
 
@@ -26,6 +23,9 @@ func load_volume_setting():
 	load_music_setting()
 
 func play_music_for_scene(stream: AudioStream, scene_name: String, volume: float = 0.0):
+	music_player = AudioStreamPlayer.new()
+	get_tree().current_scene.add_child(music_player)
+	
 	# Only change music if we're switching to a different scene's music
 	if current_music_scene != scene_name or not music_player.playing:
 		current_music_scene = scene_name
