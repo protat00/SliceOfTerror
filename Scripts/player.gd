@@ -69,7 +69,7 @@ var was_on_floor: bool = false
 @onready var normal_collision = $NormalCollision
 @onready var crouch_collision = $CrouchCollision
 @onready var animated_sprite = $AnimatedSprite2D
-@onready var walking_audio: AudioStreamPlayer2D = $WalkingAudio
+#@onready var walking_audio: AudioStreamPlayer2D = $WalkingAudio
 @onready var game_manager : Node2D
 
 # Store original sprite properties
@@ -133,16 +133,16 @@ func initialize_life_system():
 
 func setup_walking_audio():
 	return
-	if not has_node("WalkingAudio"):
-		walking_audio = AudioStreamPlayer2D.new()
-		walking_audio.name = "WalkingAudio"
-		add_child(walking_audio)
-	
-	if walking_audio:
-		walking_audio.stream = walking_sound
-		walking_audio.volume_db = walking_volume
-		walking_audio.autoplay = false
-		walking_audio.bus = "SFX"
+	#if not has_node("WalkingAudio"):
+		#walking_audio = AudioStreamPlayer2D.new()
+		#walking_audio.name = "WalkingAudio"
+		#add_child(walking_audio)
+	#
+	#if walking_audio:
+		#walking_audio.stream = walking_sound
+		#walking_audio.volume_db = walking_volume
+		#walking_audio.autoplay = false
+		#walking_audio.bus = "SFX"
 
 func setup_respawn_overlay():
 	respawn_overlay = Control.new()
@@ -174,7 +174,7 @@ func _physics_process(delta):
 	
 	handle_input()
 	update_movement(delta)
-	handle_walking_sound()
+	#handle_walking_sound()
 	play_animation()
 	move_and_slide()
 
@@ -204,19 +204,19 @@ func apply_gravity(delta):
 	if not is_on_floor() and current_state != State.DYING:
 		velocity.y += gravity * delta
 
-func handle_walking_sound():
-	if current_state == State.RUNNING and is_on_floor():
-		if not walking_audio.playing:
-			play_walking_sound()
-	else:
-		if walking_audio.playing:
-			walking_audio.stop()
-
-func play_walking_sound():
-	return
-	if walking_sound and walking_audio:
-		walking_audio.pitch_scale = randf_range(walking_pitch_min, walking_pitch_max)
-		walking_audio.play()
+#func handle_walking_sound():
+	#if current_state == State.RUNNING and is_on_floor():
+		#if not walking_audio.playing:
+			#play_walking_sound()
+	#else:
+		#if walking_audio.playing:
+			#walking_audio.stop()
+#
+#func play_walking_sound():
+	#return
+	#if walking_sound and walking_audio:
+		#walking_audio.pitch_scale = randf_range(walking_pitch_min, walking_pitch_max)
+		#walking_audio.play()
 
 func can_coyote_jump() -> bool:
 	return coyote_timer > 0.0 and not is_on_floor() and current_state == State.FALLING
@@ -398,8 +398,8 @@ func die():
 	is_dead = true
 	current_state = State.DYING
 	
-	if walking_audio.playing:
-		walking_audio.stop()
+	#if walking_audio.playing:
+		#walking_audio.stop()
 	
 	if death_tween:
 		death_tween.kill()
