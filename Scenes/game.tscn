@@ -147,9 +147,10 @@ size = Vector2(53.6637, 169)
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_1phco"]
 size = Vector2(124.5, 33)
 
-[node name="game" type="Node2D" node_paths=PackedStringArray("pause_menu")]
+[node name="game" type="Node2D" node_paths=PackedStringArray("pause_menu", "tilemap")]
 script = ExtResource("1_i6g32")
 pause_menu = NodePath("Player/PauseMenu")
+tilemap = NodePath("TileMapLayer")
 
 [node name="TileMapLayer" type="TileMapLayer" parent="."]
 scale = Vector2(3, 3)
