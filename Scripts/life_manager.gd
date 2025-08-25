@@ -10,8 +10,8 @@ signal player_died
 
 @export var max_lives: int = 3
 @export var game_over_scene_path: String = "res://Scenes/death_screen.tscn"  # Your death scene path
-@export var game_over_delay: float = 1.5  # Delay before switching to death scene
-@export var fade_duration: float = 1.0  # Duration of fade transition
+@export var game_over_delay: float = 0.7 # Delay before switching to death scene
+@export var fade_duration: float = 2.0  # Duration of fade transition
 @export var screen_shake_enabled: bool = true
 @export var screen_shake_intensity: float = 15.0  # How strong the shake is
 @export var screen_shake_duration: float = 0.8  # How long the shake lasts

@@ -1,0 +1,85 @@
+[gd_scene load_steps=18 format=3 uid="uid://3mhn6v5jn0xe"]
+
+[ext_resource type="Script" uid="uid://nxylne4uwvn2" path="res://Scripts/checkpoint.gd" id="1_i3j2t"]
+[ext_resource type="Texture2D" uid="uid://b268diilv4d2l" path="res://Assets/undead-recruit/undead/spirit-recruit-6.png" id="2_6vgh2"]
+[ext_resource type="Texture2D" uid="uid://ffu2swf65x3" path="res://Assets/undead-recruit/undead/spirit-recruit-5.png" id="3_3njwc"]
+[ext_resource type="Texture2D" uid="uid://kfc3o2xs6oy7" path="res://Assets/undead-recruit/undead/spirit-recruit-4.png" id="4_fvcyh"]
+[ext_resource type="Texture2D" uid="uid://p8e32nv6eylg" path="res://Assets/undead-recruit/undead/spirit-recruit-3.png" id="5_mjhki"]
+[ext_resource type="Texture2D" uid="uid://dc3eeua4su7ae" path="res://Assets/undead-recruit/undead/spirit-recruit-2.png" id="6_dlchq"]
+[ext_resource type="Texture2D" uid="uid://cywck8w1p0yxv" path="res://Assets/undead-recruit/undead/spirit-recruit-1.png" id="7_mqfr3"]
+[ext_resource type="Texture2D" uid="uid://ch0jrrmy7vebf" path="res://Assets/undead-recruit/undead/spirit-recruit-0.png" id="8_73tam"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_41vf3"]
+atlas = ExtResource("2_6vgh2")
+region = Rect2(0, 0, 72, 72)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_k75nq"]
+atlas = ExtResource("3_3njwc")
+region = Rect2(0, 0, 72, 72)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_a6mvm"]
+atlas = ExtResource("4_fvcyh")
+region = Rect2(0, 0, 72, 72)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_tf33f"]
+atlas = ExtResource("5_mjhki")
+region = Rect2(0, 0, 72, 72)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_heuqy"]
+atlas = ExtResource("6_dlchq")
+region = Rect2(0, 0, 72, 72)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_c4mal"]
+atlas = ExtResource("7_mqfr3")
+region = Rect2(0, 0, 72, 72)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_fn8ve"]
+atlas = ExtResource("8_73tam")
+region = Rect2(0, 0, 72, 72)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_1rpl4"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_41vf3")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_k75nq")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_a6mvm")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_tf33f")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_heuqy")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_c4mal")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_fn8ve")
+}],
+"loop": true,
+"name": &"default",
+"speed": 6.0
+}]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_jkya8"]
+size = Vector2(42, 40)
+
+[node name="Checkpoint" type="Area2D" groups=["checkpoints"]]
+script = ExtResource("1_i3j2t")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+position = Vector2(13.5, 26)
+scale = Vector2(0.625, 0.5)
+sprite_frames = SubResource("SpriteFrames_1rpl4")
+frame_progress = 0.458557
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(15, 25)
+shape = SubResource("RectangleShape2D_jkya8")
+
+[node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="."]

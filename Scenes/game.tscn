@@ -1,4 +1,4 @@
-[gd_scene load_steps=24 format=4 uid="uid://bsilhcjy0a1xp"]
+[gd_scene load_steps=25 format=4 uid="uid://bsilhcjy0a1xp"]
 
 [ext_resource type="PackedScene" uid="uid://ojlpv30i8afp" path="res://Scenes/player.tscn" id="1_ebmjs"]
 [ext_resource type="Script" uid="uid://c3t0fiuup3rkr" path="res://Scripts/game.gd" id="1_i6g32"]
@@ -7,6 +7,7 @@
 [ext_resource type="Texture2D" uid="uid://cxw25gabxe6a0" path="res://New Piskel (4)-1.png.png" id="4_3dryh"]
 [ext_resource type="Texture2D" uid="uid://drexwyoemy11q" path="res://New Piskel (4)-2.png.png" id="5_wowpa"]
 [ext_resource type="PackedScene" uid="uid://bodq3p3tfhi11" path="res://Scenes/pause_menu.tscn" id="7_1l0tm"]
+[ext_resource type="PackedScene" uid="uid://3mhn6v5jn0xe" path="res://Scenes/Checkpoint.tscn" id="8_nnt18"]
 [ext_resource type="PackedScene" uid="uid://cxh6xq2l0xeo8" path="res://Scenes/enemy.tscn" id="8_v158k"]
 [ext_resource type="PackedScene" uid="uid://dec6u07k4els3" path="res://Scenes/soul_2d.tscn" id="9_h4fw4"]
 [ext_resource type="PackedScene" uid="uid://g5oqrkbyujb5" path="res://Scenes/scoreUI.tscn" id="10_ldgsr"]
@@ -134,7 +135,7 @@ sources/3 = SubResource("TileSetAtlasSource_wrm1d")
 ambient_light_energy = 0.0
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_1l0tm"]
-size = Vector2(931.451, 19.5)
+size = Vector2(1738.31, 19.5)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_nb51f"]
 size = Vector2(1280.81, 20)
@@ -249,6 +250,9 @@ position = Vector2(1011, 154)
 scale = Vector2(2.34375, 2.71875)
 texture = ExtResource("5_wowpa")
 
+[node name="Checkpoint" parent="." instance=ExtResource("8_nnt18")]
+position = Vector2(643, 182)
+
 [node name="Player" parent="." instance=ExtResource("1_ebmjs")]
 position = Vector2(111, 261)
 
@@ -270,7 +274,7 @@ position = Vector2(1, -10)
 scale = Vector2(1.24, 1)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Border" groups=["Enemy"]]
-position = Vector2(1248.39, 497)
+position = Vector2(1246.77, 497)
 shape = SubResource("RectangleShape2D_1l0tm")
 
 [node name="CollisionShape2D2" type="CollisionShape2D" parent="Border" groups=["Enemy"]]
@@ -282,7 +286,7 @@ position = Vector2(1712.1, 14)
 shape = SubResource("RectangleShape2D_nnt18")
 
 [node name="CollisionShape2D4" type="CollisionShape2D" parent="Border" groups=["Enemy"]]
-position = Vector2(2052.02, -385)
+position = Vector2(2453.83, -385)
 shape = SubResource("RectangleShape2D_1l0tm")
 
 [node name="Ghost" parent="." instance=ExtResource("8_v158k")]
@@ -308,7 +312,6 @@ background_color = Color(0.6, 0.2, 0.8, 0.690196)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="SlideInstructions"]
 position = Vector2(1107.03, 278.406)
-scale = Vector2(1, 1)
 shape = SubResource("RectangleShape2D_ldgsr")
 
 [node name="JumpInstructions" type="Area2D" parent="."]
