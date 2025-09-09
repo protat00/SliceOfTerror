@@ -19,6 +19,7 @@ config/icon="res://icon.svg"
 
 LifeManager="*res://Scripts/life_manager.gd"
 CheckpointManager="*res://Scripts/CheckpointManager.gd"
+AudioTrackManager="*res://audio_track_manager.tscn"
 
 [global_group]
 

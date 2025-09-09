@@ -4,6 +4,7 @@ extends Node2D
 var paused = false
 var is_game_over: bool = false
 func _ready():
+	AudioTrackManager.change_track("ambient")
 	get_tree().paused = false
 	is_game_over = false
 	# Debug: Check if pause_menu was found

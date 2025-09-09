@@ -1,0 +1,10 @@
+[gd_scene load_steps=2 format=3 uid="uid://dvu58if0fpvlj"]
+
+[ext_resource type="Script" uid="uid://c3hjtfvnsqcx2" path="res://audio_track_manager.gd" id="1_drkiv"]
+
+[node name="AudioTrackManager" type="Node2D"]
+script = ExtResource("1_drkiv")
+
+[node name="AudioPlayer1" type="AudioStreamPlayer" parent="."]
+
+[node name="AudioPlayer2" type="AudioStreamPlayer" parent="."]

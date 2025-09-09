@@ -1,6 +1,7 @@
 extends Control
 
-#func _ready():
+func _ready():
+	AudioTrackManager.change_track("main_menu")
 	#var bg_music = load("res://Audio/main_menu_music.mp3")
 	## Only play music if it's not already playing this track
 	## The play_music_for_scene method should handle this, but let's be explicit

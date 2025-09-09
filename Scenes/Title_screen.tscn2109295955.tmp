@@ -1,0 +1,241 @@
+[gd_scene load_steps=30 format=3 uid="uid://pttui37r384l"]
+
+[ext_resource type="Script" uid="uid://u76dbbmhxepa" path="res://Scripts/Main_Menu.gd" id="1_35yr4"]
+[ext_resource type="Script" uid="uid://q35m5ewk00g" path="res://Scripts/play_button.gd" id="1_glfsf"]
+[ext_resource type="Texture2D" uid="uid://bodrxq16nk2uw" path="res://Assets/hq720.jpg" id="1_wou8e"]
+[ext_resource type="FontFile" uid="uid://cbphda4k2lyp8" path="res://UI_Assets/MotionSicknessRegular-Yz3Yj.otf" id="2_oltrp"]
+[ext_resource type="Script" uid="uid://y6ogfftt7mx2" path="res://Scripts/quit_button.gd" id="3_75exb"]
+[ext_resource type="Script" uid="uid://b3vegxfbjr73k" path="res://Scripts/settings_button.gd" id="4_67b70"]
+[ext_resource type="Shader" uid="uid://xqjs30mogf2j" path="res://shader.gdshader" id="5_w38ri"]
+[ext_resource type="Texture2D" uid="uid://dheps4dej4sbu" path="res://Assets/text-1749677172106-1.png.png" id="7_oltrp"]
+[ext_resource type="Texture2D" uid="uid://1y4m15ig2itl" path="res://Assets/round ghost/round ghost idle/sprite_0.png" id="9_32d14"]
+[ext_resource type="Texture2D" uid="uid://gjjy5crcd246" path="res://Assets/round ghost/round ghost idle/sprite_2.png" id="9_c1gdy"]
+[ext_resource type="Texture2D" uid="uid://dvwbn1mbw6pgk" path="res://Assets/round ghost/round ghost idle/sprite_1.png" id="10_35yr4"]
+[ext_resource type="Texture2D" uid="uid://ctk2mae84w1m5" path="res://Assets/round ghost/round ghost idle/sprite_3.png" id="12_24fsc"]
+[ext_resource type="Texture2D" uid="uid://cj7pqjn4k4v4x" path="res://Assets/round ghost/round ghost idle/sprite_4.png" id="13_50ycc"]
+[ext_resource type="Texture2D" uid="uid://7fsb3hk5bbld" path="res://Assets/round ghost/round ghost idle/sprite_5.png" id="14_dfvrw"]
+[ext_resource type="Texture2D" uid="uid://blu8tm4ei1n3o" path="res://Assets/round ghost/round ghost idle/sprite_6.png" id="15_ba4cx"]
+[ext_resource type="Texture2D" uid="uid://dfpchoxvf0eyh" path="res://Assets/round ghost/round ghost idle/sprite_7.png" id="16_or6uf"]
+[ext_resource type="Texture2D" uid="uid://cyfnumwolviw3" path="res://Assets/round ghost/round ghost idle/sprite_8.png" id="17_cgjes"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_75exb"]
+shader = ExtResource("5_w38ri")
+shader_parameter/overlay = false
+shader_parameter/resolution = Vector2(320, 180)
+shader_parameter/brightness = 1.5
+shader_parameter/scanlines_opacity = 0.075
+shader_parameter/scanlines_width = 0.201
+shader_parameter/grille_opacity = 0.0
+shader_parameter/roll = true
+shader_parameter/roll_speed = 2.0
+shader_parameter/roll_size = 4.075
+shader_parameter/roll_variation = 2.461
+shader_parameter/distort_intensity = 0.0
+shader_parameter/aberration = 0.03
+shader_parameter/noise_opacity = 0.241
+shader_parameter/noise_speed = 1.18
+shader_parameter/static_noise_intensity = 0.06
+shader_parameter/pixelate = false
+shader_parameter/discolor = true
+shader_parameter/warp_amount = 0.529
+shader_parameter/clip_warp = false
+shader_parameter/vignette_intensity = 0.5
+shader_parameter/vignette_opacity = 0.709
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_1och7"]
+bg_color = Color(0.6, 0.6, 0.6, 0)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_xpuq7"]
+atlas = ExtResource("9_32d14")
+region = Rect2(0, 0, 50, 50)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_bhi3s"]
+atlas = ExtResource("10_35yr4")
+region = Rect2(0, 0, 50, 50)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_r87vk"]
+atlas = ExtResource("9_c1gdy")
+region = Rect2(0, 0, 50, 50)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_sojpt"]
+atlas = ExtResource("12_24fsc")
+region = Rect2(0, 0, 50, 50)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_hsbmo"]
+atlas = ExtResource("13_50ycc")
+region = Rect2(0, 0, 50, 50)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_rc5vd"]
+atlas = ExtResource("14_dfvrw")
+region = Rect2(0, 0, 50, 50)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_wlc86"]
+atlas = ExtResource("15_ba4cx")
+region = Rect2(0, 0, 50, 50)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_cut0g"]
+atlas = ExtResource("16_or6uf")
+region = Rect2(0, 0, 50, 50)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_jl1yu"]
+atlas = ExtResource("17_cgjes")
+region = Rect2(0, 0, 50, 50)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_pr3xo"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_xpuq7")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_bhi3s")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_r87vk")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_sojpt")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_hsbmo")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_rc5vd")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_wlc86")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_cut0g")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_jl1yu")
+}],
+"loop": true,
+"name": &"idle",
+"speed": 4.0
+}]
+
+[node name="MainMenu" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 15.0
+offset_top = 50.0
+offset_right = -56.0
+offset_bottom = -470.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_35yr4")
+
+[node name="CanvasLayer2" type="CanvasLayer" parent="."]
+
+[node name="ColorRect" type="ColorRect" parent="CanvasLayer2"]
+material = SubResource("ShaderMaterial_75exb")
+anchors_preset = -1
+anchor_left = -0.496528
+anchor_top = -0.486111
+anchor_right = 0.00434028
+anchor_bottom = 0.0138889
+offset_left = 568.0
+offset_top = 311.0
+offset_right = 1148.0
+offset_bottom = 639.0
+metadata/_edit_use_anchors_ = true
+
+[node name="VBoxContainer" type="VBoxContainer" parent="CanvasLayer2"]
+offset_left = 434.0
+offset_top = 298.0
+offset_right = 529.0
+offset_bottom = 401.0
+scale = Vector2(3.59567, 3.0455)
+alignment = 1
+
+[node name="PlayButton" type="Button" parent="CanvasLayer2/VBoxContainer"]
+layout_mode = 2
+theme_override_colors/font_hover_color = Color(0.854902, 0, 0, 1)
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_colors/font_focus_color = Color(0.854902, 0, 0, 1)
+theme_override_colors/font_pressed_color = Color(0.854902, 0, 0, 1)
+theme_override_fonts/font = ExtResource("2_oltrp")
+theme_override_styles/disabled_mirrored = SubResource("StyleBoxFlat_1och7")
+theme_override_styles/disabled = SubResource("StyleBoxFlat_1och7")
+theme_override_styles/hover_pressed_mirrored = SubResource("StyleBoxFlat_1och7")
+theme_override_styles/hover_pressed = SubResource("StyleBoxFlat_1och7")
+theme_override_styles/hover_mirrored = SubResource("StyleBoxFlat_1och7")
+theme_override_styles/hover = SubResource("StyleBoxFlat_1och7")
+theme_override_styles/pressed_mirrored = SubResource("StyleBoxFlat_1och7")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_1och7")
+theme_override_styles/normal_mirrored = SubResource("StyleBoxFlat_1och7")
+theme_override_styles/normal = SubResource("StyleBoxFlat_1och7")
+text = "Play"
+script = ExtResource("1_glfsf")
+
+[node name="SettingsButton" type="Button" parent="CanvasLayer2/VBoxContainer"]
+layout_mode = 2
+theme_override_colors/font_hover_color = Color(0.854902, 0, 0, 1)
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_colors/font_focus_color = Color(0.854902, 0, 0, 1)
+theme_override_colors/font_pressed_color = Color(0.854902, 0, 0, 1)
+theme_override_fonts/font = ExtResource("2_oltrp")
+theme_override_font_sizes/font_size = 18
+theme_override_styles/disabled_mirrored = SubResource("StyleBoxFlat_1och7")
+theme_override_styles/disabled = SubResource("StyleBoxFlat_1och7")
+theme_override_styles/hover_pressed_mirrored = SubResource("StyleBoxFlat_1och7")
+theme_override_styles/hover_pressed = SubResource("StyleBoxFlat_1och7")
+theme_override_styles/hover_mirrored = SubResource("StyleBoxFlat_1och7")
+theme_override_styles/hover = SubResource("StyleBoxFlat_1och7")
+theme_override_styles/pressed_mirrored = SubResource("StyleBoxFlat_1och7")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_1och7")
+theme_override_styles/normal_mirrored = SubResource("StyleBoxFlat_1och7")
+theme_override_styles/normal = SubResource("StyleBoxFlat_1och7")
+text = "Settings"
+script = ExtResource("4_67b70")
+
+[node name="QuitButton" type="Button" parent="CanvasLayer2/VBoxContainer"]
+layout_mode = 2
+theme_override_colors/font_hover_color = Color(0.854902, 0, 0, 1)
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_colors/font_focus_color = Color(0.854902, 0, 0, 1)
+theme_override_colors/font_pressed_color = Color(0.854902, 0, 0, 1)
+theme_override_fonts/font = ExtResource("2_oltrp")
+theme_override_font_sizes/font_size = 20
+theme_override_styles/disabled_mirrored = SubResource("StyleBoxFlat_1och7")
+theme_override_styles/disabled = SubResource("StyleBoxFlat_1och7")
+theme_override_styles/hover_pressed_mirrored = SubResource("StyleBoxFlat_1och7")
+theme_override_styles/hover_pressed = SubResource("StyleBoxFlat_1och7")
+theme_override_styles/hover_mirrored = SubResource("StyleBoxFlat_1och7")
+theme_override_styles/hover = SubResource("StyleBoxFlat_1och7")
+theme_override_styles/pressed_mirrored = SubResource("StyleBoxFlat_1och7")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_1och7")
+theme_override_styles/normal_mirrored = SubResource("StyleBoxFlat_1och7")
+theme_override_styles/normal = SubResource("StyleBoxFlat_1och7")
+text = "Quit"
+script = ExtResource("3_75exb")
+
+[node name="TextureRect" type="TextureRect" parent="."]
+layout_mode = 0
+offset_left = -14.0
+offset_top = -55.0
+offset_right = 1928.0
+offset_bottom = 1025.0
+scale = Vector2(0.592228, 0.60524)
+texture = ExtResource("1_wou8e")
+
+[node name="Title" type="Sprite2D" parent="."]
+position = Vector2(577.938, 130.563)
+scale = Vector2(2.31097, 3.27006)
+texture = ExtResource("7_oltrp")
+
+[node name="Ghostsigma" type="AnimatedSprite2D" parent="."]
+position = Vector2(256, 371)
+scale = Vector2(4.94, 4.42)
+sprite_frames = SubResource("SpriteFrames_pr3xo")
+animation = &"idle"
+autoplay = "idle"
+frame_progress = 0.450408
+
+[connection signal="pressed" from="CanvasLayer2/VBoxContainer/PlayButton" to="CanvasLayer2/VBoxContainer/PlayButton" method="_on_pressed"]
+[connection signal="pressed" from="CanvasLayer2/VBoxContainer/SettingsButton" to="CanvasLayer2/VBoxContainer/SettingsButton" method="_on_pressed"]
+[connection signal="pressed" from="CanvasLayer2/VBoxContainer/QuitButton" to="CanvasLayer2/VBoxContainer/QuitButton" method="_on_pressed"]

@@ -1,132 +1,178 @@
 extends Node
-var music_player: AudioStreamPlayer
-var music_enabled: bool = true
-var current_music_stream: AudioStream
-var current_music_scene: String = ""
+
+# Global Audio Manager - Add as AutoLoad singleton
+# Handles music playback with smooth fade transitions
+
+# Dictionary to store all music tracks
+var music_tracks = {
+	"menu": "res://audio/music/menu_theme.ogg",
+	"gameplay": "res://audio/music/gameplay_theme.ogg",
+	"boss": "res://audio/music/boss_battle.ogg",
+	"victory": "res://audio/music/victory_fanfare.ogg",
+	"credits": "res://audio/music/credits_theme.ogg",
+	"ambient_forest": "res://audio/music/ambient_forest.ogg",
+	"dungeon": "res://audio/music/dungeon_theme.ogg"
+}
+
+# Audio players for crossfading
+@onready var current_player: AudioStreamPlayer = AudioStreamPlayer.new()
+@onready var fade_player: AudioStreamPlayer = AudioStreamPlayer.new()
+
+# Current track info
+var current_track: String = ""
+var is_playing: bool = false
+
+# Fade settings
+var fade_duration: float = 1.0
+var master_volume: float = 1.0
+
+# Tween for smooth volume transitions
+@onready var tween: Tween = Tween.new()
 
 func _ready():
+	# Set initial volumes
+	current_player.volume_db = linear_to_db(master_volume)
+	fade_player.volume_db = linear_to_db(0.0)
 
+# Play a specific track by name
+func play_track(track_name: String, fade_in: bool = true):
+	if not music_tracks.has(track_name):
+		print("Warning: Track '" + track_name + "' not found in music_tracks dictionary")
+		return
 	
-
-	# Load and apply volume setting
-	load_volume_setting()
-
-func load_volume_setting():
-	var config = ConfigFile.new()
-	if config.load("user://settings.cfg") == OK:
-		var volume_value = config.get_value("audio", "volume", 0.5)
-		var volume_db = 20.0 * log(volume_value) / log(10.0) if volume_value > 0.0 else -80.0
-		var master_bus = AudioServer.get_bus_index("Master")
-		AudioServer.set_bus_volume_db(master_bus, volume_db)
+	# If same track is already playing, do nothing
+	if current_track == track_name and is_playing:
+		return
 	
-	# Load the saved music setting
-	load_music_setting()
-
-func play_music_for_scene(stream: AudioStream, scene_name: String, volume: float = 0.0):
-	music_player = AudioStreamPlayer.new()
-	get_tree().current_scene.add_child(music_player)
+	var new_stream = load(music_tracks[track_name])
+	if not new_stream:
+		print("Error: Could not load audio file: " + music_tracks[track_name])
+		return
 	
-	# Only change music if we're switching to a different scene's music
-	if current_music_scene != scene_name or not music_player.playing:
-		current_music_scene = scene_name
-		current_music_stream = stream
-		
-		if music_enabled:
-			# Stop any currently playing music first
-			if music_player.playing:
-				music_player.stop()
-			
-			music_player.stream = stream
-			music_player.volume_db = volume
-			music_player.play()
-			
-	if current_music_scene != scene_name or not music_player.playing:
-		current_music_scene = scene_name
-		current_music_stream = stream
-		
-	if music_enabled:
-		if music_player.playing:
-			music_player.stop()
-			
-			music_player.stream = stream
-			music_player.volume_db = volume
-			# Make sure the music loops
-			if stream is AudioStreamOggVorbis:
-				stream.loop = true
-			elif stream is AudioStreamMP3:
-				stream.loop = true
-			
-			music_player.play()
-
-func play_music(stream: AudioStream, volume: float = 0.0):
-	# Stop any currently playing music first
-	if music_player.playing:
-		music_player.stop()
-	
-	current_music_stream = stream
-	current_music_scene = ""  # Clear scene tracking for direct music calls
-	
-	if music_enabled:
-		music_player.stream = stream
-		music_player.volume_db = volume
-		music_player.play()
-
-func stop_music():
-	music_player.stop()
-	current_music_scene = ""
-
-func set_music_enabled(enabled: bool):
-	music_enabled = enabled
-	
-	if enabled:
-		# Turn music back on
-		if current_music_stream and not music_player.playing:
-			music_player.stream = current_music_stream
-			music_player.play()
+	if fade_in and is_playing:
+		# Crossfade to new track
+		_crossfade_to_track(new_stream, track_name)
 	else:
-		# Turn music off
-		music_player.stop()
+		# Direct play without fade
+		current_player.stream = new_stream
+		current_player.play()
+		current_track = track_name
+		is_playing = true
+		current_player.volume_db = linear_to_db(master_volume)
+
+# Stop current track
+func stop_track(fade_out: bool = true):
+	if not is_playing:
+		return
 	
-	# Save the setting
-	save_music_setting()
-
-func save_music_setting():
-	var config = ConfigFile.new()
-	config.set_value("audio", "music_enabled", music_enabled)
-	config.save("user://settings.cfg")
-
-func load_music_setting():
-	var config = ConfigFile.new()
-	if config.load("user://settings.cfg") == OK:
-		music_enabled = config.get_value("audio", "music_enabled", true)
-
-# Added method to check if specific music is already playing
-func is_playing_music(music_resource: AudioStream) -> bool:
-	if music_player and music_player.playing and current_music_stream:
-		return current_music_stream == music_resource
-	return false
-	
-func set_volume(volume_db: float):
-	if music_player:
-		music_player.volume_db = volume_db
-
-func get_volume() -> float:
-	if music_player:
-		return music_player.volume_db
-	return 0.0  # This line was missing or not reachable
-
-func fade_volume(target_volume: float, duration: float):
-	if music_player:
-		var tween = create_tween()
-		tween.tween_property(music_player, "volume_db", target_volume, duration)
+	if fade_out:
+		# Fade out current track
+		tween = create_tween()
+		tween.tween_property(current_player, "volume_db", 
+			linear_to_db(0.0), fade_duration)
 		
-		# Add this to your MusicManager _ready() function
+		# Stop after fade completes
+		await tween.finished
+		current_player.stop()
+	else:
+		# Immediate stop
+		current_player.stop()
+	
+	current_track = ""
+	is_playing = false
 
-	music_player = AudioStreamPlayer.new()
-	add_child(music_player)
+# Change to a different track with crossfade
+func change_track(new_track: String):
+	if not music_tracks.has(new_track):
+		print("Warning: Track '" + new_track + "' not found in music_tracks dictionary")
+		return
 	
-	# Debug: Check AudioStreamPlayer settings
-	print("AudioStreamPlayer bus: ", music_player.bus)
-	print("AudioStreamPlayer volume_db: ", music_player.volume_db)
+	# If not currently playing, just start the new track
+	if not is_playing:
+		play_track(new_track, false)
+		return
 	
-	load_music_setting()
+	# If same track, do nothing
+	if current_track == new_track:
+		return
+	
+	var new_stream = load(music_tracks[new_track])
+	if not new_stream:
+		print("Error: Could not load audio file: " + music_tracks[new_track])
+		return
+	
+	_crossfade_to_track(new_stream, new_track)
+
+# Internal function to handle crossfading
+func _crossfade_to_track(new_stream: AudioStream, track_name: String):
+	# Set up the fade player with new track
+	fade_player.stream = new_stream
+	fade_player.volume_db = linear_to_db(0.0)
+	fade_player.play()
+	
+	# Crossfade: fade out current, fade in new
+	tween.parallel().interpolate_property(current_player, "volume_db",
+		current_player.volume_db, linear_to_db(0.0), fade_duration,
+		Tween.TRANS_SINE, Tween.EASE_OUT)
+	
+	tween.parallel().interpolate_property(fade_player, "volume_db",
+		linear_to_db(0.0), linear_to_db(master_volume), fade_duration,
+		Tween.TRANS_SINE, Tween.EASE_IN)
+	
+	tween.start()
+	
+	# When fade completes, swap the players
+	await tween.finished
+	_swap_players()
+	current_track = track_name
+
+# Swap current and fade players
+func _swap_players():
+	var temp = current_player
+	current_player = fade_player
+	fade_player = temp
+	
+	# Stop and reset the old player
+	fade_player.stop()
+	fade_player.volume_db = linear_to_db(0.0)
+
+# Pause current track
+func pause_track():
+	if is_playing:
+		current_player.stream_paused = true
+
+# Resume paused track
+func resume_track():
+	if is_playing:
+		current_player.stream_paused = false
+
+# Set master volume (0.0 to 1.0)
+func set_master_volume(volume: float):
+	master_volume = clamp(volume, 0.0, 1.0)
+	if is_playing:
+		current_player.volume_db = linear_to_db(master_volume)
+
+# Set fade duration for transitions
+func set_fade_duration(duration: float):
+	fade_duration = max(duration, 0.1)
+
+# Get current track name
+func get_current_track() -> String:
+	return current_track
+
+# Check if audio is currently playing
+func is_track_playing() -> bool:
+	return is_playing and current_player.playing
+
+# Add a new track to the dictionary at runtime
+func add_track(track_name: String, file_path: String):
+	music_tracks[track_name] = file_path
+
+# Remove a track from the dictionary
+func remove_track(track_name: String):
+	if music_tracks.has(track_name):
+		music_tracks.erase(track_name)
+
+# Get list of available tracks
+func get_available_tracks() -> Array:
+	return music_tracks.keys()
