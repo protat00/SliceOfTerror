@@ -1,0 +1,37 @@
+[gd_scene load_steps=5 format=3 uid="uid://d3fipkp33vweq"]
+
+[ext_resource type="Script" uid="uid://bkfrqekd3xmmq" path="res://Scripts/LevelNameDisplayer.gd" id="1_50avs"]
+[ext_resource type="Shader" uid="uid://b4mqe54ohnntt" path="res://Shaders/pause_menu.gdshader" id="2_delsm"]
+[ext_resource type="FontFile" uid="uid://xy2jqo6cs670" path="res://UI_Assets/BloodySilenceBold-d9BgK.ttf" id="3_m44bd"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_m44bd"]
+shader = ExtResource("2_delsm")
+shader_parameter/amount = 1.0
+
+[node name="TheHallway" type="CanvasLayer" groups=["level_display"]]
+script = ExtResource("1_50avs")
+
+[node name="Background" type="ColorRect" parent="."]
+material = SubResource("ShaderMaterial_m44bd")
+offset_right = 1154.0
+offset_bottom = 656.0
+
+[node name="LevelLabel" type="Label" parent="."]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -20.0
+offset_top = -11.5
+offset_right = 20.0
+offset_bottom = 11.5
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_fonts/font = ExtResource("3_m44bd")
+theme_override_font_sizes/font_size = 27
+horizontal_alignment = 1
+
+[node name="TypewriterTimer" type="Timer" parent="."]
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer2D" parent="."]

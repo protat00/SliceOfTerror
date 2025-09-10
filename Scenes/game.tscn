@@ -163,7 +163,7 @@ size = Vector2(124.5, 107.5)
 size = Vector2(118, 607.5)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_7nbq1"]
-size = Vector2(147, 52)
+size = Vector2(53, 187)
 
 [node name="game" type="Node2D" node_paths=PackedStringArray("pause_menu")]
 script = ExtResource("1_i6g32")
@@ -510,7 +510,7 @@ script = ExtResource("18_iivbl")
 level_name = "The Hallway"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="TheHallway"]
-position = Vector2(121, 262)
+position = Vector2(207, 194)
 shape = SubResource("RectangleShape2D_7nbq1")
 
 [editable path="soul"]
