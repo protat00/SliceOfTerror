@@ -29,7 +29,7 @@ offset_bottom = 11.5
 grow_horizontal = 2
 grow_vertical = 2
 theme_override_fonts/font = ExtResource("3_m44bd")
-theme_override_font_sizes/font_size = 27
+theme_override_font_sizes/font_size = 50
 horizontal_alignment = 1
 
 [node name="TypewriterTimer" type="Timer" parent="."]
