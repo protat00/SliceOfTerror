@@ -15,7 +15,7 @@ func _ready():
 		pause_menu.hide()  # Start with menu hidden
 
 	# Add game music
-func process(delta):
+func _process(delta):
 	if Input.is_action_just_pressed("pause"):
 		pauseMenu()
 

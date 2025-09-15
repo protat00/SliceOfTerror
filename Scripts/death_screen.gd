@@ -48,6 +48,7 @@ func display_death_stats():
 		deaths_label.text = "Deaths: " + str(stats.total_deaths)
 	
 	if time_label:
+		@warning_ignore("integer_division")
 		var minutes = int(stats.session_time) / 60
 		var seconds = int(stats.session_time) % 60
 		time_label.text = "Time: %02d:%02d" % [minutes, seconds]

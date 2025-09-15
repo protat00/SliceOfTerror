@@ -52,7 +52,7 @@ func teleport_to_level_2():
 	await tween.finished
 	
 	# Change to the new scene
-	get_tree().change_scene_to_file("res://scenes/level_2.tscn")
+	get_tree().change_scene_to_file("res://Scenes/level_2.tscn")
 
 # Alternative version with additional effects
 func teleport_to_level_2_with_effects():

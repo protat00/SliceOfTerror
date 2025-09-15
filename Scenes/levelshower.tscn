@@ -1,20 +1,15 @@
-[gd_scene load_steps=5 format=3 uid="uid://d3fipkp33vweq"]
+[gd_scene load_steps=3 format=3 uid="uid://d3fipkp33vweq"]
 
 [ext_resource type="Script" uid="uid://bkfrqekd3xmmq" path="res://Scripts/LevelNameDisplayer.gd" id="1_50avs"]
-[ext_resource type="Shader" uid="uid://b4mqe54ohnntt" path="res://Shaders/pause_menu.gdshader" id="2_delsm"]
 [ext_resource type="FontFile" uid="uid://xy2jqo6cs670" path="res://UI_Assets/BloodySilenceBold-d9BgK.ttf" id="3_m44bd"]
-
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_m44bd"]
-shader = ExtResource("2_delsm")
-shader_parameter/amount = 1.0
 
 [node name="TheHallway" type="CanvasLayer" groups=["level_display"]]
 script = ExtResource("1_50avs")
 
 [node name="Background" type="ColorRect" parent="."]
-material = SubResource("ShaderMaterial_m44bd")
 offset_right = 1154.0
 offset_bottom = 656.0
+color = Color(0, 0, 0, 1)
 
 [node name="LevelLabel" type="Label" parent="."]
 anchors_preset = 8

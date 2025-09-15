@@ -1,5 +1,8 @@
 extends Node2D
 
+@export var pause_menu : Control
+var paused = false
+var is_game_over: bool = false
 func _ready():
 	fade_in()
 
@@ -23,3 +26,22 @@ func fade_in():
 	
 	# Clean up
 	canvas_layer.queue_free()
+	
+func _process(delta):
+	if Input.is_action_just_pressed("pause"):
+		pauseMenu()
+
+func pauseMenu():
+	# Add null check to prevent errors
+	if pause_menu == null:
+		print("pause_menu is null - cannot show/hide")
+		return
+
+	if paused:
+		pause_menu.hide()
+		Engine.time_scale = 1
+	else:
+		pause_menu.show()
+		Engine.time_scale = 0
+
+	paused = !paused
